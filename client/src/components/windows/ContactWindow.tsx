@@ -134,40 +134,40 @@ export function ContactWindow() {
       </form>
       
       <div className="mt-4 p-3 bg-[rgb(var(--win-light-gray))] border-2 border-[rgb(var(--win-border-dark))]">
-        <div className="text-base font-bold mb-4 flex items-center gap-2">
-          <img src="https://win98icons.alexmeub.com/icons/png/tree-0.png" alt="" className="w-5 h-5" draggable={false} />
+        <div className="text-sm font-bold mb-3 flex items-center gap-2">
+          <img src="https://win98icons.alexmeub.com/icons/png/tree-0.png" alt="" className="w-4 h-4" draggable={false} />
           {t('contactDescription')}
         </div>
-        <div className="space-y-3 text-sm">
-          <div className="flex items-center gap-3">
-            <img src={instagramIcon} alt="Instagram" className="w-6 h-6" draggable={false} />
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center gap-2">
+            <img src={instagramIcon} alt="Instagram" className="w-4 h-4" draggable={false} />
             <a 
               href="https://www.instagram.com/it.swagy?igsh=MW02Z2c1bzBqbG5zdg%3D%3D&utm_source=qr" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-blue-600 hover:underline"
             >
               Instagram: @it.swagy
             </a>
           </div>
-          <div className="flex items-center gap-3">
-            <img src={telegramIcon} alt="Telegram" className="w-6 h-6" draggable={false} />
+          <div className="flex items-center gap-2">
+            <img src={telegramIcon} alt="Telegram" className="w-4 h-4" draggable={false} />
             <a 
               href="https://t.me/mohmmed" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-blue-600 hover:underline"
             >
               Telegram: @mohmmed
             </a>
           </div>
-          <div className="flex items-center gap-3">
-            <img src={whatsappIcon} alt="WhatsApp" className="w-6 h-6" draggable={false} />
+          <div className="flex items-center gap-2">
+            <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4" draggable={false} />
             <a 
               href="https://wa.me/+9647724166086" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline font-medium"
+              className="text-blue-600 hover:underline"
             >
               WhatsApp: +9647724166086
             </a>
