@@ -128,7 +128,8 @@ export function Window({
         top: 0,
         left: 0,
         width: '100%',
-        height: 'calc(100vh - 28px)',
+        height: 'calc(var(--vh, 1vh) * 100 - 28px)',
+        maxHeight: 'calc(var(--vh, 1vh) * 100 - 28px)',
         zIndex: window.zIndex,
       }
     : {
@@ -136,7 +137,8 @@ export function Window({
         left: window.isMaximized ? 0 : window.position.x,
         top: window.isMaximized ? 0 : window.position.y,
         width: window.isMaximized ? '100vw' : window.size.width,
-        height: window.isMaximized ? 'calc(100vh - 28px)' : window.size.height,
+        height: window.isMaximized ? 'calc(var(--vh, 1vh) * 100 - 28px)' : window.size.height,
+        maxHeight: window.isMaximized ? 'calc(var(--vh, 1vh) * 100 - 28px)' : window.size.height,
         zIndex: window.zIndex,
       };
 

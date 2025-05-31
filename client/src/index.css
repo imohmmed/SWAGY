@@ -38,7 +38,7 @@ body {
   }
 }
 
-/* Safari specific taskbar fix */
+/* Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
   .taskbar-safari-fix {
     position: fixed !important;
@@ -48,6 +48,22 @@ body {
     z-index: 99999 !important;
     transform: translate3d(0, 0, 0) !important;
     -webkit-transform: translate3d(0, 0, 0) !important;
+  }
+  
+  /* Fix for window content in Safari */
+  .win-window {
+    height: calc(var(--vh, 1vh) * 100 - 28px) !important;
+    max-height: calc(var(--vh, 1vh) * 100 - 28px) !important;
+    overflow: hidden !important;
+  }
+  
+  .mobile-fullscreen {
+    height: calc(var(--vh, 1vh) * 100 - 28px) !important;
+    max-height: calc(var(--vh, 1vh) * 100 - 28px) !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    position: fixed !important;
   }
 }
 
