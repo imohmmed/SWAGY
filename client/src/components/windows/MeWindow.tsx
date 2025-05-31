@@ -37,10 +37,22 @@ export function MeWindow() {
         <div className="bg-[rgb(var(--win-light-gray))] border-2 border-[rgb(var(--win-border-dark))] p-3">
           <h3 className="font-bold mb-2">{t('quickStats')}</h3>
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <div>🚀 {t('projects')}</div>
-            <div>⭐ {t('experience')}</div>
-            <div>💡 {t('ideas')}</div>
-            <div>🎵 {t('music')}</div>
+            <div className="flex items-center gap-1">
+              <img src="https://win98icons.alexmeub.com/icons/png/filepack-1.png" alt="" className="w-4 h-4" draggable={false} />
+              {t('projects')}
+            </div>
+            <div className="flex items-center gap-1">
+              <img src="https://win98icons.alexmeub.com/icons/png/chm-1.png" alt="" className="w-4 h-4" draggable={false} />
+              {t('experience')}
+            </div>
+            <div className="flex items-center gap-1">
+              <img src="https://win98icons.alexmeub.com/icons/png/media_player_stream_sun4.png" alt="" className="w-4 h-4" draggable={false} />
+              {t('ideas')}
+            </div>
+            <div className="flex items-center gap-1">
+              <img src="https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png" alt="" className="w-4 h-4" draggable={false} />
+              {t('music')}
+            </div>
           </div>
         </div>
       </div>
