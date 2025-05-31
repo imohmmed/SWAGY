@@ -227,4 +227,21 @@
     background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     font-family: 'Courier New', monospace;
   }
+
+  /* Boot logo styling */
+  .boot-logo {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1.2) contrast(1.1) saturate(1.1);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .boot-logo {
+      max-width: 150px;
+    }
+  }
 }

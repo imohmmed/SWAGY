@@ -67,11 +67,11 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in">
         <div className="text-center">
-          <div className="mb-8 animate-pulse">
+          <div className="mb-8 animate-pulse-slow">
             <img 
               src={swalyLogo} 
               alt="SWAGY" 
-              className="w-32 h-32 mx-auto"
+              className="boot-logo mx-auto"
             />
           </div>
           <div className="text-white text-2xl font-bold mb-4">
