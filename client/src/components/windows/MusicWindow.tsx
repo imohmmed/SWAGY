@@ -136,6 +136,17 @@ export function MusicWindow() {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Cleanup audio when component unmounts (window closes)
+  useEffect(() => {
+    return () => {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, []);
+
   const currentTrack = playlist[currentTrackIndex];
 
   useEffect(() => {
