@@ -3,7 +3,6 @@ import { Desktop } from './components/Desktop';
 import { Window } from './components/Window';
 import { Taskbar } from './components/Taskbar';
 import { StartMenu } from './components/StartMenu';
-import { BootScreen } from './components/BootScreen';
 import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
 import { WindowType } from './types';
