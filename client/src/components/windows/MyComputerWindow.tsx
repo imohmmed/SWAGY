@@ -406,7 +406,7 @@ Status: Active daily operation`
   },
   {
     id: 'blog',
-    name: 'Blog',
+    name: 'Ideas.txt',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png',
     windowType: 'blog',
