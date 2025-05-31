@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import instagramIcon from '@assets/IMG_6441.png';
+import whatsappIcon from '@assets/IMG_6442.png';
+import telegramIcon from '@assets/IMG_6443.png';
 
 export function ContactWindow() {
   const { t } = useLanguage();
@@ -49,15 +52,7 @@ export function ContactWindow() {
       <div className="text-sm font-bold mb-4">📧 Send Email to SWAGY</div>
       
       <form onSubmit={handleSubmit} className="space-y-3">
-        <div>
-          <label className="block text-xs font-bold mb-1">To:</label>
-          <input
-            type="text"
-            value="swagy@example.com"
-            readOnly
-            className="w-full p-1 win-input bg-[rgb(var(--win-light-gray))]"
-          />
-        </div>
+
         
         <div>
           <label className="block text-xs font-bold mb-1">From:</label>
@@ -118,30 +113,65 @@ export function ContactWindow() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="win-button px-4 py-2 text-xs font-bold"
+            className="win-button px-4 py-2 text-xs font-bold flex items-center gap-1"
           >
-            📤 {isSubmitting ? 'Sending...' : t('send')}
+            <img src="https://win98icons.alexmeub.com/icons/png/check-0.png" alt="" className="w-4 h-4" draggable={false} />
+            {isSubmitting ? 'Sending...' : t('send')}
           </button>
           <button
             type="button"
             onClick={handleClear}
-            className="win-button px-4 py-2 text-xs"
+            className="win-button px-4 py-2 text-xs flex items-center gap-1"
           >
-            🗑️ {t('clear')}
+            <img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png" alt="" className="w-4 h-4" draggable={false} />
+            {t('clear')}
           </button>
-          <button type="button" className="win-button px-4 py-2 text-xs">
-            📎 Attach File
+          <button type="button" className="win-button px-4 py-2 text-xs flex items-center gap-1">
+            <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png" alt="" className="w-4 h-4" draggable={false} />
+            Attach File
           </button>
         </div>
       </form>
       
       <div className="mt-4 p-3 bg-[rgb(var(--win-light-gray))] border-2 border-[rgb(var(--win-border-dark))]">
-        <div className="text-xs font-bold mb-2">💬 {t('contactDescription')}</div>
-        <div className="space-y-1 text-xs">
-          <div>🐦 Twitter: @swagy_dev</div>
-          <div>💼 LinkedIn: /in/swagy</div>
-          <div>📱 WhatsApp: +1 (555) 123-4567</div>
-          <div>💬 Discord: SWAGY#1234</div>
+        <div className="text-sm font-bold mb-3 flex items-center gap-2">
+          <img src="https://win98icons.alexmeub.com/icons/png/tree-0.png" alt="" className="w-4 h-4" draggable={false} />
+          {t('contactDescription')}
+        </div>
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center gap-2">
+            <img src={instagramIcon} alt="Instagram" className="w-4 h-4" draggable={false} />
+            <a 
+              href="https://www.instagram.com/it.swagy?igsh=MW02Z2c1bzBqbG5zdg%3D%3D&utm_source=qr" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Instagram: @it.swagy
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <img src={telegramIcon} alt="Telegram" className="w-4 h-4" draggable={false} />
+            <a 
+              href="https://t.me/mohmmed" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Telegram: @mohmmed
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4" draggable={false} />
+            <a 
+              href="https://wa.me/+9647724166086" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              WhatsApp: +9647724166086
+            </a>
+          </div>
         </div>
       </div>
     </div>
