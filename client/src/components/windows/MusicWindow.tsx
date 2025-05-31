@@ -173,28 +173,15 @@ export function MusicWindow() {
     }
   }, []);
 
-  // Clean up only on true window close (not minimize)
+  // Save state on component unmount but don't stop audio (for minimize/maximize)
   useEffect(() => {
-    const cleanup = () => {
-      // This will only run when the window is actually closed
-      if (globalAudioState.audio) {
-        globalAudioState.audio.pause();
-        globalAudioState.audio.currentTime = 0;
-        globalAudioState.isPlaying = false;
-        globalAudioState.audio = null;
-        globalAudioState.isInitialized = false;
-      }
-    };
-
-    // Add event listener for actual window close
-    window.addEventListener('beforeunload', cleanup);
-    
     return () => {
-      window.removeEventListener('beforeunload', cleanup);
-      // Don't cleanup audio on component unmount (minimize)
-      // Only save the current state
+      // Save current state when component unmounts (minimize)
       globalAudioState.isPlaying = isPlaying;
       globalAudioState.currentTrackIndex = currentTrackIndex;
+      if (globalAudioState.audio) {
+        globalAudioState.currentTime = globalAudioState.audio.currentTime;
+      }
     };
   }, [isPlaying, currentTrackIndex]);
 

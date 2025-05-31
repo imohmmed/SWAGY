@@ -17,7 +17,7 @@ const desktopFiles: FileItem[] = [
     id: 'c-drive',
     name: 'Local Disk (C:)',
     type: 'folder',
-    icon: 'https://win98icons.alexmeub.com/icons/png/hard_drive-2.png',
+    icon: 'https://win98icons.alexmeub.com/icons/png/cd_drive_purple-0.png',
     children: [
       {
         id: 'windows',
@@ -43,20 +43,7 @@ const desktopFiles: FileItem[] = [
       }
     ]
   },
-  {
-    id: 'd-drive',
-    name: 'CD-ROM (D:)',
-    type: 'folder',
-    icon: 'https://win98icons.alexmeub.com/icons/png/cd_drive-2.png',
-    children: []
-  },
-  {
-    id: 'floppy',
-    name: 'Floppy (A:)',
-    type: 'folder',
-    icon: 'https://win98icons.alexmeub.com/icons/png/floppy_disk-2.png',
-    children: []
-  },
+
   // Desktop Files
   {
     id: 'me',
@@ -97,7 +84,7 @@ Ready to collaborate on something amazing? Let's build something cool together!`
   },
   {
     id: 'projects',
-    name: 'My Projects',
+    name: 'Projects',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
     windowType: 'projects',
@@ -381,7 +368,7 @@ Status: Active daily operation`
   },
   {
     id: 'music',
-    name: 'Music Collection',
+    name: 'Music',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
     windowType: 'music',
@@ -419,24 +406,40 @@ Status: Active daily operation`
   },
   {
     id: 'blog',
-    name: 'Ideas & Blog',
+    name: 'Blog',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png',
     windowType: 'blog',
     children: [
       {
-        id: 'tech-thoughts',
-        name: 'Tech Thoughts.txt',
+        id: 'ideas',
+        name: 'Ideas.txt',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
-        content: 'Random thoughts about technology trends and future innovations'
-      },
-      {
-        id: 'creative-ideas',
-        name: 'Creative Ideas.txt',
-        type: 'file',
-        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
-        content: 'Collection of weird but cool project ideas and artistic concepts'
+        content: `Ideas & Random Thoughts - SWAGY
+
+Why I Still Design Like It's 1998
+Modern design is cool, but nothing beats a chunky pixel button and a drop shadow you can trip over. Call it nostalgia… or taste.
+
+2AM: Me vs. a stupid semicolon.
+Winner: semicolon.
+Lesson: always respect the semicolon.
+
+Who says devs can't be stylish?
+I debug in AirPods Max and wide-leg trousers. If the fit's clean, the code's cleaner.
+
+Retro UIs > Modern Headaches
+Windows 98 taught me one thing:
+Click, drag, feel joy.
+Modern apps?
+Click, wait, crash.
+
+Shower Thoughts
+- If you can't fix the bug, at least fix your fit.
+- My shoes? Too clean to walk
+- Coffee ≠ creativity, but Music = genius.
+- Why is it always "localhost:3000" and never "localhost: how are you?"
+- Fashion rule #1: If it confuses your mom, you're doing it right.`
       }
     ]
   },
