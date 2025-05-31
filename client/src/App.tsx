@@ -54,7 +54,7 @@ function App() {
   const handleMenuAction = (action: string) => {
     switch (action) {
       case 'my-computer':
-        openWindow('projects');
+        openWindow('mycomputer');
         break;
       case 'run':
         showRunDialog();
