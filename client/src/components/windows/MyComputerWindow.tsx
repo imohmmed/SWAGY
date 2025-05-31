@@ -10,11 +10,57 @@ interface FileItem {
 }
 
 const desktopFiles: FileItem[] = [
+  // System Drives
+  {
+    id: 'c-drive',
+    name: 'Local Disk (C:)',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/hard_drive-2.png',
+    children: [
+      {
+        id: 'windows',
+        name: 'Windows',
+        type: 'folder',
+        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+        children: [
+          {
+            id: 'system32',
+            name: 'System32',
+            type: 'folder',
+            icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+            children: []
+          }
+        ]
+      },
+      {
+        id: 'program-files',
+        name: 'Program Files',
+        type: 'folder',
+        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+        children: []
+      }
+    ]
+  },
+  {
+    id: 'd-drive',
+    name: 'CD-ROM (D:)',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/cd_drive-2.png',
+    children: []
+  },
+  {
+    id: 'floppy',
+    name: 'Floppy (A:)',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/floppy_disk-2.png',
+    children: []
+  },
+  // Desktop Files
   {
     id: 'me',
     name: 'Me.txt',
     type: 'file',
-    icon: '📄',
+    icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
     content: `SWAGY - Portfolio & Creative Works
 
 About Me:
@@ -36,51 +82,73 @@ Ready to collaborate on something amazing? Let's connect!`
   },
   {
     id: 'projects',
-    name: 'Projects',
+    name: 'My Projects',
     type: 'folder',
-    icon: '📁',
+    icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
     children: [
       {
         id: 'web-projects',
-        name: 'Web Projects',
+        name: 'Web Development',
         type: 'folder',
-        icon: '🌐',
+        icon: 'https://win98icons.alexmeub.com/icons/png/html-1.png',
         children: [
           {
             id: 'portfolio',
-            name: 'Portfolio.html',
+            name: 'Portfolio Website',
             type: 'file',
-            icon: '🌐',
-            content: 'Modern portfolio website built with React and TypeScript'
+            icon: 'https://win98icons.alexmeub.com/icons/png/html-1.png',
+            content: 'Modern portfolio website built with React and TypeScript featuring Windows 98 aesthetic'
           },
           {
             id: 'ecommerce',
             name: 'E-commerce Platform',
             type: 'file',
-            icon: '🛒',
-            content: 'Full-stack e-commerce solution with payment integration'
+            icon: 'https://win98icons.alexmeub.com/icons/png/shopping_cart-4.png',
+            content: 'Full-stack e-commerce solution with payment integration and inventory management'
           }
         ]
       },
       {
         id: 'creative-projects',
-        name: 'Creative Projects',
+        name: 'Creative & Art',
         type: 'folder',
-        icon: '🎨',
+        icon: 'https://win98icons.alexmeub.com/icons/png/paint_brush-0.png',
         children: [
           {
             id: 'generative-art',
-            name: 'Generative Art.js',
+            name: 'Generative Art Collection',
             type: 'file',
-            icon: '🎨',
-            content: 'Interactive generative art pieces using p5.js and Three.js'
+            icon: 'https://win98icons.alexmeub.com/icons/png/paint_brush-0.png',
+            content: 'Interactive generative art pieces using p5.js and Three.js with real-time user interaction'
           },
           {
             id: 'music-visualizer',
-            name: 'Music Visualizer',
+            name: 'Audio Visualizer',
             type: 'file',
-            icon: '🎵',
-            content: 'Real-time audio visualization with WebGL shaders'
+            icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
+            content: 'Real-time audio visualization with WebGL shaders and frequency analysis'
+          }
+        ]
+      },
+      {
+        id: 'telegram-bots',
+        name: 'Telegram Bots',
+        type: 'folder',
+        icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
+        children: [
+          {
+            id: 'bot1',
+            name: 'Assistant Bot',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
+            content: 'AI-powered Telegram bot for automated customer support'
+          },
+          {
+            id: 'bot2',
+            name: 'Content Manager Bot',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
+            content: 'Bot for managing and scheduling social media content'
           }
         ]
       }
@@ -90,21 +158,58 @@ Ready to collaborate on something amazing? Let's connect!`
     id: 'music',
     name: 'Music Collection',
     type: 'folder',
-    icon: '🎵',
+    icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
     children: [
       {
         id: 'playlist1',
         name: 'Coding Vibes.m3u',
         type: 'file',
-        icon: '🎵',
-        content: 'Lo-fi hip hop and electronic music for coding sessions'
+        icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
+        content: 'Lo-fi hip hop and electronic music playlist perfect for coding sessions and deep focus work'
       },
       {
         id: 'playlist2',
         name: 'Creative Flow.m3u',
         type: 'file',
-        icon: '🎵',
-        content: 'Ambient and experimental tracks for creative work'
+        icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
+        content: 'Ambient and experimental tracks designed to enhance creative workflow and artistic inspiration'
+      },
+      {
+        id: 'retro-collection',
+        name: 'Retro Collection',
+        type: 'folder',
+        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+        children: [
+          {
+            id: 'synthwave',
+            name: 'Synthwave Hits.mp3',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
+            content: '80s inspired synthwave tracks with nostalgic vibes'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'blog',
+    name: 'Ideas & Blog',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png',
+    children: [
+      {
+        id: 'tech-thoughts',
+        name: 'Tech Thoughts.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
+        content: 'Random thoughts about technology trends and future innovations'
+      },
+      {
+        id: 'creative-ideas',
+        name: 'Creative Ideas.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
+        content: 'Collection of weird but cool project ideas and artistic concepts'
       }
     ]
   },
@@ -112,31 +217,106 @@ Ready to collaborate on something amazing? Let's connect!`
     id: 'downloads',
     name: 'Downloads',
     type: 'folder',
-    icon: '📥',
+    icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
     children: [
       {
         id: 'resume',
         name: 'SWAGY_Resume.pdf',
         type: 'file',
-        icon: '📄',
-        content: 'Professional resume showcasing experience and skills'
+        icon: 'https://win98icons.alexmeub.com/icons/png/document-0.png',
+        content: 'Professional resume showcasing development experience, creative projects, and technical skills'
+      },
+      {
+        id: 'portfolio-assets',
+        name: 'Portfolio Assets',
+        type: 'folder',
+        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+        children: [
+          {
+            id: 'screenshots',
+            name: 'Project Screenshots',
+            type: 'folder',
+            icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
+            children: []
+          }
+        ]
       },
       {
         id: 'certificates',
         name: 'Certificates',
         type: 'folder',
-        icon: '🏆',
+        icon: 'https://win98icons.alexmeub.com/icons/png/certificate-0.png',
         children: [
           {
             id: 'cert1',
-            name: 'React_Certificate.pdf',
+            name: 'React_Certification.pdf',
             type: 'file',
-            icon: '📜',
-            content: 'Advanced React Development Certification'
+            icon: 'https://win98icons.alexmeub.com/icons/png/certificate-0.png',
+            content: 'Advanced React Development Certification from recognized training institute'
+          },
+          {
+            id: 'cert2',
+            name: 'JavaScript_Advanced.pdf',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/certificate-0.png',
+            content: 'Advanced JavaScript Programming Certification'
           }
         ]
       }
     ]
+  },
+  {
+    id: 'contact',
+    name: 'Contact Info',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
+    children: [
+      {
+        id: 'social-links',
+        name: 'Social Media.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
+        content: 'Social media profiles and professional networking links'
+      },
+      {
+        id: 'email-template',
+        name: 'Contact Template.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/mail-0.png',
+        content: 'Template for professional communication and project inquiries'
+      }
+    ]
+  },
+  // System Folders
+  {
+    id: 'control-panel',
+    name: 'Control Panel',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/settings_gear-0.png',
+    children: [
+      {
+        id: 'display',
+        name: 'Display Properties',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/monitor-3.png',
+        content: 'System display settings and screen resolution configuration'
+      },
+      {
+        id: 'system',
+        name: 'System Properties',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/computer_3-2.png',
+        content: 'System information and performance settings'
+      }
+    ]
+  },
+  // Recycle Bin
+  {
+    id: 'recycle',
+    name: 'Recycle Bin',
+    type: 'folder',
+    icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
+    children: []
   }
 ];
 
@@ -237,7 +417,12 @@ export function MyComputerWindow() {
               className="flex flex-col items-center p-2 hover:bg-blue-200 cursor-pointer rounded"
               onDoubleClick={() => openFile(file)}
             >
-              <div className="text-3xl mb-1">{file.icon}</div>
+              <img 
+                src={file.icon} 
+                alt={file.name}
+                className="w-8 h-8 mb-1 object-contain"
+                draggable={false}
+              />
               <span className="text-xs text-center break-words w-full">
                 {file.name}
               </span>
