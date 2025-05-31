@@ -75,6 +75,56 @@ const playlist = [
     duration: '3:27',
     url: 'https://j.top4top.io/m_3438iuf0c3.m4a',
     collection: 'J. Cole'
+  },
+  // Drake Collection
+  { 
+    id: '10', 
+    title: 'Nokia', 
+    artist: 'Drake', 
+    duration: '3:15',
+    url: 'https://b.top4top.io/m_3438pv75q0.m4a',
+    collection: 'Drake'
+  },
+  { 
+    id: '11', 
+    title: 'Virginia Beach', 
+    artist: 'Drake', 
+    duration: '4:42',
+    url: 'https://d.top4top.io/m_3438vzw0v1.m4a',
+    collection: 'Drake'
+  },
+  { 
+    id: '12', 
+    title: 'The Shoe Fit', 
+    artist: 'Drake', 
+    duration: '3:56',
+    url: 'https://e.top4top.io/m_3438bndrl2.m4a',
+    collection: 'Drake'
+  },
+  // Kendrick Lamar Collection
+  { 
+    id: '13', 
+    title: 'Poetic Justice', 
+    artist: 'Kendrick Lamar, Drake', 
+    duration: '5:00',
+    url: 'https://f.top4top.io/m_343818zsy3.m4a',
+    collection: 'Kendrick Lamar'
+  },
+  { 
+    id: '14', 
+    title: 'Opposites Attract', 
+    artist: 'Kendrick Lamar', 
+    duration: '4:16',
+    url: 'https://g.top4top.io/m_3438awa3j4.m4a',
+    collection: 'Kendrick Lamar'
+  },
+  { 
+    id: '15', 
+    title: 'P&P 1.5', 
+    artist: 'Kendrick Lamar', 
+    duration: '4:07',
+    url: 'https://d.top4top.io/m_3438ad9yn0.m4a',
+    collection: 'Kendrick Lamar'
   }
 ];
 
@@ -133,7 +183,14 @@ export function MusicWindow() {
 
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
-    setIsPlaying(false);
+    setIsPlaying(true);
+    // Auto-play the selected track
+    setTimeout(() => {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.play();
+      }
+    }, 100);
   };
 
   const formatTime = (time: number) => {
@@ -192,13 +249,21 @@ export function MusicWindow() {
       
       {/* Collections */}
       <div className="grid grid-cols-2 gap-2 mb-2">
-        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-2 text-center">
+        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-1 text-center">
           <div className="font-bold text-xs">Kanye West</div>
           <div className="text-xs">{playlist.filter(t => t.collection === 'Kanye West').length} tracks</div>
         </div>
-        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-2 text-center">
+        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-1 text-center">
           <div className="font-bold text-xs">J. Cole</div>
           <div className="text-xs">{playlist.filter(t => t.collection === 'J. Cole').length} tracks</div>
+        </div>
+        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-1 text-center">
+          <div className="font-bold text-xs">Drake</div>
+          <div className="text-xs">{playlist.filter(t => t.collection === 'Drake').length} tracks</div>
+        </div>
+        <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-1 text-center">
+          <div className="font-bold text-xs">Kendrick Lamar</div>
+          <div className="text-xs">{playlist.filter(t => t.collection === 'Kendrick Lamar').length} tracks</div>
         </div>
       </div>
       
@@ -214,7 +279,7 @@ export function MusicWindow() {
               }`}
               onClick={() => selectTrack(index)}
             >
-              {String(index + 1).padStart(2, '0')}. {track.title} - {track.artist} {index === currentTrackIndex && isPlaying ? '▶️' : ''}
+              {String(index + 1).padStart(2, '0')}. {track.artist} - {track.title} {index === currentTrackIndex && isPlaying ? '▶️' : ''}
             </div>
           ))}
         </div>
