@@ -143,14 +143,14 @@ function App() {
         console.log('Audio failed:', error);
       });
 
-      // Stop after 10 seconds total to ensure full audio plays
+      // Stop after 8 seconds total
       setTimeout(() => {
         if (audio) {
           audio.pause();
           audio.currentTime = 0;
         }
         setStartupAudio(null);
-      }, 10000);
+      }, 8000);
     }
   };
 
