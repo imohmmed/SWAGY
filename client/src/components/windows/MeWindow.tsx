@@ -1,5 +1,5 @@
 import { useLanguage } from '../../hooks/useLanguage';
-import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.png';
+import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.jpeg';
 
 export function MeWindow() {
   const { t } = useLanguage();
