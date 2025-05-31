@@ -70,22 +70,7 @@ const sampleProjects = [
     image: filmoraTvImage,
     link: 'https://filmora.tv'
   },
-  {
-    id: '6',
-    title: 'Customer Support Bot',
-    description: 'Automated customer service assistant',
-    category: 'telegram-bots' as ProjectCategory,
-    technologies: ['Python', 'Telegram API'],
-    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=300&h=200'
-  },
-  {
-    id: '7',
-    title: 'News Aggregator Bot',
-    description: 'Daily news updates and summaries',
-    category: 'telegram-bots' as ProjectCategory,
-    technologies: ['Node.js', 'Telegram Bot API'],
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&h=200'
-  }
+
 ];
 
 export function ProjectsWindow() {
