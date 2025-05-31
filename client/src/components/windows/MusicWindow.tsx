@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 
+// Global audio state to persist across window minimize/maximize
+let globalAudioState = {
+  audio: null as HTMLAudioElement | null,
+  isPlaying: false,
+  currentTrackIndex: 0,
+  currentTime: 0
+};
+
 const playlist = [
   // Kanye West Collection
   { 
@@ -130,22 +138,34 @@ const playlist = [
 
 export function MusicWindow() {
   const { t } = useLanguage();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(globalAudioState.isPlaying);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(globalAudioState.currentTrackIndex);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Cleanup audio when component unmounts (window closes)
+  // Initialize with global state
   useEffect(() => {
+    // Store audio reference globally
+    if (audioRef.current) {
+      globalAudioState.audio = audioRef.current;
+    }
+    
     return () => {
-      const audio = audioRef.current;
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
+      // Save current state to global when component unmounts
+      if (audioRef.current) {
+        globalAudioState.currentTime = audioRef.current.currentTime;
+        globalAudioState.isPlaying = isPlaying;
+        globalAudioState.currentTrackIndex = currentTrackIndex;
       }
     };
-  }, []);
+  }, [isPlaying, currentTrackIndex]);
+
+  // Sync global state
+  useEffect(() => {
+    globalAudioState.isPlaying = isPlaying;
+    globalAudioState.currentTrackIndex = currentTrackIndex;
+  }, [isPlaying, currentTrackIndex]);
 
   const currentTrack = playlist[currentTrackIndex];
 
