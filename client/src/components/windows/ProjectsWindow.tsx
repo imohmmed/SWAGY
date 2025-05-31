@@ -4,6 +4,8 @@ import moraModaaImage from '@assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg';
 import pixelSuiteImage from '@assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg';
 import crystalGiftImage from '@assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg';
 import slsCafeImage from '@assets/0E99AB1D-C087-4E31-B7C2-C8F128BA1884.jpeg';
+import altarafLinksImage from '@assets/E4985A71-EE3B-4B5A-9710-74725AFEE3C7.jpeg';
+import filmoraTvImage from '@assets/1673C2B9-71D9-4A63-9746-6CA90FAB8EE7.jpeg';
 
 type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
 
@@ -52,19 +54,21 @@ const sampleProjects = [
   },
   {
     id: '4',
-    title: 'Portfolio Website',
-    description: 'Personal showcase website',
+    title: 'Altaraf Links',
+    description: 'All the links, none of the drama 🔗\nSimple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
     category: 'other-websites' as ProjectCategory,
-    technologies: ['HTML', 'CSS', 'JavaScript'],
-    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=300&h=200'
+    technologies: ['Link Hub', 'Travel', 'Clean Design'],
+    image: altarafLinksImage,
+    link: 'https://altaraf.link'
   },
   {
     id: '5',
-    title: 'Business Landing Page',
-    description: 'Corporate website with modern design',
+    title: 'Filmora TV',
+    description: 'Like Netflix, but with more attitude 🎬\nA streaming platform with personality and style.',
     category: 'other-websites' as ProjectCategory,
-    technologies: ['React', 'Tailwind CSS'],
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200'
+    technologies: ['Streaming', 'Video Platform', 'Entertainment'],
+    image: filmoraTvImage,
+    link: 'https://filmora.tv'
   },
   {
     id: '6',
