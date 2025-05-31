@@ -27,7 +27,7 @@ export const translations: Record<string, Translation> = {
     meTitle: 'Me.txt - Notepad',
     projectsTitle: 'My Projects - Windows Explorer',
     musicTitle: 'SWAGY_playlist.m3u - Winamp',
-    blogTitle: 'ideas.notepad - Notepad',
+    blogTitle: 'ideas.txt - Notepad',
     downloadsTitle: 'Downloads',
     contactTitle: 'Send Email',
     terminalTitle: 'MS-DOS Prompt',
@@ -146,7 +146,7 @@ export const translations: Record<string, Translation> = {
     projectsTitle: 'مشاريعي - مستكشف ويندوز',
     musicTitle: 'SWAGY_playlist.m3u - مشغل الموسيقى',
 
-    blogTitle: 'ideas.notepad - المفكرة',
+    blogTitle: 'ideas.txt - المفكرة',
     downloadsTitle: 'التحميلات',
     contactTitle: 'إرسال إيميل',
     terminalTitle: 'موجه الأوامر',

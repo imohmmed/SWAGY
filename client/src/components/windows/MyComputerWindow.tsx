@@ -595,7 +595,7 @@ Resolution: Perfectly blurry, just like 1998`
         name: 'System Properties',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/joystick-5.png',
-        content: `Username: Weedy.exe  
+        content: `Username: SWAGY.exe  
 Processor: Dual-core creativity  
 RAM: 16GB of unfinished ideas  
 System Type: 90s kid / Modern dev hybrid  
