@@ -3,6 +3,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import instagramIcon from '@assets/IMG_6441.png';
 import whatsappIcon from '@assets/IMG_6442.png';
 import telegramIcon from '@assets/IMG_6443.png';
+import emailjs from '@emailjs/browser';
 
 export function ContactWindow() {
   const { t } = useLanguage();
@@ -18,17 +19,36 @@ export function ContactWindow() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate sending email
-    setTimeout(() => {
-      alert('Message sent successfully! I\'ll get back to you soon.');
+    try {
+      const result = await emailjs.send(
+        import.meta.env.EMAILJS_SERVICE_ID!,
+        import.meta.env.EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          to_name: 'SWAGY',
+          to_email: 'it.mohmmed@yahoo.com',
+          subject: formData.subject,
+          message: formData.message,
+        },
+        import.meta.env.EMAILJS_PUBLIC_KEY!
+      );
+
+      if (result.status === 200) {
+        alert('تم إرسال الرسالة بنجاح! سأرد عليك قريباً.');
+        setFormData({
+          email: '',
+          name: '',
+          subject: 'Shopping website',
+          message: ''
+        });
+      }
+    } catch (error) {
+      console.error('خطأ في إرسال الإيميل:', error);
+      alert('عذراً، حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+    } finally {
       setIsSubmitting(false);
-      setFormData({
-        email: '',
-        name: '',
-        subject: 'Shopping website',
-        message: ''
-      });
-    }, 2000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
