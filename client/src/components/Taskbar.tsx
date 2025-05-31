@@ -30,7 +30,18 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-7 bg-[rgb(var(--win-gray))] border-t-2 border-[rgb(var(--win-border-light))] flex items-center px-1 z-50">
+    <div 
+      className="fixed bottom-0 left-0 right-0 h-7 bg-[rgb(var(--win-gray))] border-t-2 border-[rgb(var(--win-border-light))] flex items-center px-1 z-[9999] taskbar-safari-fix"
+      style={{
+        position: 'fixed',
+        bottom: '0px',
+        left: '0px',
+        right: '0px',
+        zIndex: 9999,
+        transform: 'translateZ(0)',
+        willChange: 'transform'
+      }}
+    >
       {/* Start Button */}
       <button
         className={`win-button px-2 py-1 text-xs font-bold flex items-center gap-1 ${showStartMenu ? 'active' : ''}`}
