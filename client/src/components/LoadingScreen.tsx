@@ -12,8 +12,9 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   // Initialize Windows 98 startup sound
   useEffect(() => {
     const audio = new Audio();
-    audio.src = '/attached_assets/Windows-98-startup-sound.wav';
+    audio.src = '/Windows-98-startup-sound.wav';
     audio.volume = 0.8;
+    audio.preload = 'auto';
     audioRef.current = audio;
 
     return () => {
@@ -25,18 +26,29 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   }, []);
 
   // Handle Start button click
-  const handleStartClick = () => {
+  const handleStartClick = async () => {
     if (!isStarted) {
       setIsStarted(true);
       
-      // Play Windows 98 startup sound
+      // Try to play Windows 98 startup sound
       if (audioRef.current) {
-        audioRef.current.play().catch(() => {
-          console.log('Audio play failed');
-        });
+        try {
+          audioRef.current.load(); // Reload the audio
+          await audioRef.current.play();
+          console.log('Audio playing successfully');
+        } catch (error) {
+          console.log('Audio play failed:', error);
+          // Try alternative audio source
+          audioRef.current.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmMcBJ2UZ9qJNwcXab3t4JJOEgVRpOLrr2EVDz1+wrn0yoM2BSCG0fDReSYGKW3f7fmDLQQKdMPF04xECBNbsdH2qVwUGDOF6/vDdS4LIW6Z79uQOgkNW7PT5oM2AhqG0OqZRwcOO';
+          try {
+            await audioRef.current.play();
+          } catch (fallbackError) {
+            console.log('Fallback audio also failed');
+          }
+        }
       }
 
-      // Start the website after a short delay for the sound to begin
+      // Start the website after a short delay
       setTimeout(() => {
         onLoadComplete();
       }, 1500);
