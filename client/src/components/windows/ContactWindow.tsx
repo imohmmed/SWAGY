@@ -35,7 +35,7 @@ export function ContactWindow() {
         to_name: 'SWAGY',
         to_email: 'it.mohmmed@yahoo.com',
         subject: formData.subject,
-        message: formData.message + (attachedFiles.length > 0 ? `\n\nالملفات المرفقة: ${attachedFiles.map(f => f.name).join(', ')}` : ''),
+        message: formData.message + (attachedFiles.length > 0 ? `\n\nAttached Files: ${attachedFiles.map(f => f.name).join(', ')}` : ''),
       };
 
       const result = await emailjs.send('service_m5gfafg', 'template_n54wl0n', templateParams);
@@ -171,10 +171,10 @@ export function ContactWindow() {
           />
         </div>
 
-        {/* عرض الملفات المرفقة */}
+        {/* Display attached files */}
         {attachedFiles.length > 0 && (
           <div className="mt-3">
-            <label className="block text-xs font-bold mb-1">الملفات المرفقة:</label>
+            <label className="block text-xs font-bold mb-1">Attached Files:</label>
             <div className="space-y-1">
               {attachedFiles.map((file, index) => (
                 <div key={index} className="flex items-center justify-between bg-[rgb(var(--win-light-gray))] p-2 text-xs">
