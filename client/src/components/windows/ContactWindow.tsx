@@ -9,7 +9,7 @@ export function ContactWindow() {
   const [formData, setFormData] = useState({
     email: '',
     name: '',
-    subject: 'General Inquiry',
+    subject: 'Shopping website',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,7 +25,7 @@ export function ContactWindow() {
       setFormData({
         email: '',
         name: '',
-        subject: 'General Inquiry',
+        subject: 'Shopping website',
         message: ''
       });
     }, 2000);
@@ -42,7 +42,7 @@ export function ContactWindow() {
     setFormData({
       email: '',
       name: '',
-      subject: 'General Inquiry',
+      subject: 'Shopping website',
       message: ''
     });
   };
@@ -88,11 +88,9 @@ export function ContactWindow() {
             onChange={handleChange}
             className="w-full p-1 win-select"
           >
-            <option value="General Inquiry">{t('generalInquiry')}</option>
-            <option value="Project Collaboration">{t('projectCollaboration')}</option>
-            <option value="Job Opportunity">{t('jobOpportunity')}</option>
-            <option value="Technical Support">{t('technicalSupport')}</option>
-            <option value="Other">{t('other')}</option>
+            <option value="Shopping website">Shopping website</option>
+            <option value="Telegram bots">Telegram bots</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         
