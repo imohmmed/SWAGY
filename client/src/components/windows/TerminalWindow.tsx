@@ -134,7 +134,7 @@ export function TerminalWindow() {
           ))}
           
           <div className="flex items-center text-xs">
-            <span>C:\SWAGY></span>
+            <span>C:\SWAGY{'>'}</span>
             <input
               type="text"
               value={currentInput}
