@@ -39,7 +39,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   };
 
   return (
-    <div className="h-full w-full desktop-pattern relative overflow-hidden">
+    <div className="h-full w-full relative overflow-hidden" style={{ background: '#008080' }}>
       {/* Desktop Icons */}
       <div className="absolute top-4 left-4 space-y-2">
         {desktopIcons.map((icon) => (
