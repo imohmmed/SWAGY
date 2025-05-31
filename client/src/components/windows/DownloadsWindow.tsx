@@ -3,51 +3,38 @@ import { useLanguage } from '../../hooks/useLanguage';
 const downloadItems = [
   {
     id: '1',
-    icon: '📄',
+    icon: 'https://win98icons.alexmeub.com/icons/png/media_player_stream_sun4.png',
     filename: 'Resume_SWAGY_2024.pdf',
-    description: 'resumeDesc',
+    description: 'My official CV — aka "how I look on paper"',
     size: '2.3 MB',
-    date: 'Nov 2024'
+    date: 'Nov 2024',
+    downloadUrl: 'https://cdn.shopify.com/s/files/1/0822/7219/0765/files/IMG_6489.jpg?v=1748692855'
   },
   {
     id: '2',
-    icon: '🗜️',
-    filename: 'Project_Assets.zip',
-    description: 'assetsDesc',
-    size: '15.7 MB',
-    date: 'Oct 2024'
-  },
-  {
-    id: '3',
-    icon: '📊',
-    filename: 'Portfolio_Presentation.pptx',
-    description: 'presentationDesc',
-    size: '8.9 MB',
-    date: 'Nov 2024'
-  },
-  {
-    id: '4',
-    icon: '🎨',
+    icon: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
     filename: 'Brand_Guidelines.pdf',
-    description: 'brandDesc',
+    description: 'Logos, colors, brand rules — basically the SWAGY style guide.',
     size: '4.2 MB',
-    date: 'Sep 2024'
+    date: 'Sep 2024',
+    downloadUrl: 'https://cdn.shopify.com/s/files/1/0822/7219/0765/files/Brand_Guidelines_SWAGY.pdf?v=1748693389'
   }
 ];
 
 const instructions = [
-  'Right-click and "Save As" for best results',
-  'All files are virus-scanned and safe',
-  'Contact me if you need different formats',
-  'Files are updated regularly'
+  'Right-click and "Save As" for smooth downloading',
+  'All files are clean and virus-free 🧼',
+  'Need a different format? Just hit me up',
+  'Updated regularly (because I actually care)'
 ];
 
 export function DownloadsWindow() {
   const { t } = useLanguage();
 
-  const handleDownload = (filename: string) => {
-    // In a real app, this would trigger the actual download
-    alert(`Downloading ${filename}...`);
+  const handleDownload = (item: any) => {
+    if (item.downloadUrl) {
+      window.open(item.downloadUrl, '_blank');
+    }
   };
 
   return (
@@ -61,17 +48,24 @@ export function DownloadsWindow() {
             className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3"
           >
             <div className="flex items-center gap-3">
-              <div className="text-2xl">{item.icon}</div>
+              <div className="w-8 h-8 flex items-center justify-center">
+                <img 
+                  src={item.icon} 
+                  alt={item.filename} 
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
               <div className="flex-1">
                 <div className="font-bold text-sm">{item.filename}</div>
-                <div className="text-xs text-gray-600">{t(item.description)}</div>
+                <div className="text-xs text-gray-600">{item.description}</div>
                 <div className="text-xs text-gray-500">
                   Size: {item.size} | Updated: {item.date}
                 </div>
               </div>
               <button
                 className="win-button px-3 py-1 text-xs"
-                onClick={() => handleDownload(item.filename)}
+                onClick={() => handleDownload(item)}
               >
                 {t('download')}
               </button>
