@@ -3,6 +3,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import moraModaaImage from '@assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg';
 import pixelSuiteImage from '@assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg';
 import crystalGiftImage from '@assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg';
+import slsCafeImage from '@assets/0E99AB1D-C087-4E31-B7C2-C8F128BA1884.jpeg';
 
 type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
 
@@ -39,6 +40,15 @@ const sampleProjects = [
     technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
     image: crystalGiftImage,
     link: 'https://crystal4gifts.com/'
+  },
+  {
+    id: '8',
+    title: 'SLS Cafe',
+    description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
+    image: slsCafeImage,
+    link: 'https://slscafe.com/'
   },
   {
     id: '4',
