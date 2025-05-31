@@ -37,7 +37,7 @@ export function BlogWindow() {
       <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] h-full p-3 overflow-auto scrollbar font-mono text-sm">
         <div className="mb-4">
           <div className="text-xs text-gray-500 mb-2">
-            ideas.notepad - Last modified: {new Date().toLocaleDateString()}
+            ideas.txt - Last modified: {new Date().toLocaleDateString()}
           </div>
           <hr className="border-gray-300 mb-4" />
         </div>
