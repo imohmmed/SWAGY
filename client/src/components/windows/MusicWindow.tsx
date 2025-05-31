@@ -352,7 +352,7 @@ export function MusicWindow() {
       </div>
       
       {/* Playlist */}
-      <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 flex-1 overflow-auto scrollbar">
+      <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 overflow-auto scrollbar" style={{ height: '200px' }}>
         <div className="text-xs font-bold mb-2">{t('playlist')}:</div>
         <div className="space-y-1 text-xs">
           {playlist.map((track, index) => (
