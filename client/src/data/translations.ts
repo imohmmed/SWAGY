@@ -15,7 +15,7 @@ export const translations: Record<string, Translation> = {
     meIcon: 'Me.txt',
     projectsIcon: 'My Projects',
     musicIcon: 'Music Player',
-    galleryIcon: 'Gallery',
+
     blogIcon: 'ideas.txt',
     downloadsIcon: 'Downloads',
     contactIcon: 'Contact Me',
@@ -26,7 +26,7 @@ export const translations: Record<string, Translation> = {
     meTitle: 'Me.txt - Notepad',
     projectsTitle: 'My Projects - Windows Explorer',
     musicTitle: 'SWAGY_playlist.m3u - Winamp',
-    galleryTitle: 'Gallery - Windows Photo Viewer',
+
     blogTitle: 'ideas.notepad - Notepad',
     downloadsTitle: 'Downloads',
     contactTitle: 'Send Email',
@@ -137,7 +137,7 @@ export const translations: Record<string, Translation> = {
     meIcon: 'Me.txt',
     projectsIcon: 'مشاريعي',
     musicIcon: 'مشغل الموسيقى',
-    galleryIcon: 'المعرض',
+
     blogIcon: 'ideas.txt',
     downloadsIcon: 'التحميلات',
     contactIcon: 'تواصل معي',
@@ -148,7 +148,7 @@ export const translations: Record<string, Translation> = {
     meTitle: 'Me.txt - المفكرة',
     projectsTitle: 'مشاريعي - مستكشف ويندوز',
     musicTitle: 'SWAGY_playlist.m3u - مشغل الموسيقى',
-    galleryTitle: 'المعرض - عارض الصور',
+
     blogTitle: 'ideas.notepad - المفكرة',
     downloadsTitle: 'التحميلات',
     contactTitle: 'إرسال إيميل',

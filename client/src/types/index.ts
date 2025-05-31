@@ -14,7 +14,6 @@ export type WindowType =
   | 'me' 
   | 'projects' 
   | 'music' 
-  | 'gallery' 
   | 'blog' 
   | 'downloads' 
   | 'contact' 

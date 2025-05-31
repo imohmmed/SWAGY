@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { MeWindow } from './windows/MeWindow';
 import { ProjectsWindow } from './windows/ProjectsWindow';
 import { MusicWindow } from './windows/MusicWindow';
-import { GalleryWindow } from './windows/GalleryWindow';
 import { BlogWindow } from './windows/BlogWindow';
 import { DownloadsWindow } from './windows/DownloadsWindow';
 import { ContactWindow } from './windows/ContactWindow';
@@ -28,7 +27,6 @@ const windowComponents: Record<WindowType, React.ComponentType> = {
   me: MeWindow,
   projects: ProjectsWindow,
   music: MusicWindow,
-  gallery: GalleryWindow,
   blog: BlogWindow,
   downloads: DownloadsWindow,
   contact: ContactWindow,
