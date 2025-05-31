@@ -21,30 +21,22 @@ export function TerminalWindow() {
   const { t } = useLanguage();
   const [output, setOutput] = useState<string[]>([]);
   const [currentInput, setCurrentInput] = useState('');
-  const [isAutoTyping, setIsAutoTyping] = useState(true);
+  const [isAutoTyping, setIsAutoTyping] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initial terminal welcome
+    // Initial terminal welcome with help already shown
     const initialOutput = [
-      t('terminalWelcome'),
-      t('terminalCopyright'),
+      'Microsoft(R) MS-DOS(R) Version 6.22',
+      '(C)Copyright Microsoft Corp 1981-1994.',
       '',
-      'C:\\SWAGY>',
+      'C:\\SWAGY>help',
+      'Available commands: about, swag, clear, music, ascii, exit, hack, matrix, love, play, open music, whoami',
       ''
     ];
     
     setOutput(initialOutput);
-    
-    // Auto-run help command once
-    const timer = setTimeout(() => {
-      autoTypeCommand('help', () => {
-        setIsAutoTyping(false);
-      });
-    }, 200);
-
-    return () => clearTimeout(timer);
-  }, []); // Remove t dependency to prevent re-runs
+  }, []);
 
   useEffect(() => {
     // Scroll to bottom when output changes
