@@ -143,10 +143,10 @@ export const translations: Record<string, Translation> = {
     recycleIcon: 'سلة المهملات',
     
     // Window Titles
+    mycomputerTitle: 'جهاز الكمبيوتر',
     meTitle: 'Me.txt - المفكرة',
     projectsTitle: 'مشاريعي - مستكشف ويندوز',
     musicTitle: 'SWAGY_playlist.m3u - مشغل الموسيقى',
-
     blogTitle: 'ideas.txt - المفكرة',
     downloadsTitle: 'التحميلات',
     contactTitle: 'إرسال إيميل',
@@ -227,8 +227,17 @@ export const translations: Record<string, Translation> = {
     // Music
     nowPlaying: 'يُشغل الآن:',
     playlist: 'قائمة التشغيل:',
+    volume: 'مستوى الصوت',
+    shuffle: 'عشوائي',
+    repeat: 'تكرار',
     
-
+    // Projects
+    projectsDescription: 'مجموعة من مشاريعي الرقمية',
+    viewProject: 'عرض المشروع',
+    technologies: 'التقنيات المستخدمة',
+    completedProjects: 'المشاريع المكتملة',
+    category: 'الفئة',
+    status: 'الحالة',
     
     // Blog
     onDesign: 'حول التصميم والإبداع',
