@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { WindowType } from '../../types';
 
 interface FileItem {
   id: string;
@@ -7,7 +8,7 @@ interface FileItem {
   icon: string;
   content?: string;
   children?: FileItem[];
-  windowType?: string; // للربط مع نوافذ سطح المكتب
+  windowType?: WindowType; // للربط مع نوافذ سطح المكتب
 }
 
 const desktopFiles: FileItem[] = [
@@ -580,7 +581,7 @@ Ready to collaborate on projects that stand out from the crowd.`
 ];
 
 interface MyComputerWindowProps {
-  onOpenWindow?: (windowType: string) => void;
+  onOpenWindow?: (windowType: WindowType) => void;
 }
 
 export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {

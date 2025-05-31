@@ -193,7 +193,11 @@ export function Window({
         className={`h-full ${isTextLarge ? 'text-lg' : ''}`} 
         style={{ height: 'calc(100% - 24px)' }}
       >
-        <WindowContent />
+        {window.type === 'mycomputer' ? (
+          <MyComputerWindow onOpenWindow={onOpenWindow} />
+        ) : (
+          <WindowContent />
+        )}
       </div>
     </div>
   );

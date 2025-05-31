@@ -174,6 +174,7 @@ function App() {
           onMinimize={() => minimizeWindow(window.id)}
           onMaximize={() => maximizeWindow(window.id)}
           onFocus={() => bringToFront(window.id)}
+          onOpenWindow={openWindow}
         />
       ))}
       
