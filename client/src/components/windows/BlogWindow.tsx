@@ -3,36 +3,36 @@ import { useLanguage } from '../../hooks/useLanguage';
 const blogEntries = [
   {
     id: '1',
-    title: 'لماذا ما زلت أصمم كأنني في عام 1998',
-    date: 'ديسمبر 2024',
-    content: 'التصميم الحديث رائع، لكن لا شيء يضاهي زر البكسل الضخم والظل الذي يمكنك أن تتعثر عليه. اتصل بها حنينًا... أو ذوقًا'
+    title: 'Why I Still Design Like It\'s 1998',
+    date: 'December 2024',
+    content: 'Modern design is cool, but nothing beats a chunky pixel button with a shadow you can trip over. Call it nostalgia... or taste.'
   },
   {
     id: '2',
-    title: 'الساعة الثانية صباحًا: أنا ضد فاصلة منقوطة غبية',
-    date: 'نوفمبر 2024',
-    content: 'الفائز: الفاصلة المنقوطة.\nالدرس: احترم الفاصلة المنقوطة دائمًا.'
+    title: '2 AM: Me vs One Stupid Semicolon',
+    date: 'November 2024',
+    content: 'Winner: The semicolon.\nLesson: Always respect the semicolon.'
   },
   {
     id: '3',
-    title: 'من قال أن المطورين لا يمكن أن يكونوا أنيقين؟',
-    date: 'أكتوبر 2024',
-    content: 'أقوم بتصحيح الأخطاء في AirPods Max وبناطيل واسعة. إذا كانت المظاهر نظيفة، فالكود أنظف.'
+    title: 'Who Said Developers Can\'t Be Stylish?',
+    date: 'October 2024',
+    content: 'I debug in AirPods Max and baggy pants. If the looks are clean, the code is cleaner.'
   },
   {
     id: '4',
-    title: 'واجهات المستخدم القديمة > صداع حديث',
-    date: 'سبتمبر 2024',
-    content: 'علمني ويندوز 98 شيئًا واحدًا:\nانقر، اسحب، اشعر بالسعادة.\nالتطبيقات الحديثة؟\nانقر، انتظر، تعطل.'
+    title: 'Retro UIs > Modern Headaches',
+    date: 'September 2024',
+    content: 'Windows 98 taught me one thing:\nClick, drag, feel happy.\nModern apps?\nClick, wait, crash.'
   }
 ];
 
 const showerThoughts = [
-  'إذا لم تتمكن من إصلاح الخطأ، فعلى الأقل أصلح مظهرك.',
-  'حذائي؟ نظيف جدًا للمشي',
-  'القهوة ≠ الإبداع، لكن الموسيقى = العبقرية.',
-  'لماذا هو دائمًا "localhost:3000" وليس أبدًا "localhost: كيف حالك؟"',
-  'قاعدة الموضة رقم 1: إذا كان يربك أمك، فأنت تفعل الصواب.'
+  'If you can\'t fix the bug, at least fix your look.',
+  'My shoes? Too clean to walk.',
+  'Coffee ≠ creativity, but music = genius.',
+  'Why is it always "localhost:3000" and never "localhost: how are you?"',
+  'Fashion rule #1: If it confuses your mom, you\'re doing it right.'
 ];
 
 export function BlogWindow() {
@@ -43,12 +43,12 @@ export function BlogWindow() {
       <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] h-full p-3 overflow-auto scrollbar font-mono text-sm">
         <div className="mb-4">
           <div className="text-xs text-gray-500 mb-2">
-            ideas.txt - آخر تعديل: {new Date().toLocaleDateString('ar')}
+            ideas.txt - Last modified: {new Date().toLocaleDateString('en-US')}
           </div>
           <hr className="border-gray-300 mb-4" />
         </div>
         
-        <div className="space-y-4" dir="rtl">
+        <div className="space-y-4" dir="ltr">
           {blogEntries.map((entry) => (
             <div key={entry.id} className="blog-entry">
               <div className="font-bold mb-1">💭 {entry.title}</div>
