@@ -35,9 +35,26 @@ function App() {
       setIsMobile(window.innerWidth <= 768);
     };
     
+    // Fix for iOS Safari viewport
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+    
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    setVH();
+    
+    window.addEventListener('resize', () => {
+      checkMobile();
+      setVH();
+    });
+    
+    window.addEventListener('orientationchange', setVH);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('orientationchange', setVH);
+    };
   }, []);
 
   const handleIconDoubleClick = (type: WindowType) => {
@@ -169,7 +186,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen overflow-hidden" style={{ height: '100dvh' }}>
+    <div className="h-screen overflow-hidden" style={{ height: 'calc(var(--vh, 1vh) * 100)' }}>
       {/* Desktop */}
       <Desktop onIconDoubleClick={handleIconDoubleClick} />
       

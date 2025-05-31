@@ -4,25 +4,35 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
 
-/* Safari iOS viewport fix */
-html, body {
-  height: 100vh;
-  height: 100dvh;
+/* iOS Safari viewport fix */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
   overflow: hidden;
   position: fixed;
   width: 100%;
+  top: 0;
+  left: 0;
 }
 
 #root {
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   overflow: hidden;
 }
 
-/* Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-  html, body, #root {
-    height: -webkit-fill-available;
+/* Force viewport units for mobile browsers */
+@media screen and (max-width: 768px) {
+  body {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  
+  #root {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
   }
 }
 
