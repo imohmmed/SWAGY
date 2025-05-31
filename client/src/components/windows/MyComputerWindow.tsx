@@ -584,7 +584,7 @@ Ready to collaborate on projects that stand out from the crowd.`
         id: 'display',
         name: 'Display Properties',
         type: 'file',
-        icon: 'https://win98icons.alexmeub.com/icons/png/monitor-3.png',
+        icon: 'https://win98icons.alexmeub.com/icons/png/standby_monitor_moon-4.png',
         content: `Theme: Retro Pixel Blue  
 Wallpaper: Classic nostalgia activated  
 Font: System default — because we keep it OG  
@@ -594,8 +594,12 @@ Resolution: Perfectly blurry, just like 1998`
         id: 'system',
         name: 'System Properties',
         type: 'file',
-        icon: 'https://win98icons.alexmeub.com/icons/png/computer_3-2.png',
-        content: 'System information and performance settings'
+        icon: 'https://win98icons.alexmeub.com/icons/png/joystick-5.png',
+        content: `Username: Weedy.exe  
+Processor: Dual-core creativity  
+RAM: 16GB of unfinished ideas  
+System Type: 90s kid / Modern dev hybrid  
+Uptime: Running since the dial-up era`
       }
     ]
   },
