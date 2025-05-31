@@ -29,11 +29,11 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
         'System dripped ✓'
       ];
 
-      // Display boot messages progressively
+      // Display boot messages progressively - start immediately
       messages.forEach((message, index) => {
         setTimeout(() => {
           setBootMessages(prev => [...prev, message]);
-        }, index * 1200); // 1.2 seconds between each message
+        }, index * 1500); // 1.5 seconds between each message
       });
 
       // Start fade out after 6.25 seconds (75% of 9 seconds = 6.75 seconds in splash)
