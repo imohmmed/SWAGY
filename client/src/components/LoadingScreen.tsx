@@ -3,10 +3,9 @@ import swalyLogo from '@assets/IMG_6470.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
-  onSoundPlay: (audio: HTMLAudioElement) => void;
 }
 
-export function LoadingScreen({ onLoadComplete, onSoundPlay }: LoadingScreenProps) {
+export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -28,30 +27,18 @@ export function LoadingScreen({ onLoadComplete, onSoundPlay }: LoadingScreenProp
   }, []);
 
   // Handle Start button click
-  const handleStartClick = async () => {
+  const handleStartClick = () => {
     if (!isStarted) {
       setIsStarted(true);
-      
-      // Pass the audio to parent component to continue playing
-      if (audioRef.current) {
-        try {
-          audioRef.current.load();
-          await audioRef.current.play();
-          console.log('Audio playing successfully');
-          onSoundPlay(audioRef.current);
-        } catch (error) {
-          console.log('Audio play failed:', error);
-        }
-      }
 
-      // Start fade out after 3.5 seconds, then complete after sound finishes
+      // Start fade out after 1.5 seconds, then complete
       setTimeout(() => {
         setIsFadingOut(true);
-      }, 3500);
+      }, 1500);
       
       setTimeout(() => {
         onLoadComplete();
-      }, 4500);
+      }, 2500);
     }
   };
 

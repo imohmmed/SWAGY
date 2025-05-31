@@ -125,11 +125,19 @@ function App() {
 
   const handleLoadComplete = () => {
     setShowLoadingScreen(false);
-  };
-
-  const handleStartupSoundPlay = (audio: HTMLAudioElement) => {
+    
+    // Play Windows 98 startup sound when desktop loads
+    const audio = new Audio('/Windows-98-startup-sound.wav');
+    audio.volume = 0.8;
     setStartupAudio(audio);
-    // Stop the audio after 6 seconds to match Windows 98 startup sound length
+    
+    audio.play().then(() => {
+      console.log('Desktop startup sound playing');
+    }).catch((error) => {
+      console.log('Desktop audio failed:', error);
+    });
+    
+    // Stop the audio after the sound completes
     setTimeout(() => {
       if (audio) {
         audio.pause();
@@ -140,7 +148,7 @@ function App() {
   };
 
   if (showLoadingScreen) {
-    return <LoadingScreen onLoadComplete={handleLoadComplete} onSoundPlay={handleStartupSoundPlay} />;
+    return <LoadingScreen onLoadComplete={handleLoadComplete} />;
   }
 
   return (
