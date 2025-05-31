@@ -585,7 +585,10 @@ Ready to collaborate on projects that stand out from the crowd.`
         name: 'Display Properties',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/monitor-3.png',
-        content: 'System display settings and screen resolution configuration'
+        content: `Theme: Retro Pixel Blue  
+Wallpaper: Classic nostalgia activated  
+Font: System default — because we keep it OG  
+Resolution: Perfectly blurry, just like 1998`
       },
       {
         id: 'system',
