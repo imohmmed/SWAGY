@@ -7,6 +7,7 @@ interface LoadingScreenProps {
 
 export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize Windows 98 startup sound
@@ -48,15 +49,21 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
         }
       }
 
-      // Start the website after a short delay
+      // Start fade out after 3.5 seconds, then complete after sound finishes
+      setTimeout(() => {
+        setIsFadingOut(true);
+      }, 3500);
+      
       setTimeout(() => {
         onLoadComplete();
-      }, 1500);
+      }, 4500);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in">
+    <div className={`fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-1000 ${
+      isFadingOut ? 'opacity-0' : 'opacity-100'
+    }`}>
       <div className="text-center">
         <div className="mb-8 animate-pulse-slow">
           <img 
