@@ -18,7 +18,7 @@ export const translations: Record<string, Translation> = {
     galleryIcon: 'Gallery',
     blogIcon: 'ideas.notepad',
     downloadsIcon: 'Downloads',
-    contactIcon: 'Send Email',
+    contactIcon: 'Contact Me',
     terminalIcon: 'Terminal',
     recycleIcon: 'Recycle Bin',
     
@@ -136,7 +136,7 @@ export const translations: Record<string, Translation> = {
     galleryIcon: 'المعرض',
     blogIcon: 'ideas.notepad',
     downloadsIcon: 'التحميلات',
-    contactIcon: 'إرسال إيميل',
+    contactIcon: 'تواصل معي',
     terminalIcon: 'الطرفية',
     recycleIcon: 'سلة المهملات',
     
