@@ -143,7 +143,7 @@ export function MusicWindow() {
   };
 
   return (
-    <div className="p-4 h-full">
+    <div className="p-4 h-full flex flex-col">
       {/* Hidden Audio Element */}
       <audio 
         ref={audioRef} 
@@ -191,7 +191,7 @@ export function MusicWindow() {
       </div>
       
       {/* Collections */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
+      <div className="grid grid-cols-2 gap-2 mb-2">
         <div className="bg-[rgb(var(--win-button-face))] border-2 border-[rgb(var(--win-border-dark))] p-2 text-center">
           <div className="font-bold text-xs">Kanye West</div>
           <div className="text-xs">{playlist.filter(t => t.collection === 'Kanye West').length} tracks</div>
@@ -203,7 +203,7 @@ export function MusicWindow() {
       </div>
       
       {/* Playlist */}
-      <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 h-32 overflow-auto scrollbar">
+      <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 flex-1 overflow-auto scrollbar">
         <div className="text-xs font-bold mb-2">{t('playlist')}:</div>
         <div className="space-y-1 text-xs">
           {playlist.map((track, index) => (
