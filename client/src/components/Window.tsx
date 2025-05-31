@@ -12,6 +12,7 @@ import { DownloadsWindow } from './windows/DownloadsWindow';
 import { ContactWindow } from './windows/ContactWindow';
 import { TerminalWindow } from './windows/TerminalWindow';
 import { RecycleWindow } from './windows/RecycleWindow';
+import { MyComputerWindow } from './windows/MyComputerWindow';
 
 interface WindowProps {
   window: WindowState;
@@ -32,6 +33,7 @@ const windowComponents: Record<WindowType, React.ComponentType> = {
   contact: ContactWindow,
   terminal: TerminalWindow,
   recycle: RecycleWindow,
+  mycomputer: MyComputerWindow,
 };
 
 export function Window({ 

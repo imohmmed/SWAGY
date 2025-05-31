@@ -18,7 +18,8 @@ export type WindowType =
   | 'downloads' 
   | 'contact' 
   | 'terminal' 
-  | 'recycle';
+  | 'recycle'
+  | 'mycomputer';
 
 export interface DesktopIcon {
   id: string;
