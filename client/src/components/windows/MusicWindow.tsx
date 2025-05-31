@@ -160,9 +160,16 @@ export function MusicWindow() {
       // Create the audio element only once
       globalAudioState.audio = audioRef.current;
       globalAudioState.isInitialized = true;
-    } else if (globalAudioState.audio && audioRef.current !== globalAudioState.audio) {
+      
+      // Load the correct track on initialization
+      audioRef.current.src = playlist[globalAudioState.currentTrackIndex].url;
+    } else if (globalAudioState.audio && audioRef.current) {
       // Use the existing global audio element
       audioRef.current = globalAudioState.audio;
+      
+      // Sync state when reopening window
+      setCurrentTrackIndex(globalAudioState.currentTrackIndex);
+      setIsPlaying(globalAudioState.isPlaying);
     }
   }, []);
 
@@ -218,10 +225,16 @@ export function MusicWindow() {
 
     if (isPlaying) {
       audio.pause();
+      setIsPlaying(false);
+      globalAudioState.isPlaying = false;
     } else {
-      audio.play();
+      audio.play().then(() => {
+        setIsPlaying(true);
+        globalAudioState.isPlaying = true;
+      }).catch(error => {
+        console.log('Playback failed:', error);
+      });
     }
-    setIsPlaying(!isPlaying);
   };
 
   const nextTrack = () => {
