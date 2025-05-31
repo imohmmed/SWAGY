@@ -22,6 +22,7 @@ interface WindowProps {
   onMinimize: () => void;
   onMaximize: () => void;
   onFocus: () => void;
+  onOpenWindow?: (windowType: WindowType) => void;
 }
 
 const windowComponents: Record<WindowType, React.ComponentType> = {
@@ -43,7 +44,8 @@ export function Window({
   onClose, 
   onMinimize, 
   onMaximize, 
-  onFocus 
+  onFocus,
+  onOpenWindow 
 }: WindowProps) {
   const { t } = useLanguage();
   const { dragState, startDrag, updateDrag, endDrag } = useDrag();
