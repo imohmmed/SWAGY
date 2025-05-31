@@ -55,9 +55,9 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
     }`}>
       {/* Boot messages on the left side */}
       {showBootMessages && (
-        <div className="absolute top-8 left-8 text-green-400 text-sm font-mono">
+        <div className="absolute top-8 left-8 text-green-400 text-xs font-mono leading-tight">
           {bootMessages.map((message, index) => (
-            <div key={index} className="mb-1">
+            <div key={index} className="mb-0.5">
               {message}
             </div>
           ))}
@@ -91,7 +91,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
 
       {/* Bottom copyright section - left aligned */}
       <div className="absolute bottom-8 left-8">
-        <div className="text-gray-400 text-sm font-mono">
+        <div className="text-gray-400 text-xs font-mono leading-tight">
           <div>Microsoft Windows 98 [Version 4.10.1998]</div>
           <div>Copyright Microsoft Corp 1981-1998</div>
         </div>
