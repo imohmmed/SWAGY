@@ -13,7 +13,14 @@ export function RecycleWindow() {
 
   return (
     <div className="p-4 h-full text-center overflow-auto scrollbar">
-      <div className="text-6xl mb-4">🗑️</div>
+      <div className="mb-4">
+        <img 
+          src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" 
+          alt="Recycle Bin" 
+          className="w-16 h-16 mx-auto mb-2"
+          draggable={false}
+        />
+      </div>
       <div className="text-lg font-bold mb-4">{t('recycleTitle')}</div>
       
       <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-4 text-sm">
@@ -40,11 +47,6 @@ export function RecycleWindow() {
             {t('properties')}
           </button>
         </div>
-      </div>
-      
-      <div className="mt-4 text-xs text-gray-600 space-y-1">
-        <div>{t('recycleTip1')}</div>
-        <div>{t('recycleTip2')}</div>
       </div>
     </div>
   );
