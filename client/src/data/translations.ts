@@ -12,10 +12,10 @@ export const translations: Record<string, Translation> = {
     maximize: 'Maximize',
     
     // Desktop Icons
+    myComputerIcon: 'My Computer',
     meIcon: 'Me.txt',
     projectsIcon: 'My Projects',
     musicIcon: 'Music Player',
-
     blogIcon: 'ideas.txt',
     downloadsIcon: 'Downloads',
     contactIcon: 'Contact Me',
@@ -23,10 +23,10 @@ export const translations: Record<string, Translation> = {
     recycleIcon: 'Recycle Bin',
     
     // Window Titles
+    mycomputerTitle: 'My Computer',
     meTitle: 'Me.txt - Notepad',
     projectsTitle: 'My Projects - Windows Explorer',
     musicTitle: 'SWAGY_playlist.m3u - Winamp',
-
     blogTitle: 'ideas.notepad - Notepad',
     downloadsTitle: 'Downloads',
     contactTitle: 'Send Email',
