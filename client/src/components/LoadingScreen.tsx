@@ -74,17 +74,18 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
               className="boot-logo mx-auto"
             />
           </div>
-          <div className="text-white text-2xl font-bold mb-8">
-            Welcome to SWAGY's Windows 98
-          </div>
-          
           {!isStarted && (
-            <button
-              onClick={handleStartClick}
-              className="win-button px-8 py-3 text-black text-lg font-bold hover:bg-gray-300 transition-colors"
-            >
-              Start
-            </button>
+            <>
+              <div className="text-white text-2xl font-bold mb-8">
+                Welcome to SWAGY's Windows 98
+              </div>
+              <button
+                onClick={handleStartClick}
+                className="win-button px-8 py-3 text-black text-lg font-bold hover:bg-gray-300 transition-colors"
+              >
+                Start
+              </button>
+            </>
           )}
         </div>
       </div>
