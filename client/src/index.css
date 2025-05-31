@@ -65,7 +65,7 @@
 
   body {
     @apply bg-accent text-foreground;
-    font-family: 'MS Sans Serif', sans-serif;
+    font-family: 'Microsoft Sans Serif', sans-serif;
     font-size: 11px;
     overflow: hidden;
     user-select: none;
