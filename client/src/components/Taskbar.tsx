@@ -36,7 +36,12 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
         className={`win-button px-2 py-1 text-xs font-bold flex items-center gap-1 ${showStartMenu ? 'active' : ''}`}
         onClick={onStartClick}
       >
-        <span className="text-red-600 font-bold">⊞</span>
+        <img 
+          src="https://win98icons.alexmeub.com/icons/png/windows-0.png" 
+          alt="Windows" 
+          className="w-4 h-4"
+          draggable={false}
+        />
         <span>{t('start')}</span>
       </button>
       
