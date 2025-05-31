@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import moraModaaImage from '@assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg';
+import pixelSuiteImage from '@assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg';
+import crystalGiftImage from '@assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg';
 
 type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
 
@@ -16,7 +19,7 @@ const sampleProjects = [
     description: 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'Liquid', 'CSS'],
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=480&h=270',
+    image: moraModaaImage,
     link: 'https://mora1.com/'
   },
   {
@@ -25,7 +28,7 @@ const sampleProjects = [
     description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=480&h=270',
+    image: pixelSuiteImage,
     link: 'https://pixelsuite.vip/'
   },
   {
@@ -34,7 +37,7 @@ const sampleProjects = [
     description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
-    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=480&h=270',
+    image: crystalGiftImage,
     link: 'https://crystal4gifts.com/'
   },
   {
