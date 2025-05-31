@@ -38,9 +38,10 @@ export function TerminalWindow() {
     
     // Auto-run help command once
     const timer = setTimeout(() => {
-      executeCommand('help');
-      setIsAutoTyping(false);
-    }, 100);
+      autoTypeCommand('help', () => {
+        setIsAutoTyping(false);
+      });
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []); // Remove t dependency to prevent re-runs
@@ -60,9 +61,11 @@ export function TerminalWindow() {
         setCurrentInput(typedCommand);
       } else {
         clearInterval(typeInterval);
-        executeCommand(command);
-        setCurrentInput('');
-        if (callback) callback();
+        setTimeout(() => {
+          executeCommand(command);
+          setCurrentInput('');
+          if (callback) callback();
+        }, 300); // Reduced delay
       }
     }, 80); // Faster typing
   };
