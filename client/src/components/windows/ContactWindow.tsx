@@ -49,7 +49,10 @@ export function ContactWindow() {
 
   return (
     <div className="p-4 h-full overflow-auto scrollbar">
-      <div className="text-sm font-bold mb-4">📧 Send Email to SWAGY</div>
+      <div className="text-sm font-bold mb-4 flex items-center gap-2">
+        <img src="https://win98icons.alexmeub.com/icons/png/modem-3.png" alt="" className="w-4 h-4" draggable={false} />
+        Contact Me
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-3">
 
