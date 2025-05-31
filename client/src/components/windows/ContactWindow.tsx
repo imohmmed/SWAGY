@@ -11,10 +11,7 @@ export function ContactWindow() {
 
   // Initialize EmailJS
   useEffect(() => {
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || import.meta.env.EMAILJS_PUBLIC_KEY;
-    if (publicKey) {
-      emailjs.init(publicKey);
-    }
+    emailjs.init('USOYvdKavaQzL_MWg');
   }, []);
 
   const [formData, setFormData] = useState({
@@ -41,10 +38,7 @@ export function ContactWindow() {
         message: formData.message + (attachedFiles.length > 0 ? `\n\nالملفات المرفقة: ${attachedFiles.map(f => f.name).join(', ')}` : ''),
       };
 
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || import.meta.env.EMAILJS_SERVICE_ID;
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || import.meta.env.EMAILJS_TEMPLATE_ID;
-
-      const result = await emailjs.send(serviceId, templateId, templateParams);
+      const result = await emailjs.send('service_m5gfafg', 'template_n54wl0n', templateParams);
 
       if (result.status === 200) {
         alert('تم إرسال الرسالة بنجاح! سأرد عليك قريباً.');
