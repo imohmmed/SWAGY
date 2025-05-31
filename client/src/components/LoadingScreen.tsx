@@ -75,7 +75,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
           </div>
           {!isStarted && (
             <>
-              <div className="text-white text-2xl font-bold mb-8">
+              <div className="text-white text-xl font-bold mb-8">
                 Welcome to the drip OS — SWAGY Edition
               </div>
               <button
