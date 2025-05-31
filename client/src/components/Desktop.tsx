@@ -11,7 +11,7 @@ const desktopIcons: DesktopIcon[] = [
   { id: 'projects', type: 'projects', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'projectsIcon', position: { x: 16, y: 96 } },
   { id: 'music', type: 'music', icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png', label: 'musicIcon', position: { x: 16, y: 176 } },
   { id: 'gallery', type: 'gallery', icon: 'https://win98icons.alexmeub.com/icons/png/camera-0.png', label: 'galleryIcon', position: { x: 16, y: 256 } },
-  { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'blogIcon', position: { x: 16, y: 336 } },
+  { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png', label: 'blogIcon', position: { x: 16, y: 336 } },
   { id: 'downloads', type: 'downloads', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'downloadsIcon', position: { x: 16, y: 416 } },
   { id: 'contact', type: 'contact', icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png', label: 'contactIcon', position: { x: 16, y: 496 } },
   { id: 'terminal', type: 'terminal', icon: 'https://win98icons.alexmeub.com/icons/png/console_prompt-0.png', label: 'terminalIcon', position: { x: 16, y: 576 } },
