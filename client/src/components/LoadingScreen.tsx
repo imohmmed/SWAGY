@@ -12,8 +12,8 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   // Initialize Windows 98 startup sound
   useEffect(() => {
     const audio = new Audio();
-    audio.src = 'https://www.myinstants.com/media/sounds/windows-98-startup.mp3';
-    audio.volume = 0.7;
+    audio.src = '/attached_assets/Windows-98-startup-sound.wav';
+    audio.volume = 0.8;
     audioRef.current = audio;
 
     return () => {
