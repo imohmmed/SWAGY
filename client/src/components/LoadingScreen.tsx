@@ -23,11 +23,10 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
 
       // Boot sequence messages
       const messages = [
-        'Starting MS-DOS...',
-        'Loading device drivers...',
-        'Initializing Windows 98...',
-        'Loading desktop...',
-        'System ready.'
+        'Booting up SWAGY OS...',
+        'Syncing style modules...',
+        'Loading vintage interface...',
+        'System dripped ✓'
       ];
 
       // Display boot messages progressively
