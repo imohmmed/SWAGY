@@ -3,7 +3,7 @@ import { Language } from '../types';
 import { translations } from '../data/translations';
 
 export function useLanguage() {
-  const [language, setLanguage] = useState<Language>('ar');
+  const [language, setLanguage] = useState<Language>('en');
 
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'ar' : 'en';
@@ -29,9 +29,9 @@ export function useLanguage() {
       document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
       document.documentElement.lang = savedLang;
     } else {
-      // Default to Arabic
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = 'ar';
+      // Default to English
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
     }
   }, []);
 

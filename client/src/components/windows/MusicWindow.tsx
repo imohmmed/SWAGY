@@ -284,7 +284,7 @@ export function MusicWindow() {
   };
 
   return (
-    <div className="p-4 h-full flex flex-col">
+    <div className="p-4 h-full flex flex-col max-h-[calc(100vh-120px)] overflow-hidden">
       {/* Hidden Audio Element */}
       <audio 
         ref={audioRef} 
