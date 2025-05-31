@@ -27,6 +27,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
   const [startupAudio, setStartupAudio] = useState<HTMLAudioElement | null>(null);
+  const [audioStarted, setAudioStarted] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -125,19 +126,32 @@ function App() {
 
   const handleLoadComplete = () => {
     setShowLoadingScreen(false);
-    // Sound will continue playing from splash screen for remaining 3 seconds
+    // Sound continues playing seamlessly in desktop
   };
 
-  const handleSoundStart = (audio: HTMLAudioElement) => {
-    setStartupAudio(audio);
-    // Stop the audio after full 7 seconds (4 in splash + 3 in desktop)
-    setTimeout(() => {
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-      setStartupAudio(null);
-    }, 7000);
+  const handleSoundStart = () => {
+    if (!audioStarted) {
+      setAudioStarted(true);
+      // Create and manage audio at App level to prevent interruption
+      const audio = new Audio('/Windows-98-startup-sound.wav');
+      audio.volume = 0.8;
+      setStartupAudio(audio);
+      
+      audio.play().then(() => {
+        console.log('Continuous startup sound playing');
+      }).catch((error) => {
+        console.log('Audio failed:', error);
+      });
+
+      // Stop after 7 seconds total
+      setTimeout(() => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        setStartupAudio(null);
+      }, 7000);
+    }
   };
 
   if (showLoadingScreen) {

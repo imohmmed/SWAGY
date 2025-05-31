@@ -3,45 +3,20 @@ import swalyLogo from '@assets/IMG_6470.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
-  onSoundStart: (audio: HTMLAudioElement) => void;
+  onSoundStart: () => void;
 }
 
 export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Initialize Windows 98 startup sound
-  useEffect(() => {
-    const audio = new Audio();
-    audio.src = '/Windows-98-startup-sound.wav';
-    audio.volume = 0.8;
-    audio.preload = 'auto';
-    audioRef.current = audio;
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
 
   // Handle Start button click
-  const handleStartClick = async () => {
+  const handleStartClick = () => {
     if (!isStarted) {
       setIsStarted(true);
 
-      // Start playing Windows 98 startup sound
-      if (audioRef.current) {
-        try {
-          await audioRef.current.play();
-          console.log('Splash screen audio started');
-          onSoundStart(audioRef.current);
-        } catch (error) {
-          console.log('Audio play failed:', error);
-        }
-      }
+      // Start the continuous audio from App level
+      onSoundStart();
 
       // Start fade out after 3.5 seconds (first 4 seconds of sound in splash)
       setTimeout(() => {
