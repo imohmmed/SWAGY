@@ -10,6 +10,15 @@ let globalAudioState = {
   isInitialized: false
 };
 
+// Global function to stop all music when window is closed
+export const stopGlobalAudio = () => {
+  if (globalAudioState.audio) {
+    globalAudioState.audio.pause();
+    globalAudioState.audio.currentTime = 0;
+    globalAudioState.isPlaying = false;
+  }
+};
+
 const playlist = [
   // Kanye West Collection
   { 
