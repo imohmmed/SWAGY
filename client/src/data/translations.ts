@@ -48,20 +48,20 @@ export const translations: Record<string, Translation> = {
     
     // About content
     aboutMe: 'About Me:',
-    aboutDescription: 'Welcome to my digital space! I\'m a passionate developer and designer who loves creating unique digital experiences.',
+    aboutDescription: 'Hey — I\'m a designer & developer who likes building weird (but cool) stuff.\n\nI mix code, design, and retro vibes (yes, Windows 98 style) to make digital things that feel fun.',
     specializedIn: 'Specialized in:',
     webDev: 'Web Development',
     uiuxDesign: 'UI/UX Design',
     creativeCoding: 'Creative Coding',
     retroComputing: 'Retro Computing',
-    currentlyBuilding: 'Currently building amazing projects and exploring new technologies!',
+    currentlyBuilding: 'Currently working on projects that confuse people… then impress them.',
     
     // Quick stats
     quickStats: 'Quick Stats:',
-    projects: 'Projects: 25+',
-    experience: 'Experience: 5+ years',
+    projects: 'Projects: 8+',
+    experience: 'Experience: 3+ years',
     ideas: 'Ideas: Unlimited',
-    coffee: 'Coffee: Daily',
+    music: 'Music: Daily',
     
     // Contact
     contactDescription: 'Other Ways to Reach Me:',
@@ -166,20 +166,20 @@ export const translations: Record<string, Translation> = {
     
     // About content
     aboutMe: 'نبذة عني:',
-    aboutDescription: 'مرحباً بك في مساحتي الرقمية! أنا مطور ومصمم شغوف أحب إنشاء تجارب رقمية فريدة.',
+    aboutDescription: 'مرحباً — أنا مصمم ومطور أحب بناء أشياء غريبة (لكنها رائعة).\n\nأمزج الكود والتصميم والذوق القديم (نعم، نمط Windows 98) لصنع أشياء رقمية ممتعة.',
     specializedIn: 'متخصص في:',
     webDev: 'تطوير الويب',
     uiuxDesign: 'تصميم واجهة المستخدم وتجربة المستخدم',
     creativeCoding: 'البرمجة الإبداعية',
     retroComputing: 'الحوسبة القديمة',
-    currentlyBuilding: 'أقوم حالياً ببناء مشاريع مذهلة واستكشاف تقنيات جديدة!',
+    currentlyBuilding: 'أعمل حالياً على مشاريع تربك الناس... ثم تثير إعجابهم.',
     
     // Quick stats
     quickStats: 'إحصائيات سريعة:',
-    projects: 'المشاريع: +25',
-    experience: 'الخبرة: +5 سنوات',
+    projects: 'المشاريع: +8',
+    experience: 'الخبرة: +3 سنوات',
     ideas: 'الأفكار: لا محدود',
-    coffee: 'القهوة: يومية',
+    music: 'الموسيقى: يومية',
     
     // Contact
     contactDescription: 'طرق أخرى للتواصل معي:',

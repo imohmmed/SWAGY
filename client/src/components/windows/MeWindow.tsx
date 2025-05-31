@@ -8,14 +8,14 @@ export function MeWindow() {
       <div className="space-y-4">
         <div className="text-center mb-6">
           {/* Profile image */}
-          <div
-            className="w-24 h-24 mx-auto mb-4 border-2 border-[rgb(var(--win-border-dark))]"
-            style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          />
+          <div className="w-24 h-24 mx-auto mb-4 border-2 border-[rgb(var(--win-border-dark))] bg-white p-1" style={{ boxShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
+            <img 
+              src="/attached_assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.png" 
+              alt="SWAGY Profile" 
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
+          </div>
           <h2 className="text-lg font-bold mb-2">SWAGY</h2>
           <p className="text-sm">Creative Developer & Designer</p>
         </div>
@@ -39,7 +39,7 @@ export function MeWindow() {
             <div>🚀 {t('projects')}</div>
             <div>⭐ {t('experience')}</div>
             <div>💡 {t('ideas')}</div>
-            <div>☕ {t('coffee')}</div>
+            <div>🎵 {t('music')}</div>
           </div>
         </div>
       </div>
