@@ -62,6 +62,18 @@ export function StartMenu({ isVisible, onClose, onMenuAction }: StartMenuProps) 
             />
             {t('run')}
           </div>
+          <div
+            className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
+            onClick={() => handleItemClick('settings')}
+          >
+            <img 
+              src="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png" 
+              alt="Settings" 
+              className="w-4 h-4"
+              draggable={false}
+            />
+            {t('settings')}
+          </div>
           <hr className="my-1 border-[rgb(var(--win-border-dark))]" />
           <div
             className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
