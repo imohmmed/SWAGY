@@ -12,22 +12,33 @@ const projectCategories = [
 const sampleProjects = [
   {
     id: '1',
-    title: 'Online Store Platform',
-    description: 'Complete e-commerce solution with cart and payment',
+    title: 'Mora Modaa',
+    description: 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
     category: 'shopping' as ProjectCategory,
-    technologies: ['React', 'Node.js', 'Stripe'],
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200'
+    technologies: ['Shopify', 'Liquid', 'CSS'],
+    image: '/attached_assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg',
+    link: 'https://mora1.com/'
   },
   {
     id: '2',
-    title: 'Fashion Boutique',
-    description: 'Elegant online fashion store',
+    title: 'Pixel Suite',
+    description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
     category: 'shopping' as ProjectCategory,
-    technologies: ['Vue.js', 'PHP', 'MySQL'],
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=200'
+    technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
+    image: '/attached_assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg',
+    link: 'https://pixelsuite.vip/'
   },
   {
     id: '3',
+    title: 'Crystal for Gift',
+    description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
+    image: '/attached_assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg',
+    link: 'https://crystal4gifts.com/'
+  },
+  {
+    id: '4',
     title: 'Portfolio Website',
     description: 'Personal showcase website',
     category: 'other-websites' as ProjectCategory,
@@ -35,7 +46,7 @@ const sampleProjects = [
     image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=300&h=200'
   },
   {
-    id: '4',
+    id: '5',
     title: 'Business Landing Page',
     description: 'Corporate website with modern design',
     category: 'other-websites' as ProjectCategory,
@@ -43,7 +54,7 @@ const sampleProjects = [
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200'
   },
   {
-    id: '5',
+    id: '6',
     title: 'Customer Support Bot',
     description: 'Automated customer service assistant',
     category: 'telegram-bots' as ProjectCategory,
@@ -51,7 +62,7 @@ const sampleProjects = [
     image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=300&h=200'
   },
   {
-    id: '6',
+    id: '7',
     title: 'News Aggregator Bot',
     description: 'Daily news updates and summaries',
     category: 'telegram-bots' as ProjectCategory,
@@ -104,6 +115,7 @@ export function ProjectsWindow() {
                 <div
                   key={project.id}
                   className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
+                  onClick={() => project.link && window.open(project.link, '_blank')}
                 >
                   <div
                     className="w-full h-20 bg-gray-300 mb-2"
@@ -115,7 +127,12 @@ export function ProjectsWindow() {
                   />
                   <div className="text-xs font-bold">{project.title}</div>
                   <div className="text-xs text-gray-600 mb-1">{project.description}</div>
-                  <div className="text-xs text-gray-500">{project.technologies.join(', ')}</div>
+                  <div className="text-xs text-gray-500 mb-1">{project.technologies.join(', ')}</div>
+                  {project.link && (
+                    <div className="text-xs text-blue-600 hover:underline">
+                      Visit Website →
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
