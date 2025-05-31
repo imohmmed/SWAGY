@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import instagramIcon from '@assets/IMG_6441.png';
 import whatsappIcon from '@assets/IMG_6442.png';
@@ -7,6 +7,11 @@ import emailjs from '@emailjs/browser';
 
 export function ContactWindow() {
   const { t } = useLanguage();
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.EMAILJS_PUBLIC_KEY!);
+  }, []);
   const [formData, setFormData] = useState({
     email: '',
     name: '',
@@ -30,8 +35,7 @@ export function ContactWindow() {
           to_email: 'it.mohmmed@yahoo.com',
           subject: formData.subject,
           message: formData.message,
-        },
-        import.meta.env.EMAILJS_PUBLIC_KEY!
+        }
       );
 
       if (result.status === 200) {
