@@ -419,7 +419,7 @@ Status: Active daily operation`
         content: `Ideas & Random Thoughts - SWAGY
 
 Why I Still Design Like It's 1998
-Modern design is cool, but nothing beats a chunky pixel button and a drop shadow you can trip over. Call it nostalgia… or taste.
+Modern design is cool, but nothing beats a chunky pixel button and a drop shadow you can trip over. Call it nostalgia… or taste
 
 2AM: Me vs. a stupid semicolon.
 Winner: semicolon.
@@ -436,7 +436,7 @@ Click, wait, crash.
 
 Shower Thoughts
 - If you can't fix the bug, at least fix your fit.
-- My shoes? Too clean to walk
+- My shoes? Too clean to walk 
 - Coffee ≠ creativity, but Music = genius.
 - Why is it always "localhost:3000" and never "localhost: how are you?"
 - Fashion rule #1: If it confuses your mom, you're doing it right.`
