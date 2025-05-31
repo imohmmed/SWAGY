@@ -9,7 +9,7 @@ interface LoadingScreenProps {
 export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [currentMessage, setCurrentMessage] = useState('');
+  const [bootMessages, setBootMessages] = useState<string[]>([]);
   const [showBootMessages, setShowBootMessages] = useState(false);
 
   // Handle Start button click
@@ -22,7 +22,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
       onSoundStart();
 
       // Boot sequence messages
-      const bootMessages = [
+      const messages = [
         'Starting MS-DOS...',
         'Loading device drivers...',
         'Initializing Windows 98...',
@@ -31,9 +31,9 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
       ];
 
       // Display boot messages progressively
-      bootMessages.forEach((message, index) => {
+      messages.forEach((message, index) => {
         setTimeout(() => {
-          setCurrentMessage(message);
+          setBootMessages(prev => [...prev, message]);
         }, index * 1200); // 1.2 seconds between each message
       });
 
@@ -50,11 +50,22 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
   };
 
   return (
-    <div className={`fixed inset-0 bg-black flex flex-col justify-center z-50 transition-opacity duration-1000 ${
+    <div className={`fixed inset-0 bg-black z-50 transition-opacity duration-1000 ${
       isFadingOut ? 'opacity-0' : 'opacity-100'
     }`}>
-      {/* Main content area */}
-      <div className="flex-1 flex items-center justify-center">
+      {/* Boot messages on the left side */}
+      {showBootMessages && (
+        <div className="absolute top-8 left-8 text-green-400 text-sm font-mono">
+          {bootMessages.map((message, index) => (
+            <div key={index} className="mb-1">
+              {message}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Main content area - center */}
+      <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <div className="mb-8 animate-pulse-slow">
             <img 
@@ -67,23 +78,19 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
             Welcome to SWAGY's Windows 98
           </div>
           
-          {!isStarted ? (
+          {!isStarted && (
             <button
               onClick={handleStartClick}
               className="win-button px-8 py-3 text-black text-lg font-bold hover:bg-gray-300 transition-colors"
             >
               Start
             </button>
-          ) : (
-            <div className="text-green-400 text-lg font-mono min-h-[30px]">
-              {currentMessage}
-            </div>
           )}
         </div>
       </div>
 
-      {/* Bottom copyright section */}
-      <div className="pb-8 text-center">
+      {/* Bottom copyright section - left aligned */}
+      <div className="absolute bottom-8 left-8">
         <div className="text-gray-400 text-sm font-mono">
           <div>Microsoft Windows 98 [Version 4.10.1998]</div>
           <div>Copyright Microsoft Corp 1981-1998</div>
