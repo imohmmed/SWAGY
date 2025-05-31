@@ -76,7 +76,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
           {!isStarted && (
             <>
               <div className="text-white text-2xl font-bold mb-8">
-                Welcome to SWAGY's Windows 98
+                Welcome to the drip OS — SWAGY Edition
               </div>
               <button
                 onClick={handleStartClick}
