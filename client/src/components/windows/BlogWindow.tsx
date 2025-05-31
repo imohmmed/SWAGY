@@ -59,8 +59,8 @@ export function BlogWindow() {
           ))}
           
           <div className="blog-entry">
-            <div className="font-bold mb-1">⚡ أفكار الاستحمام</div>
-            <div className="text-xs text-gray-500 mb-2">يناير 2025</div>
+            <div className="font-bold mb-1">⚡ Shower Thoughts</div>
+            <div className="text-xs text-gray-500 mb-2">January 2025</div>
             <ul className="space-y-1 text-xs">
               {showerThoughts.map((thought, index) => (
                 <li key={index}>• {thought}</li>
@@ -69,7 +69,7 @@ export function BlogWindow() {
           </div>
           
           <div className="mt-8 text-center">
-            <div className="text-xs text-gray-500">--- نهاية الملف ---</div>
+            <div className="text-xs text-gray-500">--- End of File ---</div>
             <div className="blink text-xs mt-2">█</div>
           </div>
         </div>
