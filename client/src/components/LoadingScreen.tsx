@@ -6,7 +6,7 @@ interface LoadingScreenProps {
 }
 
 export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
-  const [playStartupSound, setPlayStartupSound] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize Windows 98 startup sound
@@ -16,35 +16,35 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
     audio.volume = 0.7;
     audioRef.current = audio;
 
-    // Auto complete after 3 seconds
-    const timer = setTimeout(() => {
-      onLoadComplete();
-    }, 3000);
-
     return () => {
-      clearTimeout(timer);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, [onLoadComplete]);
+  }, []);
 
-  // Handle user click to enable audio
-  const handleClick = () => {
-    if (audioRef.current && !playStartupSound) {
-      setPlayStartupSound(true);
-      audioRef.current.play().catch(() => {
-        console.log('Audio play failed');
-      });
+  // Handle Start button click
+  const handleStartClick = () => {
+    if (!isStarted) {
+      setIsStarted(true);
+      
+      // Play Windows 98 startup sound
+      if (audioRef.current) {
+        audioRef.current.play().catch(() => {
+          console.log('Audio play failed');
+        });
+      }
+
+      // Start the website after a short delay for the sound to begin
+      setTimeout(() => {
+        onLoadComplete();
+      }, 1500);
     }
   };
 
   return (
-    <div 
-      className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in cursor-pointer"
-      onClick={handleClick}
-    >
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in">
       <div className="text-center">
         <div className="mb-8 animate-pulse-slow">
           <img 
@@ -53,20 +53,20 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
             className="boot-logo mx-auto"
           />
         </div>
-        <div className="text-white text-2xl font-bold mb-4">
+        <div className="text-white text-2xl font-bold mb-8">
           Welcome to SWAGY's Windows 98
         </div>
-        <div className="text-gray-400 text-sm mb-4">
-          Loading desktop...
-        </div>
-        {!playStartupSound && (
-          <div className="text-yellow-400 text-xs animate-pulse">
-            🔊 Click to enable startup sound
-          </div>
-        )}
-        {playStartupSound && (
-          <div className="text-green-400 text-xs">
-            ♪ Windows 98 startup sound playing...
+        
+        {!isStarted ? (
+          <button
+            onClick={handleStartClick}
+            className="win-button px-8 py-3 text-black text-lg font-bold hover:bg-gray-300 transition-colors"
+          >
+            Start
+          </button>
+        ) : (
+          <div className="text-green-400 text-sm">
+            ♪ Starting Windows 98...
           </div>
         )}
       </div>
