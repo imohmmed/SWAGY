@@ -1,4 +1,5 @@
 import { useLanguage } from '../../hooks/useLanguage';
+import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.png';
 
 export function MeWindow() {
   const { t } = useLanguage();
@@ -10,7 +11,7 @@ export function MeWindow() {
           {/* Profile image */}
           <div className="w-24 h-24 mx-auto mb-4 border-2 border-[rgb(var(--win-border-dark))] bg-white p-1" style={{ boxShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
             <img 
-              src="/attached_assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.png" 
+              src={profileImage} 
               alt="SWAGY Profile" 
               className="w-full h-full object-cover"
               draggable={false}
