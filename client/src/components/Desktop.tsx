@@ -1,7 +1,7 @@
 import { DesktopIcon, WindowType } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { useState } from 'react';
-import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.jpeg';
+import profileImage from '@assets/IMG_6447.png';
 
 interface DesktopProps {
   onIconDoubleClick: (type: WindowType) => void;
