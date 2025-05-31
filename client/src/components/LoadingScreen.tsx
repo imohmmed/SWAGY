@@ -3,9 +3,10 @@ import swalyLogo from '@assets/IMG_6470.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
+  onSoundPlay: (audio: HTMLAudioElement) => void;
 }
 
-export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
+export function LoadingScreen({ onLoadComplete, onSoundPlay }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -31,21 +32,15 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
     if (!isStarted) {
       setIsStarted(true);
       
-      // Try to play Windows 98 startup sound
+      // Pass the audio to parent component to continue playing
       if (audioRef.current) {
         try {
-          audioRef.current.load(); // Reload the audio
+          audioRef.current.load();
           await audioRef.current.play();
           console.log('Audio playing successfully');
+          onSoundPlay(audioRef.current);
         } catch (error) {
           console.log('Audio play failed:', error);
-          // Try alternative audio source
-          audioRef.current.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmMcBJ2UZ9qJNwcXab3t4JJOEgVRpOLrr2EVDz1+wrn0yoM2BSCG0fDReSYGKW3f7fmDLQQKdMPF04xECBNbsdH2qVwUGDOF6/vDdS4LIW6Z79uQOgkNW7PT5oM2AhqG0OqZRwcOO';
-          try {
-            await audioRef.current.play();
-          } catch (fallbackError) {
-            console.log('Fallback audio also failed');
-          }
         }
       }
 

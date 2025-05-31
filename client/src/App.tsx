@@ -26,6 +26,7 @@ function App() {
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
+  const [startupAudio, setStartupAudio] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -126,8 +127,20 @@ function App() {
     setShowLoadingScreen(false);
   };
 
+  const handleStartupSoundPlay = (audio: HTMLAudioElement) => {
+    setStartupAudio(audio);
+    // Stop the audio after 6 seconds to match Windows 98 startup sound length
+    setTimeout(() => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      setStartupAudio(null);
+    }, 6000);
+  };
+
   if (showLoadingScreen) {
-    return <LoadingScreen onLoadComplete={handleLoadComplete} />;
+    return <LoadingScreen onLoadComplete={handleLoadComplete} onSoundPlay={handleStartupSoundPlay} />;
   }
 
   return (
