@@ -3,6 +3,7 @@ import { Desktop } from './components/Desktop';
 import { Window } from './components/Window';
 import { Taskbar } from './components/Taskbar';
 import { StartMenu } from './components/StartMenu';
+import { LoadingScreen } from './components/LoadingScreen';
 import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
 import { WindowType } from './types';
@@ -24,7 +25,7 @@ function App() {
   const { t } = useLanguage();
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [showBootScreen, setShowBootScreen] = useState(true);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -119,12 +120,14 @@ function App() {
     }
   };
 
-  const handleBootComplete = () => {
-    setShowBootScreen(false);
+
+
+  const handleLoadComplete = () => {
+    setShowLoadingScreen(false);
   };
 
-  if (showBootScreen) {
-    return <BootScreen onBootComplete={handleBootComplete} />;
+  if (showLoadingScreen) {
+    return <LoadingScreen onLoadComplete={handleLoadComplete} />;
   }
 
   return (
