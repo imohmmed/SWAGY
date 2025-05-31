@@ -413,7 +413,7 @@ Status: Active daily operation`
     children: [
       {
         id: 'ideas',
-        name: 'Ideas.txt',
+        name: 'Ideas.notepad',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
         content: `Ideas & Random Thoughts - SWAGY
