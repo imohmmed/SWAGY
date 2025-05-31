@@ -1,13 +1,14 @@
 import { DesktopIcon, WindowType } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { useState } from 'react';
+import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.jpeg';
 
 interface DesktopProps {
   onIconDoubleClick: (type: WindowType) => void;
 }
 
 const desktopIcons: DesktopIcon[] = [
-  { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 16, y: 16 } },
+  { id: 'me', type: 'me', icon: profileImage, label: 'meIcon', position: { x: 16, y: 16 } },
   { id: 'projects', type: 'projects', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'projectsIcon', position: { x: 16, y: 96 } },
   { id: 'music', type: 'music', icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png', label: 'musicIcon', position: { x: 16, y: 176 } },
   { id: 'gallery', type: 'gallery', icon: 'https://win98icons.alexmeub.com/icons/png/camera-0.png', label: 'galleryIcon', position: { x: 16, y: 256 } },
