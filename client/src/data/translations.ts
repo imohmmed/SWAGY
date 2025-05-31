@@ -108,10 +108,7 @@ export const translations: Record<string, Translation> = {
     nowPlaying: 'Now Playing:',
     playlist: 'Playlist:',
     
-    // Gallery
-    imageOf: 'Image 1 of 12',
-    zoom: '🔍 Zoom',
-    slideshow: '🎞️ Slideshow',
+
     
     // Blog
     onDesign: 'On Design & Creativity',
@@ -230,10 +227,7 @@ export const translations: Record<string, Translation> = {
     nowPlaying: 'يُشغل الآن:',
     playlist: 'قائمة التشغيل:',
     
-    // Gallery
-    imageOf: 'صورة 1 من 12',
-    zoom: '🔍 تكبير',
-    slideshow: '🎞️ عرض شرائح',
+
     
     // Blog
     onDesign: 'حول التصميم والإبداع',

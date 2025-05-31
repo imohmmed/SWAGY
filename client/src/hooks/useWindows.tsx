@@ -5,12 +5,11 @@ const defaultWindowPositions = {
   me: { x: 50, y: 50 },
   projects: { x: 100, y: 100 },
   music: { x: 150, y: 150 },
-  gallery: { x: 200, y: 200 },
-  blog: { x: 250, y: 250 },
-  downloads: { x: 300, y: 300 },
-  contact: { x: 350, y: 350 },
-  terminal: { x: 400, y: 400 },
-  recycle: { x: 450, y: 450 }
+  blog: { x: 200, y: 200 },
+  downloads: { x: 250, y: 250 },
+  contact: { x: 300, y: 300 },
+  terminal: { x: 350, y: 350 },
+  recycle: { x: 400, y: 400 }
 };
 
 export function useWindows() {
