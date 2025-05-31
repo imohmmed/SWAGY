@@ -18,15 +18,15 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
       // Start the continuous audio from App level
       onSoundStart();
 
-      // Start fade out after 5.5 seconds (75% of 8 seconds = 6 seconds in splash)
+      // Start fade out after 6.25 seconds (75% of 9 seconds = 6.75 seconds in splash)
       setTimeout(() => {
         setIsFadingOut(true);
-      }, 5500);
+      }, 6250);
       
-      // Complete transition after 6 seconds (remaining 25% = 2 seconds will play in desktop)
+      // Complete transition after 6.75 seconds (remaining 25% = 2.25 seconds will play in desktop)
       setTimeout(() => {
         onLoadComplete();
-      }, 6000);
+      }, 6750);
     }
   };
 

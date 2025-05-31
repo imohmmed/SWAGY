@@ -143,14 +143,14 @@ function App() {
         console.log('Audio failed:', error);
       });
 
-      // Stop after 8 seconds total
+      // Stop after 9 seconds total
       setTimeout(() => {
         if (audio) {
           audio.pause();
           audio.currentTime = 0;
         }
         setStartupAudio(null);
-      }, 8000);
+      }, 9000);
     }
   };
 
