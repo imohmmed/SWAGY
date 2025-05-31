@@ -7,6 +7,7 @@ interface FileItem {
   icon: string;
   content?: string;
   children?: FileItem[];
+  windowType?: string; // للربط مع نوافذ سطح المكتب
 }
 
 const desktopFiles: FileItem[] = [
@@ -61,24 +62,37 @@ const desktopFiles: FileItem[] = [
     name: 'Me.txt',
     type: 'file',
     icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
-    content: `SWAGY - Portfolio & Creative Works
+    windowType: 'me',
+    content: `SWAGY - Creative Developer & Designer
 
 About Me:
-I'm a creative developer passionate about building unique digital experiences.
-My work spans from web development to creative coding projects.
+Creative developer passionate about building unique digital experiences.
+Currently working on projects that confuse people… then impress them.
 
-Skills:
+Skills & Expertise:
 - Frontend Development (React, TypeScript, CSS)
 - UI/UX Design
-- Creative Coding
-- Digital Art & Design
+- E-commerce Development (Shopify)
+- Creative Coding & Digital Art
+- Retro Computing & Nostalgic Interfaces
+- Arabic RTL Design Implementation
+
+Quick Stats:
+- Projects: 8+ completed
+- Experience: 3+ years in development
+- Ideas: Unlimited supply
+- Coffee: Daily requirement
 
 Philosophy:
-"Making weird but cool stuff" - that's my motto. I believe in pushing 
-boundaries and creating experiences that are both functional and memorable.
+"Making weird but cool stuff" - Creating experiences that are both 
+functional and memorable, with a focus on authentic retro aesthetics.
+
+Current Focus:
+Building stylish Shopify stores, creative web experiences, and 
+bringing Windows 98 nostalgia to modern web development.
 
 Contact:
-Ready to collaborate on something amazing? Let's connect!`
+Ready to collaborate on something amazing? Let's build something cool together!`
   },
   {
     id: 'projects',
@@ -93,18 +107,107 @@ Ready to collaborate on something amazing? Let's connect!`
         icon: 'https://win98icons.alexmeub.com/icons/png/html-1.png',
         children: [
           {
-            id: 'portfolio',
-            name: 'Portfolio Website',
-            type: 'file',
-            icon: 'https://win98icons.alexmeub.com/icons/png/html-1.png',
-            content: 'Modern portfolio website built with React and TypeScript featuring Windows 98 aesthetic'
-          },
-          {
-            id: 'ecommerce',
-            name: 'E-commerce Platform',
+            id: 'mora-modaa',
+            name: 'Mora Modaa Store',
             type: 'file',
             icon: 'https://win98icons.alexmeub.com/icons/png/shopping_cart-4.png',
-            content: 'Full-stack e-commerce solution with payment integration and inventory management'
+            content: `Mora Modaa - Fashion E-commerce Platform
+
+Description:
+Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.
+
+Technologies Used:
+- Shopify Platform
+- Liquid Templating
+- Custom CSS Styling
+- Responsive Design
+
+Features:
+- Modern fashion catalog
+- Clean, scrollable interface
+- Mobile-optimized experience
+- Arabic language support
+
+URL: https://mora1.com/
+Status: Live and operational`
+          },
+          {
+            id: 'pixel-suite',
+            name: 'Pixel Suite Gaming Store',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/games-0.png',
+            content: `Pixel Suite - Gaming Digital Marketplace
+
+Description:
+A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.
+
+Technologies Used:
+- Shopify E-commerce Platform
+- JavaScript for interactivity
+- Dark Theme UI Design
+- Gaming-focused UX
+
+Features:
+- Gaming skins and bundles
+- Dark mode interface
+- Digital product delivery
+- Gamer-friendly checkout process
+
+URL: https://pixelsuite.vip/
+Status: Active gaming marketplace`
+          },
+          {
+            id: 'crystal-gift',
+            name: 'Crystal for Gift',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/present-0.png',
+            content: `Crystal for Gift - Luxury Gifts Platform
+
+Description:
+Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren't enough.
+
+Technologies Used:
+- Shopify Platform
+- Arabic RTL Implementation
+- Luxury UI Components
+- Custom Styling
+
+Features:
+- Premium gift catalog
+- Full Arabic language support
+- Right-to-left layout design
+- Luxury brand aesthetics
+- Gift packaging options
+
+URL: https://crystal4gifts.com/
+Status: Operational luxury marketplace`
+          },
+          {
+            id: 'sls-cafe',
+            name: 'SLS Cafe Website',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/coffee_cup-0.png',
+            content: `SLS Cafe - Coffee Shop Experience
+
+Description:
+Not just a coffee shop — it's a whole mood ☕
+Built to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.
+
+Technologies Used:
+- Shopify E-commerce
+- Food & Beverage Optimization
+- Cozy UI Design
+- Mobile-First Approach
+
+Features:
+- Coffee menu showcase
+- Cozy atmosphere design
+- Online ordering system
+- Cafe ambiance capture
+- Mobile-optimized experience
+
+URL: https://slscafe.com/
+Status: Brewing success online`
           }
         ]
       },
@@ -115,18 +218,85 @@ Ready to collaborate on something amazing? Let's connect!`
         icon: 'https://win98icons.alexmeub.com/icons/png/paint_brush-0.png',
         children: [
           {
-            id: 'generative-art',
-            name: 'Generative Art Collection',
+            id: 'altaraf-links',
+            name: 'Altaraf Links Hub',
             type: 'file',
-            icon: 'https://win98icons.alexmeub.com/icons/png/paint_brush-0.png',
-            content: 'Interactive generative art pieces using p5.js and Three.js with real-time user interaction'
+            icon: 'https://win98icons.alexmeub.com/icons/png/world-2.png',
+            content: `Altaraf Links - Travel Link Hub
+
+Description:
+All the links, none of the drama 🔗
+Simple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.
+
+Technologies Used:
+- Clean HTML/CSS Design
+- Link Hub Architecture
+- Travel Industry Focus
+- Minimalist Interface
+
+Features:
+- Centralized link management
+- Travel-themed design
+- Quick access navigation
+- Professional presentation
+- Mobile-responsive layout
+
+URL: https://altaraf.link
+Status: Active link hub`
           },
           {
-            id: 'music-visualizer',
-            name: 'Audio Visualizer',
+            id: 'filmora-tv',
+            name: 'Filmora TV Platform',
             type: 'file',
-            icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
-            content: 'Real-time audio visualization with WebGL shaders and frequency analysis'
+            icon: 'https://win98icons.alexmeub.com/icons/png/video_file-2.png',
+            content: `Filmora TV - Streaming Platform
+
+Description:
+Like Netflix, but with more attitude 🎬
+A streaming platform with personality and style.
+
+Technologies Used:
+- Streaming Technology
+- Video Platform Architecture
+- Entertainment UI/UX
+- Content Management System
+
+Features:
+- Video streaming capabilities
+- Entertainment-focused design
+- Content organization
+- User-friendly interface
+- Media player integration
+
+URL: https://filmora.tv
+Status: Live streaming platform`
+          },
+          {
+            id: 'windows98-portfolio',
+            name: 'Windows 98 Portfolio',
+            type: 'file',
+            icon: 'https://win98icons.alexmeub.com/icons/png/computer_3-2.png',
+            content: `SWAGY Windows 98 Portfolio
+
+Description:
+Current project - A meticulously crafted Windows 98-inspired personal portfolio website delivering an authentic retro computing experience.
+
+Technologies Used:
+- React.js Frontend
+- TypeScript
+- Tailwind CSS
+- Windows 98 UI Recreation
+- Authentic Sound Effects
+
+Features:
+- Pixel-perfect Windows 98 interface
+- Interactive desktop simulation
+- Functional file explorer
+- Nostalgic startup sequence
+- Mobile-responsive design
+- Multilingual support (Arabic/English)
+
+Status: Currently in development`
           }
         ]
       },
@@ -137,18 +307,71 @@ Ready to collaborate on something amazing? Let's connect!`
         icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
         children: [
           {
-            id: 'bot1',
-            name: 'Assistant Bot',
+            id: 'customer-support-bot',
+            name: 'Customer Support Bot',
             type: 'file',
             icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
-            content: 'AI-powered Telegram bot for automated customer support'
+            content: `Customer Support Bot - Telegram Automation
+
+Description:
+Automated customer service assistant for handling common inquiries and support tickets.
+
+Technologies Used:
+- Python Programming
+- Telegram Bot API
+- Natural Language Processing
+- Database Integration
+
+Features:
+- 24/7 automated responses
+- FAQ handling
+- Ticket routing system
+- Multi-language support
+- Customer data management
+- Integration with support systems
+
+Capabilities:
+- Handle common customer queries
+- Escalate complex issues to humans
+- Provide instant responses
+- Track conversation history
+- Generate support reports
+
+Status: Deployed and operational`
           },
           {
-            id: 'bot2',
-            name: 'Content Manager Bot',
+            id: 'news-aggregator-bot',
+            name: 'News Aggregator Bot',
             type: 'file',
-            icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
-            content: 'Bot for managing and scheduling social media content'
+            icon: 'https://win98icons.alexmeub.com/icons/png/newsletter-0.png',
+            content: `News Aggregator Bot - Daily Updates
+
+Description:
+Daily news updates and summaries delivered directly to Telegram channels.
+
+Technologies Used:
+- Node.js Runtime
+- Telegram Bot API
+- RSS Feed Processing
+- News API Integration
+
+Features:
+- Daily news compilation
+- Category-based filtering
+- Automated scheduling
+- Summary generation
+- Multi-source aggregation
+- Custom news topics
+
+Capabilities:
+- Fetch news from multiple sources
+- Generate concise summaries
+- Schedule automated posts
+- Filter by user preferences
+- Provide trending topics
+- Archive news history
+
+Status: Active daily operation`
           }
         ]
       }
@@ -224,7 +447,39 @@ Ready to collaborate on something amazing? Let's connect!`
         name: 'SWAGY_Resume.pdf',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/document-0.png',
-        content: 'Professional resume showcasing development experience, creative projects, and technical skills'
+        content: `SWAGY - Creative Developer Resume
+
+Personal Information:
+Name: SWAGY
+Title: Creative Developer & Designer
+Experience: 3+ years in web development
+Location: Available for remote work
+
+Professional Summary:
+Creative developer with a passion for building unique digital experiences that confuse people… then impress them. Specialized in e-commerce development, retro computing interfaces, and bringing nostalgic aesthetics to modern web development.
+
+Technical Skills:
+- Frontend: React, TypeScript, JavaScript, CSS, HTML
+- E-commerce: Shopify Platform, Liquid Templating
+- Design: UI/UX Design, Retro Computing Interfaces
+- Languages: Arabic RTL Implementation, Multi-language Support
+- Tools: Git, Modern Development Workflow
+
+Project Portfolio:
+1. Mora Modaa (mora1.com) - Fashion e-commerce platform
+2. Pixel Suite (pixelsuite.vip) - Gaming marketplace with dark theme
+3. Crystal for Gift (crystal4gifts.com) - Luxury gifts with Arabic support
+4. SLS Cafe (slscafe.com) - Coffee shop website with cozy design
+5. Altaraf Links (altaraf.link) - Travel industry link hub
+6. Filmora TV (filmora.tv) - Streaming platform
+7. Windows 98 Portfolio - Current retro computing project
+8. Telegram Bots - Customer support and news automation
+
+Philosophy:
+"Making weird but cool stuff" - Creating experiences that are both functional and memorable, with a focus on authentic aesthetics and user experience.
+
+Contact:
+Ready to collaborate on projects that stand out from the crowd.`
       },
       {
         id: 'portfolio-assets',
