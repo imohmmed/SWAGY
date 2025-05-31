@@ -12,7 +12,7 @@ export const translations: Record<string, Translation> = {
     maximize: 'Maximize',
     
     // Desktop Icons
-    myComputerIcon: 'My Computer',
+    myComputerIcon: 'MyComputer',
     meIcon: 'Me.txt',
     projectsIcon: 'My Projects',
     musicIcon: 'Music Player',
@@ -131,6 +131,7 @@ export const translations: Record<string, Translation> = {
     maximize: 'تكبير',
     
     // Desktop Icons
+    myComputerIcon: 'جهازالكمبيوتر',
     meIcon: 'Me.txt',
     projectsIcon: 'مشاريعي',
     musicIcon: 'مشغل الموسيقى',
