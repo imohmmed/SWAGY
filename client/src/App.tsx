@@ -3,6 +3,7 @@ import { Desktop } from './components/Desktop';
 import { Window } from './components/Window';
 import { Taskbar } from './components/Taskbar';
 import { StartMenu } from './components/StartMenu';
+import { BootScreen } from './components/BootScreen';
 import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
 import { WindowType } from './types';
@@ -24,6 +25,7 @@ function App() {
   const { t } = useLanguage();
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showBootScreen, setShowBootScreen] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -117,6 +119,14 @@ function App() {
       `;
     }
   };
+
+  const handleBootComplete = () => {
+    setShowBootScreen(false);
+  };
+
+  if (showBootScreen) {
+    return <BootScreen onBootComplete={handleBootComplete} />;
+  }
 
   return (
     <div className="h-screen overflow-hidden">
