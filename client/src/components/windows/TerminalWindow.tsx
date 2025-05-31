@@ -3,13 +3,18 @@ import { useLanguage } from '../../hooks/useLanguage';
 
 const commands = {
   help: 'helpCommand',
-  whoami: 'whoamiResponse',
-  dir: 'dirResponse',
   about: 'aboutResponse',
-  skills: 'skillsResponse',
-  contact: 'contactResponse',
+  swag: 'swagResponse',
   clear: 'CLEAR_SCREEN',
-  exit: 'exitResponse'
+  music: 'musicResponse',
+  ascii: 'asciiResponse',
+  exit: 'exitResponse',
+  hack: 'hackResponse',
+  matrix: 'matrixResponse',
+  love: 'loveResponse',
+  play: 'playResponse',
+  'open music': 'openMusicResponse',
+  whoami: 'whoamiResponse'
 };
 
 export function TerminalWindow() {
@@ -30,7 +35,7 @@ export function TerminalWindow() {
     ]);
 
     // Auto-run commands
-    const autoCommands = ['whoami', 'about', 'help'];
+    const autoCommands = ['help'];
     let commandIndex = 0;
 
     const runNextCommand = () => {
@@ -90,6 +95,25 @@ export function TerminalWindow() {
         // In a real app, this would close the window
         alert('Terminal session ended.');
       }, 3000);
+      return;
+    }
+
+    // Special matrix command effect
+    if (cmd === 'matrix') {
+      setOutput(prev => [...prev, '🟢 Entering the Matrix...', '']);
+      setTimeout(() => {
+        const matrixLines = [
+          '01001000 01100101 01101100 01101100 01101111',
+          '01010111 01101111 01110010 01101100 01100100',
+          '01001101 01100001 01110100 01110010 01101001',
+          '01111000 00100000 01001100 01101111 01100001',
+          '01100100 01100101 01100100 00101110 00101110',
+          '',
+          'Wake up, SWAGY... The Matrix has you...',
+          ''
+        ];
+        setOutput(prev => [...prev, ...matrixLines]);
+      }, 1000);
       return;
     }
     
