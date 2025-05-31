@@ -99,6 +99,7 @@ Ready to collaborate on something amazing? Let's build something cool together!`
     name: 'My Projects',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
+    windowType: 'projects',
     children: [
       {
         id: 'web-projects',
@@ -382,6 +383,7 @@ Status: Active daily operation`
     name: 'Music Collection',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
+    windowType: 'music',
     children: [
       {
         id: 'playlist1',
@@ -419,6 +421,7 @@ Status: Active daily operation`
     name: 'Ideas & Blog',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png',
+    windowType: 'blog',
     children: [
       {
         id: 'tech-thoughts',
@@ -441,6 +444,7 @@ Status: Active daily operation`
     name: 'Downloads',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
+    windowType: 'downloads',
     children: [
       {
         id: 'resume',
@@ -575,7 +579,11 @@ Ready to collaborate on projects that stand out from the crowd.`
   }
 ];
 
-export function MyComputerWindow() {
+interface MyComputerWindowProps {
+  onOpenWindow?: (windowType: string) => void;
+}
+
+export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
   const [currentPath, setCurrentPath] = useState<FileItem[]>([]);
   const [currentFiles, setCurrentFiles] = useState<FileItem[]>(desktopFiles);
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
@@ -608,6 +616,12 @@ export function MyComputerWindow() {
   };
 
   const openFile = (file: FileItem) => {
+    // إذا كان الملف مرتبط بنافذة سطح المكتب، افتحها
+    if (file.windowType && onOpenWindow) {
+      onOpenWindow(file.windowType);
+      return;
+    }
+    
     if (file.type === 'file' && file.content) {
       setSelectedFile(file);
       setViewingContent(true);
