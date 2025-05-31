@@ -446,9 +446,7 @@ Shower Thoughts
         name: 'Display Properties.txt',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
-        content: `Display Properties
-
-Theme: Retro Pixel Blue  
+        content: `Theme: Retro Pixel Blue  
 Wallpaper: Classic nostalgia activated  
 Font: System default — because we keep it OG  
 Resolution: Perfectly blurry, just like 1998`
