@@ -103,7 +103,9 @@ function App() {
       document.body.innerHTML = `
         <div class="h-screen bg-black flex items-center justify-center text-white">
           <div class="text-center">
-            <div class="text-6xl mb-4">👋</div>
+            <div class="mb-4">
+              <img src="./attached_assets/IMG_6470.png" alt="SWAGY" class="w-32 h-auto mx-auto" />
+            </div>
             <div class="text-2xl font-bold mb-4">Windows is shutting down...</div>
             <div class="text-sm">Thank you for visiting SWAGY's portfolio!</div>
             <div class="mt-8">
