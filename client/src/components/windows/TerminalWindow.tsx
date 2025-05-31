@@ -41,7 +41,7 @@ export function TerminalWindow() {
       autoTypeCommand('help', () => {
         setIsAutoTyping(false);
       });
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timer);
   }, []); // Remove t dependency to prevent re-runs
@@ -65,9 +65,9 @@ export function TerminalWindow() {
           executeCommand(command);
           setCurrentInput('');
           if (callback) callback();
-        }, 300); // Reduced delay
+        }, 100); // Much faster response
       }
-    }, 80); // Faster typing
+    }, 50); // Much faster typing
   };
 
   const executeCommand = (command: string) => {
