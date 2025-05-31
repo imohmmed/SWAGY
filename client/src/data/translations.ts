@@ -25,7 +25,7 @@ export const translations: Record<string, Translation> = {
     // Window Titles
     meTitle: 'Me.txt - Notepad',
     projectsTitle: 'My Projects - Windows Explorer',
-    musicTitle: 'weedy_playlist.m3u - Winamp',
+    musicTitle: 'SWAGY_playlist.m3u - Winamp',
     galleryTitle: 'Gallery - Windows Photo Viewer',
     blogTitle: 'ideas.notepad - Notepad',
     downloadsTitle: 'Downloads',
@@ -143,7 +143,7 @@ export const translations: Record<string, Translation> = {
     // Window Titles
     meTitle: 'Me.txt - المفكرة',
     projectsTitle: 'مشاريعي - مستكشف ويندوز',
-    musicTitle: 'weedy_playlist.m3u - مشغل الموسيقى',
+    musicTitle: 'SWAGY_playlist.m3u - مشغل الموسيقى',
     galleryTitle: 'المعرض - عارض الصور',
     blogTitle: 'ideas.notepad - المفكرة',
     downloadsTitle: 'التحميلات',
