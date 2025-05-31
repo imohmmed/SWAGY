@@ -227,25 +227,54 @@ export function MusicWindow() {
   const nextTrack = () => {
     const nextIndex = (currentTrackIndex + 1) % playlist.length;
     setCurrentTrackIndex(nextIndex);
-    setIsPlaying(false);
+    globalAudioState.currentTrackIndex = nextIndex;
+    
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = playlist[nextIndex].url;
+      setIsPlaying(false);
+      globalAudioState.isPlaying = false;
+    }
   };
 
   const prevTrack = () => {
     const prevIndex = currentTrackIndex === 0 ? playlist.length - 1 : currentTrackIndex - 1;
     setCurrentTrackIndex(prevIndex);
-    setIsPlaying(false);
+    globalAudioState.currentTrackIndex = prevIndex;
+    
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = playlist[prevIndex].url;
+      setIsPlaying(false);
+      globalAudioState.isPlaying = false;
+    }
   };
 
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
-    setIsPlaying(true);
-    // Auto-play the selected track
-    setTimeout(() => {
-      const audio = audioRef.current;
-      if (audio) {
-        audio.play();
-      }
-    }, 100);
+    globalAudioState.currentTrackIndex = index;
+    
+    // Stop current audio and update source
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = playlist[index].url;
+      
+      // Auto-play the selected track
+      setTimeout(() => {
+        audio.play().then(() => {
+          setIsPlaying(true);
+          globalAudioState.isPlaying = true;
+        }).catch(error => {
+          console.log('Playback failed:', error);
+        });
+      }, 100);
+    }
   };
 
   const formatTime = (time: number) => {
