@@ -1,39 +1,62 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 
-type ProjectCategory = 'web' | 'mobile' | 'design' | 'creative';
+type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
 
 const projectCategories = [
-  { id: 'web', icon: '🌐', label: 'Web Applications' },
-  { id: 'mobile', icon: '📱', label: 'Mobile Apps' },
-  { id: 'design', icon: '🎨', label: 'UI/UX Design' },
-  { id: 'creative', icon: '✨', label: 'Creative Projects' }
+  { id: 'shopping', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: 'Shopping Websites' },
+  { id: 'other-websites', icon: 'https://win98icons.alexmeub.com/icons/png/msie2-1.png', label: 'Other Websites' },
+  { id: 'telegram-bots', icon: 'https://win98icons.alexmeub.com/icons/png/utopia_smiley.png', label: 'Telegram Bots' }
 ];
 
 const sampleProjects = [
   {
     id: '1',
-    title: 'E-Commerce Platform',
-    description: 'Modern online shopping experience',
-    category: 'web' as ProjectCategory,
-    technologies: ['React', 'Node.js'],
+    title: 'Online Store Platform',
+    description: 'Complete e-commerce solution with cart and payment',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['React', 'Node.js', 'Stripe'],
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200'
   },
   {
     id: '2',
-    title: 'Portfolio Website',
-    description: 'Responsive personal portfolio',
-    category: 'web' as ProjectCategory,
-    technologies: ['HTML', 'CSS', 'JS'],
-    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=300&h=200'
+    title: 'Fashion Boutique',
+    description: 'Elegant online fashion store',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['Vue.js', 'PHP', 'MySQL'],
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=200'
   },
   {
     id: '3',
-    title: 'Mobile Game',
-    description: 'Addictive puzzle game',
-    category: 'mobile' as ProjectCategory,
-    technologies: ['Unity', 'C#'],
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&h=200'
+    title: 'Portfolio Website',
+    description: 'Personal showcase website',
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['HTML', 'CSS', 'JavaScript'],
+    image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=300&h=200'
+  },
+  {
+    id: '4',
+    title: 'Business Landing Page',
+    description: 'Corporate website with modern design',
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['React', 'Tailwind CSS'],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=300&h=200'
+  },
+  {
+    id: '5',
+    title: 'Customer Support Bot',
+    description: 'Automated customer service assistant',
+    category: 'telegram-bots' as ProjectCategory,
+    technologies: ['Python', 'Telegram API'],
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=300&h=200'
+  },
+  {
+    id: '6',
+    title: 'News Aggregator Bot',
+    description: 'Daily news updates and summaries',
+    category: 'telegram-bots' as ProjectCategory,
+    technologies: ['Node.js', 'Telegram Bot API'],
+    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&h=200'
   }
 ];
 
@@ -49,17 +72,21 @@ export function ProjectsWindow() {
     <div className="flex h-full">
       {/* Sidebar */}
       <div className="w-1/3 border-r-2 border-[rgb(var(--win-border-dark))] p-2 bg-[rgb(var(--win-light-gray))]">
-        <div className="text-xs font-bold mb-2">📁 Project Categories</div>
+        <div className="text-xs font-bold mb-2 flex items-center gap-1">
+          <img src="https://win98icons.alexmeub.com/icons/png/directory_open_cool-5.png" alt="" className="w-4 h-4" draggable={false} />
+          Project Categories
+        </div>
         <div className="space-y-1 text-xs">
           {projectCategories.map((category) => (
             <div
               key={category.id}
-              className={`p-1 hover:bg-blue-600 hover:text-white cursor-pointer ${
+              className={`p-1 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2 ${
                 selectedCategory === category.id ? 'bg-blue-600 text-white' : ''
               }`}
               onClick={() => setSelectedCategory(category.id as ProjectCategory)}
             >
-              {category.icon} {category.label}
+              <img src={category.icon} alt="" className="w-4 h-4" draggable={false} />
+              {category.label}
             </div>
           ))}
         </div>
