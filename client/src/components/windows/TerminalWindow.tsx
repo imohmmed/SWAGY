@@ -61,11 +61,9 @@ export function TerminalWindow() {
         setCurrentInput(typedCommand);
       } else {
         clearInterval(typeInterval);
-        setTimeout(() => {
-          executeCommand(command);
-          setCurrentInput('');
-          if (callback) callback();
-        }, 300); // Reduced delay
+        executeCommand(command);
+        setCurrentInput('');
+        if (callback) callback();
       }
     }, 80); // Faster typing
   };
