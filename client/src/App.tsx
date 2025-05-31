@@ -169,7 +169,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden" style={{ height: '100dvh' }}>
       {/* Desktop */}
       <Desktop onIconDoubleClick={handleIconDoubleClick} />
       
