@@ -440,6 +440,31 @@ Shower Thoughts
 - Coffee ≠ creativity, but Music = genius.
 - Why is it always "localhost:3000" and never "localhost: how are you?"
 - Fashion rule #1: If it confuses your mom, you're doing it right.`
+      },
+      {
+        id: 'display-properties',
+        name: 'Display Properties.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
+        content: `Display Properties
+
+Theme: Retro Pixel Blue  
+Wallpaper: Classic nostalgia activated  
+Font: System default — because we keep it OG  
+Resolution: Perfectly blurry, just like 1998`
+      },
+      {
+        id: 'system-properties',
+        name: 'System Properties.txt',
+        type: 'file',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
+        content: `System Properties
+
+Username: Weedy.exe  
+Processor: Dual-core creativity  
+RAM: 16GB of unfinished ideas  
+System Type: 90s kid / Modern dev hybrid  
+Uptime: Running since the dial-up era`
       }
     ]
   },
