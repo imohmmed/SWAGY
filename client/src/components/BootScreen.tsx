@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import swalyLogo from '@assets/IMG_6470.png';
 
 interface BootScreenProps {
@@ -10,6 +10,8 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
   const [currentText, setCurrentText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [bootComplete, setBootComplete] = useState(false);
+  const [playStartupSound, setPlayStartupSound] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const bootMessages = [
     'Starting MS-DOS...',
@@ -57,15 +59,42 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
     return () => clearInterval(typingInterval);
   }, [currentStep, onBootComplete]);
 
-  // Play boot sound (requires user interaction first)
-  const playBootSound = () => {
-    // We'll add this after creating the audio file
-    console.log('Boot sound would play here');
+  // Initialize Windows 98 startup sound
+  useEffect(() => {
+    // Create audio context for Windows 98 startup sound simulation
+    const createStartupTone = () => {
+      if (!audioRef.current) {
+        audioRef.current = new Audio();
+        // Using a web-based Windows 98 startup sound URL
+        audioRef.current.src = 'https://www.myinstants.com/media/sounds/windows-98-startup.mp3';
+        audioRef.current.volume = 0.7;
+      }
+    };
+
+    createStartupTone();
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  // Handle user click to enable audio
+  const handleStartupClick = () => {
+    if (audioRef.current && !playStartupSound) {
+      setPlayStartupSound(true);
+      audioRef.current.play();
+    }
   };
 
   if (bootComplete) {
     return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in">
+      <div 
+        className="fixed inset-0 bg-black flex items-center justify-center z-50 animate-fade-in cursor-pointer"
+        onClick={handleStartupClick}
+      >
         <div className="text-center">
           <div className="mb-8 animate-pulse-slow">
             <img 
@@ -77,9 +106,19 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
           <div className="text-white text-2xl font-bold mb-4">
             Welcome to SWAGY's Windows 98
           </div>
-          <div className="text-gray-400 text-sm">
+          <div className="text-gray-400 text-sm mb-4">
             Loading desktop...
           </div>
+          {!playStartupSound && (
+            <div className="text-yellow-400 text-xs animate-pulse">
+              🔊 Click to enable startup sound
+            </div>
+          )}
+          {playStartupSound && (
+            <div className="text-green-400 text-xs">
+              ♪ Windows 98 startup sound playing...
+            </div>
+          )}
         </div>
       </div>
     );
