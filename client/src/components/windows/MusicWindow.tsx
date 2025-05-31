@@ -6,7 +6,8 @@ let globalAudioState = {
   audio: null as HTMLAudioElement | null,
   isPlaying: false,
   currentTrackIndex: 0,
-  currentTime: 0
+  currentTime: 0,
+  isInitialized: false
 };
 
 const playlist = [
@@ -144,27 +145,41 @@ export function MusicWindow() {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize with global state
+  // Initialize audio element only once globally
   useEffect(() => {
-    // Store audio reference globally
-    if (audioRef.current) {
+    if (!globalAudioState.isInitialized && audioRef.current) {
+      // Create the audio element only once
       globalAudioState.audio = audioRef.current;
+      globalAudioState.isInitialized = true;
+    } else if (globalAudioState.audio && audioRef.current !== globalAudioState.audio) {
+      // Use the existing global audio element
+      audioRef.current = globalAudioState.audio;
     }
-    
-    return () => {
-      // Save current state to global when component unmounts
-      if (audioRef.current) {
-        globalAudioState.currentTime = audioRef.current.currentTime;
-        globalAudioState.isPlaying = isPlaying;
-        globalAudioState.currentTrackIndex = currentTrackIndex;
+  }, []);
+
+  // Clean up only on true window close (not minimize)
+  useEffect(() => {
+    const cleanup = () => {
+      // This will only run when the window is actually closed
+      if (globalAudioState.audio) {
+        globalAudioState.audio.pause();
+        globalAudioState.audio.currentTime = 0;
+        globalAudioState.isPlaying = false;
+        globalAudioState.audio = null;
+        globalAudioState.isInitialized = false;
       }
     };
-  }, [isPlaying, currentTrackIndex]);
 
-  // Sync global state
-  useEffect(() => {
-    globalAudioState.isPlaying = isPlaying;
-    globalAudioState.currentTrackIndex = currentTrackIndex;
+    // Add event listener for actual window close
+    window.addEventListener('beforeunload', cleanup);
+    
+    return () => {
+      window.removeEventListener('beforeunload', cleanup);
+      // Don't cleanup audio on component unmount (minimize)
+      // Only save the current state
+      globalAudioState.isPlaying = isPlaying;
+      globalAudioState.currentTrackIndex = currentTrackIndex;
+    };
   }, [isPlaying, currentTrackIndex]);
 
   const currentTrack = playlist[currentTrackIndex];
