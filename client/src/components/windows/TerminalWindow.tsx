@@ -150,17 +150,25 @@ export function TerminalWindow() {
           
           <div className="flex items-center text-xs">
             <span>C:\SWAGY{'>'}</span>
-            <input
-              type="text"
-              value={currentInput}
-              onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
-              className="ml-1 bg-transparent border-none outline-none text-green-400 flex-1"
-              style={{ fontFamily: 'inherit' }}
-              autoFocus
-              readOnly={isAutoTyping}
-            />
-            <span className="blink">█</span>
+            <div className="ml-1 flex items-center flex-1 relative">
+              <input
+                type="text"
+                value={currentInput}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                className="bg-transparent border-none outline-none text-green-400 w-full caret-transparent"
+                style={{ fontFamily: 'inherit' }}
+                autoFocus
+                readOnly={isAutoTyping}
+              />
+              <span 
+                className="absolute blink text-green-400 pointer-events-none"
+                style={{ 
+                  left: `${currentInput.length * 0.6}em`,
+                  fontFamily: 'inherit'
+                }}
+              >█</span>
+            </div>
           </div>
         </div>
       </div>
