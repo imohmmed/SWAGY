@@ -38,10 +38,9 @@ export function TerminalWindow() {
     
     // Auto-run help command once
     const timer = setTimeout(() => {
-      autoTypeCommand('help', () => {
-        setIsAutoTyping(false);
-      });
-    }, 500);
+      executeCommand('help');
+      setIsAutoTyping(false);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []); // Remove t dependency to prevent re-runs
