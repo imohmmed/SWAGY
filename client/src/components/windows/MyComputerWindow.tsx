@@ -416,9 +416,7 @@ Status: Active daily operation`
         name: 'Ideas.txt',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
-        content: `Ideas & Random Thoughts - SWAGY
-
-Why I Still Design Like It's 1998
+        content: `Why I Still Design Like It's 1998
 Modern design is cool, but nothing beats a chunky pixel button and a drop shadow you can trip over. Call it nostalgia… or taste
 
 2AM: Me vs. a stupid semicolon.
