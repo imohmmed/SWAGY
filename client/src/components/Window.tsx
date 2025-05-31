@@ -163,18 +163,16 @@ export function Window({
           >
             _
           </button>
-          {!isMobile && (
-            <button
-              className="win-button px-1 py-0 text-xs ml-1"
-              onClick={(e) => {
-                e.stopPropagation();
-                onMaximize();
-              }}
-              title={t('maximize')}
-            >
-              □
-            </button>
-          )}
+          <button
+            className="win-button px-1 py-0 text-xs ml-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleMaximizeClick();
+            }}
+            title={isMobile ? 'تكبير النص' : t('maximize')}
+          >
+            {isMobile ? (isTextLarge ? 'A-' : 'A+') : '□'}
+          </button>
           <button
             className="win-button px-1 py-0 text-xs ml-1"
             onClick={(e) => {
@@ -189,7 +187,10 @@ export function Window({
       </div>
       
       {/* Window Content */}
-      <div className="h-full" style={{ height: 'calc(100% - 24px)' }}>
+      <div 
+        className={`h-full ${isTextLarge ? 'text-lg' : ''}`} 
+        style={{ height: 'calc(100% - 24px)' }}
+      >
         <WindowContent />
       </div>
     </div>
