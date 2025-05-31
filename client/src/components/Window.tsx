@@ -1,7 +1,7 @@
 import { WindowState, WindowType } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { useDrag } from '../hooks/useDrag';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Import window content components
 import { MeWindow } from './windows/MeWindow';
@@ -47,6 +47,7 @@ export function Window({
 }: WindowProps) {
   const { t } = useLanguage();
   const { dragState, startDrag, updateDrag, endDrag } = useDrag();
+  const [isTextLarge, setIsTextLarge] = useState(false);
   const windowRef = useRef<HTMLDivElement>(null);
 
   const WindowContent = windowComponents[window.type];
@@ -107,6 +108,15 @@ export function Window({
     if (windowRef.current) {
       startDrag(window.id, touch.clientX, touch.clientY, windowRef.current);
       onFocus();
+    }
+  };
+
+  const handleMaximizeClick = () => {
+    if (isMobile) {
+      // On mobile, maximize means toggle text size
+      setIsTextLarge(!isTextLarge);
+    } else {
+      onMaximize();
     }
   };
 

@@ -7,20 +7,20 @@ interface DesktopProps {
 }
 
 const desktopIcons: DesktopIcon[] = [
-  { id: 'me', type: 'me', icon: '📝', label: 'meIcon', position: { x: 16, y: 16 } },
-  { id: 'projects', type: 'projects', icon: '📁', label: 'projectsIcon', position: { x: 16, y: 96 } },
-  { id: 'music', type: 'music', icon: '🎵', label: 'musicIcon', position: { x: 16, y: 176 } },
-  { id: 'gallery', type: 'gallery', icon: '📸', label: 'galleryIcon', position: { x: 16, y: 256 } },
-  { id: 'blog', type: 'blog', icon: '🧠', label: 'blogIcon', position: { x: 16, y: 336 } },
-  { id: 'downloads', type: 'downloads', icon: '📦', label: 'downloadsIcon', position: { x: 16, y: 416 } },
-  { id: 'contact', type: 'contact', icon: '💬', label: 'contactIcon', position: { x: 16, y: 496 } },
-  { id: 'terminal', type: 'terminal', icon: '🖥️', label: 'terminalIcon', position: { x: 16, y: 576 } },
+  { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 16, y: 16 } },
+  { id: 'projects', type: 'projects', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'projectsIcon', position: { x: 16, y: 96 } },
+  { id: 'music', type: 'music', icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png', label: 'musicIcon', position: { x: 16, y: 176 } },
+  { id: 'gallery', type: 'gallery', icon: 'https://win98icons.alexmeub.com/icons/png/camera-0.png', label: 'galleryIcon', position: { x: 16, y: 256 } },
+  { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'blogIcon', position: { x: 16, y: 336 } },
+  { id: 'downloads', type: 'downloads', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'downloadsIcon', position: { x: 16, y: 416 } },
+  { id: 'contact', type: 'contact', icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png', label: 'contactIcon', position: { x: 16, y: 496 } },
+  { id: 'terminal', type: 'terminal', icon: 'https://win98icons.alexmeub.com/icons/png/console_prompt-0.png', label: 'terminalIcon', position: { x: 16, y: 576 } },
 ];
 
 const recycleIcon: DesktopIcon = {
   id: 'recycle',
   type: 'recycle',
-  icon: '🗑️',
+  icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
   label: 'recycleIcon',
   position: { x: 0, y: 16 } // Will be positioned on the right
 };
@@ -49,8 +49,13 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
             onClick={() => handleIconClick(icon.id)}
             onDoubleClick={() => handleIconDoubleClick(icon.type)}
           >
-            <div className="w-8 h-8 md:w-12 md:h-12 mb-1 text-2xl md:text-3xl flex items-center justify-center">
-              {icon.icon}
+            <div className="w-8 h-8 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+              <img 
+                src={icon.icon} 
+                alt={t(icon.label)} 
+                className="w-full h-full object-contain"
+                draggable={false}
+              />
             </div>
             <span className="text-xs">{t(icon.label)}</span>
           </div>
@@ -64,8 +69,13 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
           onClick={() => handleIconClick(recycleIcon.id)}
           onDoubleClick={() => handleIconDoubleClick(recycleIcon.type)}
         >
-          <div className="w-8 h-8 md:w-12 md:h-12 mb-1 text-2xl md:text-3xl flex items-center justify-center">
-            {recycleIcon.icon}
+          <div className="w-8 h-8 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+            <img 
+              src={recycleIcon.icon} 
+              alt={t(recycleIcon.label)} 
+              className="w-full h-full object-contain"
+              draggable={false}
+            />
           </div>
           <span className="text-xs">{t(recycleIcon.label)}</span>
         </div>
