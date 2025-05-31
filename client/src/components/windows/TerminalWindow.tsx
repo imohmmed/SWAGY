@@ -26,34 +26,25 @@ export function TerminalWindow() {
 
   useEffect(() => {
     // Initial terminal welcome
-    setOutput([
+    const initialOutput = [
       t('terminalWelcome'),
       t('terminalCopyright'),
       '',
       'C:\\SWAGY>',
       ''
-    ]);
-
-    // Auto-run commands
-    const autoCommands = ['help'];
-    let commandIndex = 0;
-
-    const runNextCommand = () => {
-      if (commandIndex < autoCommands.length) {
-        const command = autoCommands[commandIndex];
-        setTimeout(() => {
-          autoTypeCommand(command, () => {
-            commandIndex++;
-            setTimeout(runNextCommand, 2000);
-          });
-        }, 2000);
-      } else {
+    ];
+    
+    setOutput(initialOutput);
+    
+    // Auto-run help command once
+    const timer = setTimeout(() => {
+      autoTypeCommand('help', () => {
         setIsAutoTyping(false);
-      }
-    };
+      });
+    }, 1000);
 
-    setTimeout(runNextCommand, 1000);
-  }, [t]);
+    return () => clearTimeout(timer);
+  }, []); // Remove t dependency to prevent re-runs
 
   useEffect(() => {
     // Scroll to bottom when output changes
