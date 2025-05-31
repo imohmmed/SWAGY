@@ -16,7 +16,7 @@ const sampleProjects = [
     description: 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'Liquid', 'CSS'],
-    image: '/attached_assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=480&h=270',
     link: 'https://mora1.com/'
   },
   {
@@ -25,7 +25,7 @@ const sampleProjects = [
     description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
-    image: '/attached_assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=480&h=270',
     link: 'https://pixelsuite.vip/'
   },
   {
@@ -34,7 +34,7 @@ const sampleProjects = [
     description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
     category: 'shopping' as ProjectCategory,
     technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
-    image: '/attached_assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg',
+    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=480&h=270',
     link: 'https://crystal4gifts.com/'
   },
   {
@@ -118,8 +118,9 @@ export function ProjectsWindow() {
                   onClick={() => project.link && window.open(project.link, '_blank')}
                 >
                   <div
-                    className="w-full h-20 bg-gray-300 mb-2"
+                    className="w-full bg-gray-300 mb-2"
                     style={{
+                      aspectRatio: '16/9',
                       backgroundImage: `url(${project.image})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center'
