@@ -42,26 +42,50 @@ export function StartMenu({ isVisible, onClose, onMenuAction }: StartMenuProps) 
             className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
             onClick={() => handleItemClick('my-computer')}
           >
-            📁 {t('myComputer')}
+            <img 
+              src="https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-0.png" 
+              alt="My Computer" 
+              className="w-4 h-4"
+              draggable={false}
+            />
+            {t('myComputer')}
           </div>
           <div
             className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
             onClick={() => handleItemClick('run')}
           >
-            ▶️ {t('run')}
+            <img 
+              src="https://win98icons.alexmeub.com/icons/png/application_hourglass-0.png" 
+              alt="Run" 
+              className="w-4 h-4"
+              draggable={false}
+            />
+            {t('run')}
           </div>
           <div
             className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
             onClick={() => handleItemClick('settings')}
           >
-            ⚙️ {t('settings')}
+            <img 
+              src="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png" 
+              alt="Settings" 
+              className="w-4 h-4"
+              draggable={false}
+            />
+            {t('settings')}
           </div>
           <hr className="my-1 border-[rgb(var(--win-border-dark))]" />
           <div
             className="px-3 py-1 hover:bg-blue-600 hover:text-white cursor-pointer text-xs flex items-center gap-2"
             onClick={() => handleItemClick('shutdown')}
           >
-            🔌 {t('shutdown')}
+            <img 
+              src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-3.png" 
+              alt="Shut Down" 
+              className="w-4 h-4"
+              draggable={false}
+            />
+            {t('shutdown')}
           </div>
         </div>
       </div>
