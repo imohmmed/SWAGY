@@ -18,30 +18,7 @@ const desktopFiles: FileItem[] = [
     name: 'Local Disk (C:)',
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/cd_drive_purple-0.png',
-    children: [
-      {
-        id: 'windows',
-        name: 'Windows',
-        type: 'folder',
-        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
-        children: [
-          {
-            id: 'system32',
-            name: 'System32',
-            type: 'folder',
-            icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
-            children: []
-          }
-        ]
-      },
-      {
-        id: 'program-files',
-        name: 'Program Files',
-        type: 'folder',
-        icon: 'https://win98icons.alexmeub.com/icons/png/folder_closed-4.png',
-        children: []
-      }
-    ]
+    children: []
   },
 
   // Desktop Files
@@ -622,6 +599,11 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
   const [viewingContent, setViewingContent] = useState(false);
 
   const navigateToFolder = (folder: FileItem) => {
+    // Skip navigation for Local Disk C
+    if (folder.id === 'c-drive') {
+      return;
+    }
+    
     if (folder.type === 'folder' && folder.children) {
       setCurrentPath([...currentPath, folder]);
       setCurrentFiles(folder.children);
