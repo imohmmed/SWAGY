@@ -3,9 +3,10 @@ import swalyLogo from '@assets/IMG_6470.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
+  onSoundStart: (audio: HTMLAudioElement) => void;
 }
 
-export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
+export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -27,18 +28,30 @@ export function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
   }, []);
 
   // Handle Start button click
-  const handleStartClick = () => {
+  const handleStartClick = async () => {
     if (!isStarted) {
       setIsStarted(true);
 
-      // Start fade out after 1.5 seconds, then complete
+      // Start playing Windows 98 startup sound
+      if (audioRef.current) {
+        try {
+          await audioRef.current.play();
+          console.log('Splash screen audio started');
+          onSoundStart(audioRef.current);
+        } catch (error) {
+          console.log('Audio play failed:', error);
+        }
+      }
+
+      // Start fade out after 3.5 seconds (first 4 seconds of sound in splash)
       setTimeout(() => {
         setIsFadingOut(true);
-      }, 1500);
+      }, 3500);
       
+      // Complete transition after 4 seconds (remaining 3 seconds will play in desktop)
       setTimeout(() => {
         onLoadComplete();
-      }, 2500);
+      }, 4000);
     }
   };
 
