@@ -5,7 +5,7 @@ import pixelSuiteImage from '@assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg';
 import crystalGiftImage from '@assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg';
 import slsCafeImage from '@assets/0E99AB1D-C087-4E31-B7C2-C8F128BA1884.jpeg';
 import altarafLinksImage from '@assets/E4985A71-EE3B-4B5A-9710-74725AFEE3C7.jpeg';
-import altarafNetImage from '@assets/1027A0B5-45A3-4759-932A-1654BDB34C6F.jpeg';
+import altarafNetImage from '@assets/altaraf-net-logo.png';
 import filmoraTvImage from '@assets/1673C2B9-71D9-4A63-9746-6CA90FAB8EE7.jpeg';
 
 type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
