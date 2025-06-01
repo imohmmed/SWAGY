@@ -130,13 +130,11 @@ export function ProjectsWindow() {
                   onClick={() => project.link && window.open(project.link, '_blank')}
                 >
                   <div
-                    className="w-full bg-gray-300 mb-2 flex justify-center items-center"
+                    className="w-full bg-gray-300 mb-2"
                     style={{
-                      minHeight: '120px',
-                      maxHeight: '200px',
+                      aspectRatio: '16/9',
                       backgroundImage: `url(${project.image})`,
-                      backgroundSize: 'contain',
-                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
                       backgroundPosition: 'center'
                     }}
                   />
@@ -162,13 +160,11 @@ export function ProjectsWindow() {
                   className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
                 >
                   <div
-                    className="w-full bg-gray-300 mb-2 flex justify-center items-center"
+                    className="w-full bg-gray-300 mb-2"
                     style={{
-                      minHeight: '80px',
-                      maxHeight: '120px',
+                      aspectRatio: '16/9',
                       backgroundImage: `url(${project.image})`,
-                      backgroundSize: 'contain',
-                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
                       backgroundPosition: 'center'
                     }}
                   />
