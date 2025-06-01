@@ -27,24 +27,6 @@ const sampleProjects = [
   },
   {
     id: '2',
-    title: 'Pixel Suite',
-    description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
-    category: 'shopping' as ProjectCategory,
-    technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
-    image: pixelSuiteImage,
-    link: 'https://pixelsuite.vip/'
-  },
-  {
-    id: '3',
-    title: 'Crystal for Gift',
-    description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
-    category: 'shopping' as ProjectCategory,
-    technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
-    image: crystalGiftImage,
-    link: 'https://crystal4gifts.com/'
-  },
-  {
-    id: '8',
     title: 'SLS Cafe',
     description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
     category: 'shopping' as ProjectCategory,
@@ -53,7 +35,34 @@ const sampleProjects = [
     link: 'https://slscafe.com/'
   },
   {
+    id: '3',
+    title: 'Pixel Suite',
+    description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
+    image: pixelSuiteImage,
+    link: 'https://pixelsuite.vip/'
+  },
+  {
     id: '4',
+    title: 'Crystal for Gift',
+    description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
+    category: 'shopping' as ProjectCategory,
+    technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
+    image: crystalGiftImage,
+    link: 'https://crystal4gifts.com/'
+  },
+  {
+    id: '5',
+    title: 'Altaraf.net',
+    description: 'A travel company I co-created that makes vacations feel like music videos. Clean branding, custom website, and golden vibes all the way.',
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Travel', 'Custom Design', 'Branding'],
+    image: altarafLinksImage,
+    link: 'https://altaraf.net'
+  },
+  {
+    id: '6',
     title: 'Altaraf Links',
     description: 'All the links, none of the drama 🔗\nSimple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
     category: 'other-websites' as ProjectCategory,
@@ -62,7 +71,7 @@ const sampleProjects = [
     link: 'https://altaraf.link'
   },
   {
-    id: '5',
+    id: '7',
     title: 'Filmora TV',
     description: 'Like Netflix, but with more attitude 🎬\nA streaming platform with personality and style.',
     category: 'other-websites' as ProjectCategory,
