@@ -114,12 +114,12 @@ const sampleProjects = [
   },
   {
     id: '10',
-    title: 'SLS Cafe',
+    title: 'Printday7',
     description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
-    image: slsCafeImage,
-    link: 'https://slscafe.com/'
+    image: printday7Image,
+    link: 'https://printday7.com/'
   },
   {
     id: '11',
@@ -175,6 +175,7 @@ const sampleProjects = [
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Telegram Bot API', 'Prayer Times', 'Quran API'],
     image: quranBotImage,
+    logo: botsMakerImage,
     link: 'https://t.me/QEGbot'
   },
   {
@@ -184,6 +185,7 @@ const sampleProjects = [
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Bot Creation', 'Telegram API', 'Automation'],
     image: botsMakerImage,
+    logo: quranBotImage,
     link: 'https://t.me/slsbot'
   },
   {
@@ -202,6 +204,7 @@ const sampleProjects = [
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Customer Support', 'FAQ System', 'Job Applications'],
     image: customerServiceBotImage,
+    logo: hrSystemBotImage,
     link: 'https://t.me/Mora0Bot'
   },
   {
@@ -211,6 +214,7 @@ const sampleProjects = [
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Instagram API', 'Automation', 'Social Media Management'],
     image: addToCloseFriendsBotImage,
+    logo: customerServiceBotImage,
     link: 'https://t.me/mohmmed'
   },
   {
@@ -220,6 +224,7 @@ const sampleProjects = [
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['HR Management', 'Time Tracking', 'Payroll System'],
     image: hrSystemBotImage,
+    logo: addToCloseFriendsBotImage,
     link: 'https://t.me/mohmmed'
   },
   {
