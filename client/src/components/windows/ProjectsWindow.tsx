@@ -33,72 +33,72 @@ const sampleProjects = [
   {
     id: '1',
     title: 'Mora',
-    description: '',
+    description: 'Fashion and style brand specializing in modern clothing designs and trends.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['E-commerce', 'Fashion', 'Brand Development'],
     image: moraModaaImage,
     link: 'https://www.instagram.com/mora.modaa?igsh=MXF5NXU2ZHZzZ3AzOQ=='
   },
   {
     id: '2',
     title: 'SLS',
-    description: '',
+    description: 'Premium coffee brand and café experience focused on quality and community.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['Food & Beverage', 'Brand Identity', 'Hospitality'],
     image: slsCafeImage,
     link: 'https://www.instagram.com/sls___brand?igsh=MW01Zmt0ZGpjcDE3Mg=='
   },
   {
     id: '3',
     title: 'Pixel Suite',
-    description: '',
+    description: 'Digital design studio providing creative solutions and visual identity services.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['Design Agency', 'Creative Services', 'Digital Solutions'],
     image: pixelSuiteImage,
     link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
   },
   {
     id: '4',
     title: 'printday7',
-    description: '',
+    description: 'Coffee shop and printing services combining quality beverages with professional printing solutions.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['Food & Beverage', 'Printing Services', 'Hospitality'],
     image: candyshopaliImage,
     link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
   },
   {
     id: '5',
     title: 'Alali Plus',
-    description: '',
+    description: 'Multi-service business offering various professional services and solutions.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['Business Services', 'Professional Solutions', 'Consulting'],
     image: printday7Image,
     link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
   },
   {
     id: '6',
     title: 'crystal4gift',
-    description: '',
+    description: 'Luxury gift shop specializing in premium crystal items and personalized gift solutions.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['E-commerce', 'Luxury Goods', 'Gift Solutions'],
     image: crystalGiftImage,
     link: 'https://www.instagram.com/crystal4gifts?igsh=MTFjYjYwaXpza3Zkbw=='
   },
   {
     id: '7',
     title: 'candyshopali',
-    description: '',
+    description: 'Sweet shop and confectionery business specializing in premium candies and treats.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['E-commerce', 'Food & Beverage', 'Retail'],
     image: alaliPlusImage,
     link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
   },
   {
     id: '8',
     title: 'Al Taraf',
-    description: '',
+    description: 'Technology and digital services company providing innovative solutions for businesses.',
     category: 'worked-with' as ProjectCategory,
-    technologies: [],
+    technologies: ['Technology Services', 'Digital Solutions', 'Business Innovation'],
     image: altarafNetImage,
     link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },

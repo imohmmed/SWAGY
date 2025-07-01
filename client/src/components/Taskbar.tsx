@@ -80,7 +80,7 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
         {isMobile && (
           <>
             <button
-              className={`cursor-pointer px-1 text-xs font-bold win-button ${!canDecrease ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`cursor-pointer w-6 h-6 text-xs font-bold win-button flex items-center justify-center ${!canDecrease ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={decreaseTextSize}
               disabled={!canDecrease}
               title="Decrease text size"
@@ -88,7 +88,7 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
               A-
             </button>
             <button
-              className={`cursor-pointer px-1 text-xs font-bold win-button ${!canIncrease ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`cursor-pointer w-6 h-6 text-xs font-bold win-button flex items-center justify-center ${!canIncrease ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={increaseTextSize}
               disabled={!canIncrease}
               title="Increase text size"
