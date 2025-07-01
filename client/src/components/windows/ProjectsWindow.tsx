@@ -62,7 +62,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: printday7Image,
+    image: candyshopaliImage,
     link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
   },
   {
@@ -71,7 +71,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: alaliPlusImage,
+    image: printday7Image,
     link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
   },
   {
@@ -89,7 +89,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: candyshopaliImage,
+    image: alaliPlusImage,
     link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
   },
   {
@@ -388,10 +388,10 @@ export function ProjectsWindow() {
       
       {/* Windows 98 Style Modal for project details */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-start justify-center z-50 p-4 pt-8 overflow-auto" onClick={() => setSelectedProject(null)}>
-          <div className="win-window w-full max-w-md min-h-fit" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4" onClick={() => setSelectedProject(null)}>
+          <div className="win-window w-full max-w-md h-auto max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
             {/* Windows 98 Title Bar */}
-            <div className="win-titlebar">
+            <div className="win-titlebar flex-shrink-0">
               <div className="flex items-center gap-1">
                 <img 
                   src={selectedProject.logo || selectedProject.image}
@@ -411,29 +411,34 @@ export function ProjectsWindow() {
               </div>
             </div>
             
-            {/* Window Content */}
-            <div className="p-3 bg-[rgb(var(--win-gray))] space-y-3">
-              <div
-                className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
-                style={{
-                  aspectRatio: '16/9',
-                  backgroundImage: `url(${selectedProject.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-              
-              <div className="text-xs whitespace-pre-line leading-relaxed">
-                {selectedProject.description}
-              </div>
-              
-              {selectedProject.technologies.length > 0 && (
-                <div className="text-xs text-gray-600 p-2 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]">
-                  <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
+            {/* Scrollable Window Content */}
+            <div className="bg-[rgb(var(--win-gray))] overflow-y-auto flex-1">
+              <div className="p-3 space-y-3">
+                <div
+                  className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
+                  style={{
+                    aspectRatio: '16/9',
+                    backgroundImage: `url(${selectedProject.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+                
+                <div className="text-xs whitespace-pre-line leading-relaxed">
+                  {selectedProject.description}
                 </div>
-              )}
-              
-              <div className="flex gap-2 justify-center pt-2">
+                
+                {selectedProject.technologies.length > 0 && (
+                  <div className="text-xs text-gray-600 p-2 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]">
+                    <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Fixed Bottom Buttons */}
+            <div className="bg-[rgb(var(--win-gray))] p-3 border-t border-[rgb(var(--win-border-dark))] flex-shrink-0">
+              <div className="flex gap-2 justify-center">
                 <button
                   className="win-button px-3 py-1 text-xs"
                   onClick={() => setSelectedProject(null)}
