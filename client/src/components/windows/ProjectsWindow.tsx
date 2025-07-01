@@ -22,6 +22,18 @@ import downloaderBotImage from '@assets/downloader-bot-logo.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  category: ProjectCategory;
+  technologies: string[];
+  image: string;
+  link: string;
+  logo?: string;
+  instagramLink?: string;
+}
+
 const projectCategories = [
   { id: 'worked-with', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: 'Worked With' },
   { id: 'other-websites', icon: 'https://win98icons.alexmeub.com/icons/png/msie2-1.png', label: 'Live Websites' },
@@ -37,7 +49,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: moraModaaImage,
-    link: 'https://www.instagram.com/mora.modaa?igsh=MXF5NXU2ZHZzZ3AzOQ=='
+    link: 'https://www.instagram.com/mora.modaa?igsh=MXF5NXU2ZHZzZ3AzOQ==',
+    instagramLink: 'https://www.instagram.com/mora.modaa?igsh=MXF5NXU2ZHZzZ3AzOQ=='
   },
   {
     id: '2',
@@ -46,7 +59,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: slsCafeImage,
-    link: 'https://www.instagram.com/sls___brand?igsh=MW01Zmt0ZGpjcDE3Mg=='
+    link: 'https://www.instagram.com/sls___brand?igsh=MW01Zmt0ZGpjcDE3Mg==',
+    instagramLink: 'https://www.instagram.com/sls___brand?igsh=MW01Zmt0ZGpjcDE3Mg=='
   },
   {
     id: '3',
@@ -55,7 +69,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: pixelSuiteImage,
-    link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
+    link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw==',
+    instagramLink: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
   },
   {
     id: '4',
@@ -64,7 +79,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: candyshopaliImage,
-    link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
+    link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw==',
+    instagramLink: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
   },
   {
     id: '5',
@@ -73,7 +89,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: printday7Image,
-    link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
+    link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ==',
+    instagramLink: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
   },
   {
     id: '6',
@@ -82,7 +99,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: crystalGiftImage,
-    link: 'https://www.instagram.com/crystal4gifts?igsh=MTFjYjYwaXpza3Zkbw=='
+    link: 'https://www.instagram.com/crystal4gifts?igsh=MTFjYjYwaXpza3Zkbw==',
+    instagramLink: 'https://www.instagram.com/crystal4gifts?igsh=MTFjYjYwaXpza3Zkbw=='
   },
   {
     id: '7',
@@ -292,13 +310,12 @@ export function ProjectsWindow() {
               {selectedCategory === 'worked-with' ? 'Companies I Worked With' : `${projectCategories.find(c => c.id === selectedCategory)?.label} Projects`}
             </h3>
             {selectedCategory === 'worked-with' ? (
-              // Worked With - Simple grid layout with logos only
+              // Worked With - Simple grid layout with logos and Instagram button
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredProjects.map((project) => (
                   <div
                     key={project.id}
-                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
-                    onClick={() => project.link && window.open(project.link, '_blank')}
+                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))]"
                   >
                     <div
                       className="w-full bg-gray-300 mb-2"
@@ -310,7 +327,19 @@ export function ProjectsWindow() {
                         backgroundPosition: 'center'
                       }}
                     />
-                    <div className="text-xs font-bold text-left">{project.title}</div>
+                    <div className="text-xs font-bold text-left mb-2">{project.title}</div>
+                    {project.instagramLink && (
+                      <button
+                        className="win-button px-2 py-1 text-xs flex items-center gap-1"
+                        onClick={() => window.open(project.instagramLink, '_blank')}
+                        title="Visit Instagram"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Instagram
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
