@@ -43,7 +43,8 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
         right: '0px',
         zIndex: 9999,
         transform: 'translateZ(0)',
-        willChange: 'transform'
+        willChange: 'transform',
+        direction: language === 'ar' ? 'rtl' : 'ltr'
       }}
     >
       {/* Start Button */}

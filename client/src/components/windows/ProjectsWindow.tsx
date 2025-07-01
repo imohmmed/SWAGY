@@ -41,12 +41,12 @@ const getProjectCategories = (t: (key: string) => string) => [
   { id: 'telegram-bots', icon: 'https://win98icons.alexmeub.com/icons/png/utopia_smiley.png', label: t('telegramBots') }
 ];
 
-const sampleProjects = [
+const getProjects = (t: (key: string) => string) => [
   // Worked With section - Companies I collaborated with
   {
     id: '1',
     title: 'Mora',
-    description: 'moraDesc',
+    description: t('moraDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: moraModaaImage,
@@ -56,7 +56,7 @@ const sampleProjects = [
   {
     id: '2',
     title: 'SLS',
-    description: 'slsDesc',
+    description: t('slsDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: slsCafeImage,
@@ -66,7 +66,7 @@ const sampleProjects = [
   {
     id: '3',
     title: 'Pixel Suite',
-    description: 'pixelSuiteDesc',
+    description: t('pixelSuiteDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: pixelSuiteImage,
@@ -76,7 +76,7 @@ const sampleProjects = [
   {
     id: '4',
     title: 'printday7',
-    description: 'printday7Desc',
+    description: t('printday7Desc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: candyshopaliImage,
@@ -86,7 +86,7 @@ const sampleProjects = [
   {
     id: '5',
     title: 'Alali Plus',
-    description: 'alaliPlusDesc',
+    description: t('alaliPlusDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: printday7Image,
@@ -96,7 +96,7 @@ const sampleProjects = [
   {
     id: '6',
     title: 'crystal4gift',
-    description: 'crystal4giftDesc',
+    description: t('crystal4giftDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: crystalGiftImage,
@@ -106,7 +106,7 @@ const sampleProjects = [
   {
     id: '7',
     title: 'candyshopali',
-    description: 'candyshopaliDesc',
+    description: t('candyshopaliDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: alaliPlusImage,
@@ -116,7 +116,7 @@ const sampleProjects = [
   {
     id: '8',
     title: 'Al Taraf',
-    description: 'altarafDesc',
+    description: t('altarafDesc'),
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: altarafLinksImage,
@@ -128,7 +128,7 @@ const sampleProjects = [
   {
     id: '9',
     title: 'Mora Modaa',
-    description: 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
+    description: t('moraModaaFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'Liquid', 'CSS'],
     image: moraModaaImage,
@@ -137,7 +137,7 @@ const sampleProjects = [
   {
     id: '10',
     title: 'Printday7',
-    description: 'Helped PrintDay7 with backend and frontend improvements — solved technical issues, improved performance, and customized features to make the platform run smoother for users.',
+    description: t('printday7FullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
     image: printday7WebsiteImage,
@@ -146,7 +146,7 @@ const sampleProjects = [
   {
     id: '11',
     title: 'Pixel Suite',
-    description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
+    description: t('pixelSuiteFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
     image: pixelSuiteImage,
@@ -155,7 +155,7 @@ const sampleProjects = [
   {
     id: '12',
     title: 'Crystal for Gift',
-    description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
+    description: t('crystal4giftFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
     image: crystalGiftImage,
@@ -173,7 +173,7 @@ const sampleProjects = [
   {
     id: '14',
     title: 'Altaraf Links',
-    description: 'All the links, none of the drama 🔗\nSimple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
+    description: t('altarafLinksFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Link Hub', 'Travel', 'Clean Design'],
     image: altarafLinksImage,
@@ -278,6 +278,7 @@ export function ProjectsWindow() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
   const projectCategories = getProjectCategories(t);
+  const sampleProjects = getProjects(t);
 
   const filteredProjects = selectedCategory
     ? sampleProjects.filter(p => p.category === selectedCategory)

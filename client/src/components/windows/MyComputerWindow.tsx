@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WindowType } from '../../types';
 import { useLanguage } from '../../hooks/useLanguage';
 
@@ -12,11 +12,11 @@ interface FileItem {
   windowType?: WindowType; // للربط مع نوافذ سطح المكتب
 }
 
-const desktopFiles: FileItem[] = [
+const getDesktopFiles = (t: (key: string) => string): FileItem[] => [
   // System Drives
   {
     id: 'c-drive',
-    name: 'Local Disk (C:)',
+    name: t('localDisk'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/cd_drive_purple-0.png',
     children: []
@@ -25,7 +25,7 @@ const desktopFiles: FileItem[] = [
   // Desktop Files
   {
     id: 'me',
-    name: 'Me.txt',
+    name: t('meFile'),
     type: 'file',
     icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
     windowType: 'me',
@@ -62,14 +62,14 @@ Ready to collaborate on something amazing? Let's build something cool together!`
   },
   {
     id: 'projects',
-    name: 'Projects',
+    name: t('projects'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
     windowType: 'projects',
     children: [
       {
         id: 'web-projects',
-        name: 'Web Development',
+        name: t('webDev'),
         type: 'folder',
         icon: 'https://win98icons.alexmeub.com/icons/png/html-1.png',
         children: [
@@ -180,7 +180,7 @@ Status: Brewing success online`
       },
       {
         id: 'creative-projects',
-        name: 'Creative & Art',
+        name: t('creativeCoding'),
         type: 'folder',
         icon: 'https://win98icons.alexmeub.com/icons/png/paint_brush-0.png',
         children: [
@@ -346,7 +346,7 @@ Status: Active daily operation`
   },
   {
     id: 'music',
-    name: 'Music',
+    name: t('music'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png',
     windowType: 'music',
@@ -391,7 +391,7 @@ Status: Active daily operation`
     children: [
       {
         id: 'ideas',
-        name: 'Ideas.txt',
+        name: t('ideasFile'),
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-3.png',
         content: `Why I Still Design Like It's 1998
@@ -444,7 +444,7 @@ Uptime: Running since the dial-up era`
   },
   {
     id: 'downloads',
-    name: 'Downloads',
+    name: t('downloads'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png',
     windowType: 'downloads',
@@ -529,7 +529,7 @@ Ready to collaborate on projects that stand out from the crowd.`
   },
   {
     id: 'contact',
-    name: 'Contact Info',
+    name: t('contactInfo'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png',
     children: [
@@ -552,7 +552,7 @@ Ready to collaborate on projects that stand out from the crowd.`
   // System Folders
   {
     id: 'control-panel',
-    name: 'Control Panel',
+    name: t('controlPanel'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/settings_gear-0.png',
     children: [
@@ -582,7 +582,7 @@ Uptime: Running since the dial-up era`
   // Recycle Bin
   {
     id: 'recycle',
-    name: 'Recycle Bin',
+    name: t('recycleBin'),
     type: 'folder',
     icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
     children: []
@@ -594,9 +594,18 @@ interface MyComputerWindowProps {
 }
 
 export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentPath, setCurrentPath] = useState<FileItem[]>([]);
+  const desktopFiles = getDesktopFiles(t);
   const [currentFiles, setCurrentFiles] = useState<FileItem[]>(desktopFiles);
+
+  // Update files when language changes
+  useEffect(() => {
+    const updatedFiles = getDesktopFiles(t);
+    if (currentPath.length === 0) {
+      setCurrentFiles(updatedFiles);
+    }
+  }, [language, t, currentPath.length]);
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
   const [viewingContent, setViewingContent] = useState(false);
 
@@ -621,7 +630,7 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
       setCurrentPath(newPath);
       
       if (newPath.length === 0) {
-        setCurrentFiles(desktopFiles);
+        setCurrentFiles(getDesktopFiles(t));
       } else {
         const parentFolder = newPath[newPath.length - 1];
         setCurrentFiles(parentFolder.children || []);

@@ -110,6 +110,12 @@ export const translations: Record<string, Translation> = {
     address: 'Address:',
     emptyFolder: 'This folder is empty',
     systemType: 'System Type: 90s kid / Modern dev hybrid',
+    meFile: 'Me.txt',
+    localDisk: 'Local Disk (C:)',
+    controlPanel: 'Control Panel',
+    contactInfo: 'Contact Info',
+    ideasFile: 'Ideas.txt',
+    items: 'item(s)',
     
     // Terminal
     terminalWelcome: 'Microsoft(R) MS-DOS(R) Version 6.22',
@@ -196,6 +202,14 @@ export const translations: Record<string, Translation> = {
     'crystal4giftDesc': 'Gifts and accessories store',
     'candyshopaliDesc': 'Sweets and food store',
     'altarafDesc': 'Integrated services and solutions company',
+    
+    // Full project descriptions for "Other Websites" section
+    'moraModaaFullDesc': 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
+    'printday7FullDesc': 'Helped PrintDay7 with backend and frontend improvements — solved technical issues, improved performance, and customized features to make the platform run smoother for users.',
+    'pixelSuiteFullDesc': 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
+    'crystal4giftFullDesc': 'Crystal gifts with luxury vibes. Clean Arabic support, RTL layout, and smooth shopping flow. Built for elegance and cultural authenticity.',
+    'slsCafeFullDesc': 'All the café feels, none of the queue. An online menu experience that captures the cozy vibes of SLS Café — warm, inviting, and smooth as their coffee.',
+    'altarafLinksFullDesc': 'All the links, none of the drama 🔗 Simple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
     
 
     
@@ -313,6 +327,14 @@ export const translations: Record<string, Translation> = {
     address: 'العنوان:',
     emptyFolder: 'هذا المجلد فارغ',
     systemType: 'نوع النظام: هجين بين طفل التسعينات ومطور حديث',
+
+    meFile: 'Me.txt',
+    localDisk: 'القرص المحلي (C:)',
+    controlPanel: 'لوحة التحكم',
+    contactInfo: 'معلومات التواصل',
+    downloads: 'التحميلات',
+    ideasFile: 'Ideas.txt',
+    recycleBin: 'سلة المهملات',
     
     // Terminal
     terminalWelcome: 'Microsoft(R) MS-DOS(R) Version 6.22',
@@ -403,6 +425,14 @@ export const translations: Record<string, Translation> = {
     'crystal4giftDesc': 'متجر هدايا وإكسسوارات',
     'candyshopaliDesc': 'متجر حلويات ومأكولات',
     'altarafDesc': 'شركة خدمات وحلول متكاملة',
+    
+    // وصف المشاريع الكاملة لقسم "المواقع الأخرى"
+    'moraModaaFullDesc': 'موضة؟ تمام. أجواء؟ تمام مضاعف. متجر شوبيفاي أنيق يشبه خزانتك قبل العيد — نظيف، قابل للتصفح، ومليء بالإطلالات العصرية.',
+    'printday7FullDesc': 'ساعدت PrintDay7 بتحسينات الباك إند والفرونت إند — حلّيت المشاكل التقنية، حسّنت الأداء، وخصصت الميزات لجعل المنصة تعمل بسلاسة أكثر للمستخدمين.',
+    'pixelSuiteFullDesc': 'كهف رقمي للغنائم خاص بالجيمرز — اسكنز، باقات، وحكة "أضف للسلة". ثيم داكن، تصميم نظيف، وأجل... مبني على شوبيفاي لأننا نحب الحياة سهلة.',
+    'crystal4giftFullDesc': 'هدايا كريستالية بأجواء فاخرة. دعم عربي نظيف، تخطيط RTL، وتدفق تسوق سلس. مبني للأناقة والأصالة الثقافية.',
+    'slsCafeFullDesc': 'كل أحاسيس الكافيه، بدون طابور. تجربة قائمة طعام أونلاين تلتقط الأجواء المريحة لكافيه SLS — دافئة، مرحبة، وناعمة مثل قهوتهم.',
+    'altarafLinksFullDesc': 'كل الروابط، بدون دراما 🔗 بسيط، نظيف، ومباشر للنقطة — مركز روابط أنيق لسفريات الأطراف. فكر فيه كبطاقة عمل رقمية، لكن بأجواء ✈️.',
     
     // Projects
     projectsDescription: 'مجموعة من مشاريعي الرقمية',
