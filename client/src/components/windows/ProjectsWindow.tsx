@@ -110,7 +110,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: alaliPlusImage,
-    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
+    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw==',
+    instagramLink: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
   },
   {
     id: '8',
@@ -119,7 +120,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: altarafNetImage,
-    link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
+    link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0',
+    instagramLink: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },
   
   // Other Websites section - Full projects with descriptions
