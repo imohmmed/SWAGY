@@ -401,3 +401,8 @@ body {
 .text-size-extra-large .window-content h3 {
   font-size: calc(1.25rem * var(--text-scale)) !important;
 }
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}

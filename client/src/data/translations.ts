@@ -148,6 +148,7 @@ export const translations: Record<string, Translation> = {
     workedWith: 'Worked With',
     liveWebsites: 'Live Websites', 
     telegramBots: 'Telegram Bots',
+    selectCategory: 'Select a category to view projects',
     
     // Project Buttons
     instagram: 'Instagram',
@@ -353,6 +354,7 @@ export const translations: Record<string, Translation> = {
     workedWith: 'تعاونت معهم',
     liveWebsites: 'مواقع مباشرة',
     telegramBots: 'بوتات تيليجرام',
+    selectCategory: 'اختر فئة لعرض المشاريع',
     
     // Project Buttons
     instagram: 'انستجرام',

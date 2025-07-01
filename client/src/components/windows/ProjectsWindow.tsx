@@ -407,7 +407,7 @@ export function ProjectsWindow() {
           </div>
         ) : (
           <div>
-            <h3 className="font-bold mb-4">Select a category to view projects</h3>
+            <h3 className="font-bold mb-4">{t('selectCategory')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {sampleProjects.map((project) => (
                 <div

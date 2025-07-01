@@ -47,7 +47,7 @@ export function Window({
   onFocus,
   onOpenWindow 
 }: WindowProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { dragState, startDrag, updateDrag, endDrag } = useDrag();
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -138,6 +138,7 @@ export function Window({
 
   return (
     <div
+      key={`${window.id}-${language}`}
       ref={windowRef}
       className={`win-window ${isMobile ? 'mobile-fullscreen' : ''}`}
       style={windowStyle}
@@ -148,6 +149,8 @@ export function Window({
         className={`win-titlebar ${!isActive ? 'inactive' : ''}`}
         onMouseDown={handleTitleBarMouseDown}
         onTouchStart={handleTitleBarTouchStart}
+        dir={language === 'ar' ? 'rtl' : 'ltr'}
+        style={{ direction: language === 'ar' ? 'rtl' : 'ltr' }}
       >
         <span className="text-xs font-bold select-none">{t(window.title)}</span>
         <div className="flex">
@@ -187,7 +190,11 @@ export function Window({
       {/* Window Content */}
       <div 
         className="h-full window-content" 
-        style={{ height: 'calc(100% - 24px)' }}
+        style={{ 
+          height: 'calc(100% - 24px)',
+          direction: language === 'ar' ? 'rtl' : 'ltr'
+        }}
+        dir={language === 'ar' ? 'rtl' : 'ltr'}
       >
         {window.type === 'mycomputer' ? (
           <MyComputerWindow onOpenWindow={onOpenWindow} />
