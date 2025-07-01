@@ -388,70 +388,72 @@ export function ProjectsWindow() {
       
       {/* Windows 98 Style Modal for project details */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4" onClick={() => setSelectedProject(null)}>
-          <div className="win-window w-full max-w-md" style={{ height: 'auto', display: 'table' }} onClick={e => e.stopPropagation()}>
-            {/* Windows 98 Title Bar */}
-            <div className="win-titlebar">
-              <div className="flex items-center gap-1">
-                <img 
-                  src={selectedProject.logo || selectedProject.image}
-                  alt="" 
-                  className="w-4 h-4 object-cover" 
-                  draggable={false}
-                />
-                <span className="text-[11px] truncate">{selectedProject.title} - Details</span>
-              </div>
-              <div className="flex gap-1">
-                <button
-                  className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-black text-xs hover:bg-[rgb(var(--win-light-gray))] leading-none"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  ×
-                </button>
-              </div>
-            </div>
-            
-            {/* Content */}
-            <div className="bg-[rgb(var(--win-gray))] p-2">
-              <div
-                className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2"
-                style={{
-                  aspectRatio: '16/9',
-                  backgroundImage: `url(${selectedProject.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-              
-              <div className="text-sm whitespace-pre-line leading-snug mb-2">
-                {selectedProject.description}
-              </div>
-              
-              {selectedProject.technologies.length > 0 && (
-                <div className="text-xs text-gray-600 p-1 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2">
-                  <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
+        <div className="fixed inset-0 bg-black bg-opacity-30 z-50" onClick={() => setSelectedProject(null)}>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md mx-4">
+            <div className="win-window" style={{ height: 'fit-content', minHeight: 'fit-content', maxHeight: 'fit-content' }} onClick={e => e.stopPropagation()}>
+              {/* Windows 98 Title Bar */}
+              <div className="win-titlebar">
+                <div className="flex items-center gap-1">
+                  <img 
+                    src={selectedProject.logo || selectedProject.image}
+                    alt="" 
+                    className="w-4 h-4 object-cover" 
+                    draggable={false}
+                  />
+                  <span className="text-[11px] truncate">{selectedProject.title} - Details</span>
                 </div>
-              )}
-              
-              {/* Bottom Buttons */}
-              <div className="flex gap-2 justify-center">
-                <button
-                  className="win-button px-3 py-1 text-xs"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  Close
-                </button>
-                {selectedProject.link && (
+                <div className="flex gap-1">
                   <button
-                    className="win-button px-3 py-1 text-xs font-bold"
-                    onClick={() => {
-                      window.open(selectedProject.link, '_blank');
-                      setSelectedProject(null);
-                    }}
+                    className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-black text-xs hover:bg-[rgb(var(--win-light-gray))] leading-none"
+                    onClick={() => setSelectedProject(null)}
                   >
-                    {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                    ×
                   </button>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="bg-[rgb(var(--win-gray))] p-2">
+                <div
+                  className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2"
+                  style={{
+                    aspectRatio: '16/9',
+                    backgroundImage: `url(${selectedProject.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
+                
+                <div className="text-sm whitespace-pre-line leading-snug mb-2">
+                  {selectedProject.description}
+                </div>
+                
+                {selectedProject.technologies.length > 0 && (
+                  <div className="text-xs text-gray-600 p-1 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2">
+                    <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
+                  </div>
                 )}
+                
+                {/* Bottom Buttons */}
+                <div className="flex gap-2 justify-center">
+                  <button
+                    className="win-button px-3 py-1 text-xs"
+                    onClick={() => setSelectedProject(null)}
+                  >
+                    Close
+                  </button>
+                  {selectedProject.link && (
+                    <button
+                      className="win-button px-3 py-1 text-xs font-bold"
+                      onClick={() => {
+                        window.open(selectedProject.link, '_blank');
+                        setSelectedProject(null);
+                      }}
+                    >
+                      {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
