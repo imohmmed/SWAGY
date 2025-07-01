@@ -8,7 +8,7 @@ const downloadItems = [
     description: 'My official CV — aka "how I look on paper"',
     size: '2.3 MB',
     date: 'Nov 2024',
-    downloadUrl: 'https://cdn.shopify.com/s/files/1/0822/7219/0765/files/IMG_6489.jpg?v=1748692855'
+    downloadUrl: 'https://f.top4top.io/p_3469acl2b0.jpeg'
   },
   {
     id: '2',
@@ -31,9 +31,23 @@ const instructions = [
 export function DownloadsWindow() {
   const { t } = useLanguage();
 
-  const handleDownload = (item: any) => {
+  const handleDownload = async (item: any) => {
     if (item.downloadUrl) {
-      window.open(item.downloadUrl, '_blank');
+      try {
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = item.downloadUrl;
+        link.download = item.filename; // Use the filename for download
+        link.target = '_blank';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        // Fallback to opening in new tab
+        window.open(item.downloadUrl, '_blank');
+      }
     }
   };
 
