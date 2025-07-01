@@ -62,14 +62,7 @@ export function MeWindow() {
               return part;
             })}
           </div>
-          <p className="mb-2">{t('specializedIn')}</p>
-          <ul className="list-disc ml-4 mb-2">
-            <li>{t('webDev')}</li>
-            <li>{t('uiuxDesign')}</li>
-            <li>{t('creativeCoding')}</li>
-            <li>{t('retroComputing')}</li>
-          </ul>
-          <p>{t('currentlyBuilding')}</p>
+
         </div>
         
         <div className="bg-[rgb(var(--win-light-gray))] border-2 border-[rgb(var(--win-border-dark))] p-3">
