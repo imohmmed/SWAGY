@@ -242,6 +242,7 @@ interface Project {
   technologies: string[];
   image: string;
   link: string;
+  logo?: string;
 }
 
 export function ProjectsWindow() {
@@ -387,22 +388,22 @@ export function ProjectsWindow() {
       
       {/* Windows 98 Style Modal for project details */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" onClick={() => setSelectedProject(null)}>
-          <div className="win-window max-w-lg w-full mx-4 max-h-[80vh] overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-start justify-center z-50 p-4 pt-8 overflow-auto" onClick={() => setSelectedProject(null)}>
+          <div className="win-window w-full max-w-md min-h-fit" onClick={e => e.stopPropagation()}>
             {/* Windows 98 Title Bar */}
             <div className="win-titlebar">
               <div className="flex items-center gap-1">
                 <img 
-                  src="https://win98icons.alexmeub.com/icons/png/file_find-0.png" 
+                  src={selectedProject.logo || selectedProject.image}
                   alt="" 
-                  className="w-4 h-4" 
+                  className="w-4 h-4 object-cover" 
                   draggable={false}
                 />
-                <span>{selectedProject.title} - Details</span>
+                <span className="text-[11px] truncate">{selectedProject.title} - Details</span>
               </div>
               <div className="flex gap-1">
                 <button
-                  className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-xs hover:bg-[rgb(var(--win-light-gray))]"
+                  className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-black text-xs hover:bg-[rgb(var(--win-light-gray))] leading-none"
                   onClick={() => setSelectedProject(null)}
                 >
                   ×
@@ -411,9 +412,9 @@ export function ProjectsWindow() {
             </div>
             
             {/* Window Content */}
-            <div className="p-4 bg-[rgb(var(--win-gray))] overflow-auto max-h-[calc(80vh-40px)]">
+            <div className="p-3 bg-[rgb(var(--win-gray))] space-y-3">
               <div
-                className="w-full bg-gray-300 mb-3 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
+                className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
                 style={{
                   aspectRatio: '16/9',
                   backgroundImage: `url(${selectedProject.image})`,
@@ -422,26 +423,26 @@ export function ProjectsWindow() {
                 }}
               />
               
-              <div className="text-xs mb-3 whitespace-pre-line leading-relaxed">
+              <div className="text-xs whitespace-pre-line leading-relaxed">
                 {selectedProject.description}
               </div>
               
               {selectedProject.technologies.length > 0 && (
-                <div className="text-xs text-gray-600 mb-4 p-2 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]">
+                <div className="text-xs text-gray-600 p-2 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]">
                   <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
                 </div>
               )}
               
-              <div className="flex gap-2 justify-center">
+              <div className="flex gap-2 justify-center pt-2">
                 <button
-                  className="win-button px-4 py-2 text-xs"
+                  className="win-button px-3 py-1 text-xs"
                   onClick={() => setSelectedProject(null)}
                 >
                   Close
                 </button>
                 {selectedProject.link && (
                   <button
-                    className="win-button px-4 py-2 text-xs font-bold"
+                    className="win-button px-3 py-1 text-xs font-bold"
                     onClick={() => {
                       window.open(selectedProject.link, '_blank');
                       setSelectedProject(null);
