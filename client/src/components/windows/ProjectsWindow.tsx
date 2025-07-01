@@ -310,7 +310,7 @@ export function ProjectsWindow() {
                         backgroundPosition: 'center'
                       }}
                     />
-                    <div className="text-xs font-bold text-center">{project.title}</div>
+                    <div className="text-xs font-bold text-left">{project.title}</div>
                   </div>
                 ))}
               </div>
