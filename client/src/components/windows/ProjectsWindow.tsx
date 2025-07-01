@@ -116,7 +116,7 @@ const sampleProjects = [
   {
     id: '10',
     title: 'Printday7',
-    description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
+    description: 'Helped PrintDay7 with backend and frontend improvements — solved technical issues, improved performance, and customized features to make the platform run smoother for users.',
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
     image: printday7WebsiteImage,
@@ -204,8 +204,8 @@ const sampleProjects = [
     description: '1. Welcome Message – Instantly greets users and guides them clearly.\n2. Job Applications – Allows users to apply for available job positions.\n3. FAQs Support – Quick answers to common questions like delivery, return, payment, etc.\n4. Live Help Option – If the bot doesn\'t solve it, customers can write directly and get a reply ASAP.\n5. Service Menu',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Customer Support', 'FAQ System', 'Job Applications'],
-    image: hrSystemBotImage,
-    logo: hrSystemBotImage,
+    image: addToCloseFriendsBotImage,
+    logo: addToCloseFriendsBotImage,
     link: 'https://t.me/Mora0Bot'
   },
   {
@@ -214,8 +214,8 @@ const sampleProjects = [
     description: '1. Main Function – Automatically adds all Instagram followers of a specific account to its Close Friends list.\n2. Who it\'s for – Perfect for creators, private sellers, or anyone who wants to post exclusive stories to all followers.\n3. Automation – No need to add users manually — the bot handles it for you in real time.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Instagram API', 'Automation', 'Social Media Management'],
-    image: customerServiceBotImage,
-    logo: customerServiceBotImage,
+    image: hrSystemBotImage,
+    logo: hrSystemBotImage,
     link: 'https://t.me/mohmmed'
   },
   {
@@ -224,8 +224,8 @@ const sampleProjects = [
     description: '1. Clock-in/out system – Tracks working hours like a digital fingerprint.\n2. Auto salary calculation – Daily + overtime pay done automatically.\n3. Role management – Add employees & managers with custom access.\n4. Department stats – See how many staff per section (online, store, etc.).\n5. Work reports – View full logs of hours and wages.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['HR Management', 'Time Tracking', 'Payroll System'],
-    image: addToCloseFriendsBotImage,
-    logo: addToCloseFriendsBotImage,
+    image: customerServiceBotImage,
+    logo: customerServiceBotImage,
     link: 'https://t.me/mohmmed'
   },
   {
