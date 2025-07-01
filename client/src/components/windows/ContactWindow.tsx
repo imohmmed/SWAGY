@@ -111,7 +111,7 @@ export function ContactWindow() {
 
         
         <div>
-          <label className="block text-xs font-bold mb-1">From:</label>
+          <label className="block text-xs font-bold mb-1">{t('from')}</label>
           <input
             type="email"
             name="email"
@@ -150,9 +150,9 @@ export function ContactWindow() {
             onBlur={handleInputBlur}
             className="w-full p-1 win-select"
           >
-            <option value="Shopping website">Shopping website</option>
-            <option value="Telegram bots">Telegram bots</option>
-            <option value="Other">Other</option>
+            <option value="Shopping website">{t('shoppingWebsite')}</option>
+            <option value="Telegram bots">{t('telegramBots')}</option>
+            <option value="Other">{t('other')}</option>
           </select>
         </div>
         

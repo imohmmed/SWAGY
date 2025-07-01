@@ -4,28 +4,28 @@ const getDownloadItems = (t: (key: string) => string) => [
   {
     id: '1',
     icon: 'https://win98icons.alexmeub.com/icons/png/media_player_stream_sun4.png',
-    filename: 'Resume_SWAGY_2024.pdf',
-    description: t('resumeDescription') || 'My official CV — aka "how I look on paper"',
-    size: '2.3 MB',
-    date: 'Nov 2024',
+    filename: t('resumeTitle'),
+    title: t('resumeTitle'),
+    description: t('resumeDesc'),
+    size: t('resumeSize'),
     downloadUrl: 'https://f.top4top.io/p_3469acl2b0.jpeg'
   },
   {
     id: '2',
     icon: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
-    filename: 'Brand_Guidelines.pdf',
-    description: t('brandDescription') || 'Logos, colors, brand rules — basically the SWAGY style guide.',
-    size: '4.2 MB',
-    date: 'Sep 2024',
+    filename: t('brandTitle'),
+    title: t('brandTitle'),
+    description: t('brandGuidelinesDesc'),
+    size: t('brandSize'),
     downloadUrl: 'https://cdn.shopify.com/s/files/1/0822/7219/0765/files/Brand_Guidelines_SWAGY.pdf?v=1748693389'
   }
 ];
 
 const getInstructions = (t: (key: string) => string) => [
-  t('downloadInstruction1') || 'Right-click and "Save As" for smooth downloading',
-  t('downloadInstruction2') || 'All files are clean and virus-free 🧼',
-  t('downloadInstruction3') || 'Need a different format? Just hit me up',
-  t('downloadInstruction4') || 'Updated regularly (because I actually care)'
+  t('rightClickSave'),
+  t('filesClean'),
+  t('differentFormat'),
+  t('updatedRegularly')
 ];
 
 export function DownloadsWindow() {
@@ -74,10 +74,10 @@ export function DownloadsWindow() {
                 />
               </div>
               <div className="flex-1">
-                <div className="font-bold text-sm">{item.filename}</div>
+                <div className="font-bold text-sm">{item.title}</div>
                 <div className="text-xs text-gray-600">{item.description}</div>
                 <div className="text-xs text-gray-500">
-                  Size: {item.size} | Updated: {item.date}
+                  {item.size}
                 </div>
               </div>
               <button

@@ -20,8 +20,8 @@ export function MeWindow() {
               draggable={false}
             />
           </div>
-          <h2 className="text-lg font-bold mb-2">SWAGY</h2>
-          <p className="text-sm mb-3">Engineer, Model & Programmer</p>
+          <h2 className="text-lg font-bold mb-2">{t('swagy')}</h2>
+          <p className="text-sm mb-3">{t('engineerModel')}</p>
           
           {/* Social Media Icons */}
           <div className="flex justify-center gap-3 mb-2">
