@@ -54,7 +54,14 @@ export function MeWindow() {
         
         <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 text-sm">
           <h3 className="font-bold mb-2">{t('aboutMe')}</h3>
-          <p className="mb-2">{t('aboutDescription')}</p>
+          <div className="mb-2 whitespace-pre-line">
+            {t('aboutDescription').split('*').map((part, index) => {
+              if (index % 2 === 1) {
+                return <strong key={index}>{part}</strong>;
+              }
+              return part;
+            })}
+          </div>
           <p className="mb-2">{t('specializedIn')}</p>
           <ul className="list-disc ml-4 mb-2">
             <li>{t('webDev')}</li>
