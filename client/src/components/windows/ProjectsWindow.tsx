@@ -433,29 +433,27 @@ export function ProjectsWindow() {
                     <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
                   </div>
                 )}
-              </div>
-            </div>
-            
-            {/* Fixed Bottom Buttons */}
-            <div className="bg-[rgb(var(--win-gray))] px-2 py-2 border-t border-[rgb(var(--win-border-dark))] flex-shrink-0">
-              <div className="flex gap-2 justify-center">
-                <button
-                  className="win-button px-3 py-1 text-xs"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  Close
-                </button>
-                {selectedProject.link && (
+                
+                {/* Bottom Buttons directly in content */}
+                <div className="flex gap-2 justify-center mt-2">
                   <button
-                    className="win-button px-3 py-1 text-xs font-bold"
-                    onClick={() => {
-                      window.open(selectedProject.link, '_blank');
-                      setSelectedProject(null);
-                    }}
+                    className="win-button px-3 py-1 text-xs"
+                    onClick={() => setSelectedProject(null)}
                   >
-                    {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                    Close
                   </button>
-                )}
+                  {selectedProject.link && (
+                    <button
+                      className="win-button px-3 py-1 text-xs font-bold"
+                      onClick={() => {
+                        window.open(selectedProject.link, '_blank');
+                        setSelectedProject(null);
+                      }}
+                    >
+                      {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
