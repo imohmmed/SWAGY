@@ -48,7 +48,7 @@ export const translations: Record<string, Translation> = {
     
     // About content
     aboutMe: 'About Me:',
-    aboutDescription: '*Heyyy!*\nI\'m *Mohammed Abdulkarim* — a proud *Biomedical Engineering* graduate from *Al-Farahidi University*\nBut wait, there\'s more!\nI\'m also deep into *programming*, *fashion*, and anything that screams weird but cool.\nI like working on things that make people say, *"Wait, what even is this?"* — and then two minutes later, *"Okay, that\'s actually genius."*',
+    aboutDescription: '*Heyyy!*\nI\'m *Mohammed Abdulkarim* — a proud *Biomedical Engineering* graduate from *Al-Farahidi University*\n(I genuinely enjoy diving into circuits, signals, and all the nerdy stuff)\nBut wait, there\'s more!\nI\'m also deep into *programming*, *fashion*, and anything that screams weird but cool.\n\nI like working on things that make people say, *"Wait, what even is this?"* — and then two minutes later, *"Okay, that\'s actually genius."*',
     specializedIn: 'Specialized in:',
     webDev: 'Web Development',
     uiuxDesign: 'UI/UX Design',
@@ -168,7 +168,7 @@ export const translations: Record<string, Translation> = {
     
     // About content
     aboutMe: 'نبذة عني:',
-    aboutDescription: '*مرحباً!*\nأنا *محمد عبدالكريم* — خريج فخور في *الهندسة الطبية الحيوية* من *جامعة الفراهيدي*\nولكن انتظر، هناك المزيد!\nأنا أيضاً مولع بـ*البرمجة* و*الموضة* وأي شيء يصرخ غريب لكن رائع.\nأحب العمل على أشياء تجعل الناس يقولون، *"انتظر، ما هذا حتى؟"* — ثم بعد دقيقتين *"حسناً، هذا عبقري فعلاً."*',
+    aboutDescription: '*مرحباً!*\nأنا *محمد عبدالكريم* — خريج فخور في *الهندسة الطبية الحيوية* من *جامعة الفراهيدي*\n(أستمتع حقاً بالغوص في الدوائر والإشارات وكل الأشياء التقنية)\nولكن انتظر، هناك المزيد!\nأنا أيضاً مولع بـ*البرمجة* و*الموضة* وأي شيء يصرخ غريب لكن رائع.\n\nأحب العمل على أشياء تجعل الناس يقولون، *"انتظر، ما هذا حتى؟"* — ثم بعد دقيقتين *"حسناً، هذا عبقري فعلاً."*',
     specializedIn: 'متخصص في:',
     webDev: 'تطوير الويب',
     uiuxDesign: 'تصميم واجهة المستخدم وتجربة المستخدم',
