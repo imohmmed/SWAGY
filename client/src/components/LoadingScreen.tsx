@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import swalyLogo from '@assets/IMG_6470.png';
+import swalyLogo from '@assets/swagy-logo-alt.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;

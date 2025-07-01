@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
-import moraModaaImage from '@assets/428E9314-85CB-44BA-BEB3-CF8E51606DCB.jpeg';
-import pixelSuiteImage from '@assets/E6FA0246-CB67-4C43-B49F-5DC3158A48D9.jpeg';
-import crystalGiftImage from '@assets/FEBA9F27-7D4A-48DA-863E-A982DD1C8533.jpeg';
-import slsCafeImage from '@assets/0E99AB1D-C087-4E31-B7C2-C8F128BA1884.jpeg';
-import altarafLinksImage from '@assets/E4985A71-EE3B-4B5A-9710-74725AFEE3C7.jpeg';
+import moraModaaImage from '@assets/mora-modaa-logo.jpeg';
+import pixelSuiteImage from '@assets/pixel-suite-logo.jpeg';
+import crystalGiftImage from '@assets/crystal-gift-logo.jpeg';
+import slsCafeImage from '@assets/sls-cafe-logo.jpeg';
+import altarafLinksImage from '@assets/altaraf-links-logo.jpeg';
 import altarafNetImage from '@assets/altaraf-net-logo.png';
-import filmoraTvImage from '@assets/1673C2B9-71D9-4A63-9746-6CA90FAB8EE7.jpeg';
+import filmoraTvImage from '@assets/filmora-tv-logo.jpeg';
 import printday7Image from '@assets/printday7-logo.jpeg';
-import printday7WebsiteImage from '@assets/3006175A-6775-46E2-9385-AE938D37F7BE_1751381358892.jpeg';
+import printday7WebsiteImage from '@assets/printday7-website-screenshot.jpeg';
 import alaliPlusImage from '@assets/alaliplus-logo.jpeg';
 import candyshopaliImage from '@assets/candyshopali-logo.jpeg';
-import swagyLogo from '@assets/IMG_6470_1751373028778.png';
+import swagyLogo from '@assets/swagy-logo-main.png';
 import quranBotImage from '@assets/quran-bot-logo.jpeg';
 import botsMakerImage from '@assets/bots-maker-logo.jpeg';
 import serviceBotImage from '@assets/service-bot-logo.jpeg';
@@ -19,7 +19,7 @@ import customerServiceBotImage from '@assets/customer-service-bot-logo.jpeg';
 import addToCloseFriendsBotImage from '@assets/add-to-close-friends-bot-logo.jpeg';
 import hrSystemBotImage from '@assets/hr-system-bot-logo.jpeg';
 import downloaderBotImage from '@assets/downloader-bot-logo.jpeg';
-import instagramIcon from '@assets/IMG_7835_1751388021998.png';
+import instagramIcon from '@assets/instagram-icon.png';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
