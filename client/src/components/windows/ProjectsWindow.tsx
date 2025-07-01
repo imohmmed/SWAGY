@@ -413,7 +413,7 @@ export function ProjectsWindow() {
             
             {/* Scrollable Window Content */}
             <div className="bg-[rgb(var(--win-gray))] overflow-y-auto flex-1">
-              <div className="p-3 space-y-3">
+              <div className="p-2 space-y-2">
                 <div
                   className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
                   style={{
@@ -424,7 +424,7 @@ export function ProjectsWindow() {
                   }}
                 />
                 
-                <div className="text-xs whitespace-pre-line leading-relaxed">
+                <div className="text-xs whitespace-pre-line leading-snug">
                   {selectedProject.description}
                 </div>
                 
@@ -437,7 +437,7 @@ export function ProjectsWindow() {
             </div>
             
             {/* Fixed Bottom Buttons */}
-            <div className="bg-[rgb(var(--win-gray))] p-3 border-t border-[rgb(var(--win-border-dark))] flex-shrink-0">
+            <div className="bg-[rgb(var(--win-gray))] px-2 py-2 border-t border-[rgb(var(--win-border-dark))] flex-shrink-0">
               <div className="flex gap-2 justify-center">
                 <button
                   className="win-button px-3 py-1 text-xs"
