@@ -6,6 +6,7 @@ import { StartMenu } from './components/StartMenu';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
+import { useFontScale } from './hooks/useFontScale';
 import { WindowType } from './types';
 import { stopGlobalAudio } from './components/windows/MusicWindow';
 import swalyLogo from '@assets/IMG_6470.png';
@@ -24,6 +25,7 @@ function App() {
   } = useWindows();
   
   const { t } = useLanguage();
+  const { getFontScale, increaseFontSize, decreaseFontSize, resetFontSize } = useFontScale();
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
@@ -197,11 +199,15 @@ function App() {
           window={window}
           isActive={activeWindow === window.id}
           isMobile={isMobile}
+          fontScale={getFontScale(window.id)}
           onClose={() => handleWindowClose(window.id)}
           onMinimize={() => minimizeWindow(window.id)}
           onMaximize={() => maximizeWindow(window.id)}
           onFocus={() => bringToFront(window.id)}
           onOpenWindow={openWindow}
+          onFontIncrease={() => increaseFontSize(window.id)}
+          onFontDecrease={() => decreaseFontSize(window.id)}
+          onFontReset={() => resetFontSize(window.id)}
         />
       ))}
       

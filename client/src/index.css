@@ -307,4 +307,38 @@ body {
       max-width: 150px;
     }
   }
+
+  /* RTL Support */
+  .rtl {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .ltr {
+    direction: ltr;
+    text-align: left;
+  }
+  
+  /* RTL specific adjustments */
+  .rtl .flex:not(.flex-col) {
+    flex-direction: row-reverse;
+  }
+  
+  .rtl .text-left {
+    text-align: right !important;
+  }
+  
+  .rtl .text-right {
+    text-align: left !important;
+  }
+
+  .rtl .border-r-2 {
+    border-right: none;
+    border-left: 2px solid;
+  }
+
+  .rtl .border-l-2 {
+    border-left: none;
+    border-right: 2px solid;
+  }
 }
