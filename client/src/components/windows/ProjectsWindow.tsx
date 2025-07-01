@@ -388,7 +388,7 @@ export function ProjectsWindow() {
       
       {/* Windows 98 Style Modal for project details */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-start justify-center z-50 p-4 pt-16" onClick={() => setSelectedProject(null)}>
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4" onClick={() => setSelectedProject(null)}>
           <div className="win-window w-full max-w-md" onClick={e => e.stopPropagation()}>
             {/* Windows 98 Title Bar */}
             <div className="win-titlebar">
@@ -411,49 +411,47 @@ export function ProjectsWindow() {
               </div>
             </div>
             
-            {/* Window Content - Compact */}
-            <div className="bg-[rgb(var(--win-gray))]">
-              <div className="p-2">
-                <div
-                  className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2"
-                  style={{
-                    aspectRatio: '16/9',
-                    backgroundImage: `url(${selectedProject.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                />
-                
-                <div className="text-sm whitespace-pre-line leading-snug mb-2">
-                  {selectedProject.description}
+            {/* Content */}
+            <div className="bg-[rgb(var(--win-gray))] p-2">
+              <div
+                className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2"
+                style={{
+                  aspectRatio: '16/9',
+                  backgroundImage: `url(${selectedProject.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
+              />
+              
+              <div className="text-sm whitespace-pre-line leading-snug mb-2">
+                {selectedProject.description}
+              </div>
+              
+              {selectedProject.technologies.length > 0 && (
+                <div className="text-xs text-gray-600 p-1 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2">
+                  <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
                 </div>
-                
-                {selectedProject.technologies.length > 0 && (
-                  <div className="text-xs text-gray-600 p-1 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2">
-                    <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
-                  </div>
-                )}
-                
-                {/* Bottom Buttons */}
-                <div className="flex gap-2 justify-center">
+              )}
+              
+              {/* Bottom Buttons */}
+              <div className="flex gap-2 justify-center">
+                <button
+                  className="win-button px-3 py-1 text-xs"
+                  onClick={() => setSelectedProject(null)}
+                >
+                  Close
+                </button>
+                {selectedProject.link && (
                   <button
-                    className="win-button px-3 py-1 text-xs"
-                    onClick={() => setSelectedProject(null)}
+                    className="win-button px-3 py-1 text-xs font-bold"
+                    onClick={() => {
+                      window.open(selectedProject.link, '_blank');
+                      setSelectedProject(null);
+                    }}
                   >
-                    Close
+                    {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
                   </button>
-                  {selectedProject.link && (
-                    <button
-                      className="win-button px-3 py-1 text-xs font-bold"
-                      onClick={() => {
-                        window.open(selectedProject.link, '_blank');
-                        setSelectedProject(null);
-                      }}
-                    >
-                      {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
-                    </button>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>
