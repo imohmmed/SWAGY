@@ -8,7 +8,7 @@ import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
 import { WindowType } from './types';
 import { stopGlobalAudio } from './components/windows/MusicWindow';
-import swalyLogo from '@assets/swagy-logo-alt.png';
+import swalyLogo from '@assets/IMG_6470.png';
 
 function App() {
   const {
