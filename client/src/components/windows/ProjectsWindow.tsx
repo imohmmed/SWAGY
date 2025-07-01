@@ -8,6 +8,7 @@ import altarafLinksImage from '@assets/E4985A71-EE3B-4B5A-9710-74725AFEE3C7.jpeg
 import altarafNetImage from '@assets/altaraf-net-logo.png';
 import filmoraTvImage from '@assets/1673C2B9-71D9-4A63-9746-6CA90FAB8EE7.jpeg';
 import printday7Image from '@assets/printday7-logo.jpeg';
+import printday7WebsiteImage from '@assets/3006175A-6775-46E2-9385-AE938D37F7BE_1751381358892.jpeg';
 import alaliPlusImage from '@assets/alaliplus-logo.jpeg';
 import candyshopaliImage from '@assets/candyshopali-logo.jpeg';
 import swagyLogo from '@assets/IMG_6470_1751373028778.png';
@@ -118,7 +119,7 @@ const sampleProjects = [
     description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
     category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
-    image: printday7Image,
+    image: printday7WebsiteImage,
     link: 'https://printday7.com/'
   },
   {
@@ -174,7 +175,7 @@ const sampleProjects = [
     description: '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Telegram Bot API', 'Prayer Times', 'Quran API'],
-    image: quranBotImage,
+    image: botsMakerImage,
     logo: botsMakerImage,
     link: 'https://t.me/QEGbot'
   },
@@ -184,7 +185,7 @@ const sampleProjects = [
     description: '1. Choose a bot type – Downloader, translator, whatever you need.\n2. Add your token – That\'s it, your bot is live!\n3. Full control – Your name, your bot, your rules.\n4. Broadcast ready – Send messages to your users anytime.\n5. No code needed – Just click and create.\nMake bots like a boss.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Bot Creation', 'Telegram API', 'Automation'],
-    image: botsMakerImage,
+    image: quranBotImage,
     logo: quranBotImage,
     link: 'https://t.me/slsbot'
   },
@@ -203,7 +204,7 @@ const sampleProjects = [
     description: '1. Welcome Message – Instantly greets users and guides them clearly.\n2. Job Applications – Allows users to apply for available job positions.\n3. FAQs Support – Quick answers to common questions like delivery, return, payment, etc.\n4. Live Help Option – If the bot doesn\'t solve it, customers can write directly and get a reply ASAP.\n5. Service Menu',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Customer Support', 'FAQ System', 'Job Applications'],
-    image: customerServiceBotImage,
+    image: hrSystemBotImage,
     logo: hrSystemBotImage,
     link: 'https://t.me/Mora0Bot'
   },
@@ -213,7 +214,7 @@ const sampleProjects = [
     description: '1. Main Function – Automatically adds all Instagram followers of a specific account to its Close Friends list.\n2. Who it\'s for – Perfect for creators, private sellers, or anyone who wants to post exclusive stories to all followers.\n3. Automation – No need to add users manually — the bot handles it for you in real time.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Instagram API', 'Automation', 'Social Media Management'],
-    image: addToCloseFriendsBotImage,
+    image: customerServiceBotImage,
     logo: customerServiceBotImage,
     link: 'https://t.me/mohmmed'
   },
@@ -223,7 +224,7 @@ const sampleProjects = [
     description: '1. Clock-in/out system – Tracks working hours like a digital fingerprint.\n2. Auto salary calculation – Daily + overtime pay done automatically.\n3. Role management – Add employees & managers with custom access.\n4. Department stats – See how many staff per section (online, store, etc.).\n5. Work reports – View full logs of hours and wages.',
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['HR Management', 'Time Tracking', 'Payroll System'],
-    image: hrSystemBotImage,
+    image: addToCloseFriendsBotImage,
     logo: addToCloseFriendsBotImage,
     link: 'https://t.me/mohmmed'
   },
