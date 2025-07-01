@@ -1,5 +1,4 @@
 import { useLanguage } from '../../hooks/useLanguage';
-import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.jpeg';
 import instagramIcon from '@assets/IMG_6441.png';
 import whatsappIcon from '@assets/IMG_6442.png';
 import telegramIcon from '@assets/IMG_6443.png';
@@ -11,15 +10,6 @@ export function MeWindow() {
     <div className="p-4 h-full overflow-auto scrollbar">
       <div className="space-y-4">
         <div className="text-center mb-6">
-          {/* Profile image */}
-          <div className="w-24 h-24 mx-auto mb-4 border-2 border-[rgb(var(--win-border-dark))] bg-white p-1" style={{ boxShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
-            <img 
-              src={profileImage} 
-              alt="SWAGY Profile" 
-              className="w-full h-full object-cover"
-              draggable={false}
-            />
-          </div>
           <h2 className="text-lg font-bold mb-2">SWAGY</h2>
           <p className="text-sm mb-3">Creative Developer & Designer</p>
           
