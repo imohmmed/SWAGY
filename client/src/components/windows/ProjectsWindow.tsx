@@ -245,17 +245,16 @@ interface Project {
 }
 
 export function ProjectsWindow() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const isRTL = language === 'ar';
 
   const filteredProjects = selectedCategory
     ? sampleProjects.filter(p => p.category === selectedCategory)
     : sampleProjects;
 
   return (
-    <div className={`flex h-full ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="flex h-full">
       {/* Sidebar */}
       <div className="w-1/3 border-r-2 border-[rgb(var(--win-border-dark))] p-2 bg-[rgb(var(--win-light-gray))]">
         <div className="text-xs font-bold mb-2 flex items-center gap-1">
@@ -339,7 +338,7 @@ export function ProjectsWindow() {
                             setSelectedProject(project as Project);
                           }}
                         >
-                          {t('readMore')}
+                          Read More
                         </button>
                       )}
                       {project.link && (
@@ -350,7 +349,7 @@ export function ProjectsWindow() {
                             window.open(project.link, '_blank');
                           }}
                         >
-                          {selectedCategory === 'telegram-bots' ? t('openBot') : t('visitWebsite')}
+                          {selectedCategory === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
                         </button>
                       )}
                     </div>
@@ -389,29 +388,22 @@ export function ProjectsWindow() {
       {/* Windows 98 Style Modal for project details */}
       {selectedProject && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" onClick={() => setSelectedProject(null)}>
-          <div className="win-window w-[480px] h-[600px] overflow-hidden" onClick={e => e.stopPropagation()}>
+          <div className="win-window max-w-lg w-full mx-4 max-h-[80vh] overflow-hidden" onClick={e => e.stopPropagation()}>
             {/* Windows 98 Title Bar */}
             <div className="win-titlebar">
               <div className="flex items-center gap-1">
                 <img 
-                  src={selectedProject.image} 
+                  src="https://win98icons.alexmeub.com/icons/png/file_find-0.png" 
                   alt="" 
-                  className="w-4 h-4 object-cover" 
+                  className="w-4 h-4" 
                   draggable={false}
                 />
-                <span>{selectedProject.title} - {t('details')}</span>
+                <span>{selectedProject.title} - Details</span>
               </div>
               <div className="flex gap-1">
                 <button
                   className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-xs hover:bg-[rgb(var(--win-light-gray))]"
-                  title="Minimize"
-                >
-                  _
-                </button>
-                <button
-                  className="w-4 h-4 bg-[rgb(var(--win-gray))] border border-[rgb(var(--win-border-light))] border-r-[rgb(var(--win-border-dark))] border-b-[rgb(var(--win-border-dark))] flex items-center justify-center text-xs hover:bg-[rgb(var(--win-light-gray))]"
                   onClick={() => setSelectedProject(null)}
-                  title="Close"
                 >
                   ×
                 </button>
@@ -419,11 +411,11 @@ export function ProjectsWindow() {
             </div>
             
             {/* Window Content */}
-            <div className="p-4 bg-[rgb(var(--win-gray))] overflow-auto h-[calc(100%-24px)]">
+            <div className="p-4 bg-[rgb(var(--win-gray))] overflow-auto max-h-[calc(80vh-40px)]">
               <div
                 className="w-full bg-gray-300 mb-3 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
                 style={{
-                  height: '200px',
+                  aspectRatio: '16/9',
                   backgroundImage: `url(${selectedProject.image})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
@@ -436,7 +428,7 @@ export function ProjectsWindow() {
               
               {selectedProject.technologies.length > 0 && (
                 <div className="text-xs text-gray-600 mb-4 p-2 bg-[rgb(var(--win-light-gray))] border border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]">
-                  <strong>{t('technologies')}:</strong> {selectedProject.technologies.join(', ')}
+                  <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
                 </div>
               )}
               
@@ -445,7 +437,7 @@ export function ProjectsWindow() {
                   className="win-button px-4 py-2 text-xs"
                   onClick={() => setSelectedProject(null)}
                 >
-                  {t('close')}
+                  Close
                 </button>
                 {selectedProject.link && (
                   <button
@@ -455,7 +447,7 @@ export function ProjectsWindow() {
                       setSelectedProject(null);
                     }}
                   >
-                    {selectedProject.category === 'telegram-bots' ? t('openBot') : t('visitWebsite')}
+                    {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
                   </button>
                 )}
               </div>

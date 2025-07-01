@@ -18,15 +18,11 @@ interface WindowProps {
   window: WindowState;
   isActive: boolean;
   isMobile: boolean;
-  fontScale: number;
   onClose: () => void;
   onMinimize: () => void;
   onMaximize: () => void;
   onFocus: () => void;
   onOpenWindow?: (windowType: WindowType) => void;
-  onFontIncrease: () => void;
-  onFontDecrease: () => void;
-  onFontReset: () => void;
 }
 
 const windowComponents: Record<WindowType, React.ComponentType> = {
@@ -45,15 +41,11 @@ export function Window({
   window, 
   isActive, 
   isMobile, 
-  fontScale,
   onClose, 
   onMinimize, 
   onMaximize, 
   onFocus,
-  onOpenWindow,
-  onFontIncrease,
-  onFontDecrease,
-  onFontReset
+  onOpenWindow 
 }: WindowProps) {
   const { t } = useLanguage();
   const { dragState, startDrag, updateDrag, endDrag } = useDrag();
@@ -179,21 +171,11 @@ export function Window({
             className="win-button px-1 py-0 text-xs ml-1"
             onClick={(e) => {
               e.stopPropagation();
-              onFontDecrease();
+              handleMaximizeClick();
             }}
-            title="تصغير الخط"
+            title={isMobile ? 'تكبير النص' : t('maximize')}
           >
-            A-
-          </button>
-          <button
-            className="win-button px-1 py-0 text-xs ml-1"
-            onClick={(e) => {
-              e.stopPropagation();
-              onFontIncrease();
-            }}
-            title="تكبير الخط"
-          >
-            A+
+            {isMobile ? (isTextLarge ? 'A-' : 'A+') : '□'}
           </button>
           <button
             className="win-button px-1 py-0 text-xs ml-1"
@@ -210,11 +192,8 @@ export function Window({
       
       {/* Window Content */}
       <div 
-        className="h-full overflow-hidden" 
-        style={{ 
-          height: 'calc(100% - 24px)',
-          fontSize: `${fontScale}rem`
-        }}
+        className={`h-full ${isTextLarge ? 'text-lg' : ''}`} 
+        style={{ height: 'calc(100% - 24px)' }}
       >
         {window.type === 'mycomputer' ? (
           <MyComputerWindow onOpenWindow={onOpenWindow} />

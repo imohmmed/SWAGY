@@ -118,23 +118,7 @@ export const translations: Record<string, Translation> = {
     retroNostalgia: 'Retro Computing Nostalgia',
     retroThought: 'Why does Windows 98 still feel so satisfying? Maybe it\'s the skeuomorphic design, the clear visual hierarchy, or just the nostalgia. Modern UIs could learn a lot from the past.',
     quickThoughts: 'Quick Thoughts',
-    endOfFile: '--- End of File ---',
-    
-    // Projects Modal
-    readMore: 'Read More',
-    visitWebsite: 'Visit Website',
-    openBot: 'Open Bot',
-    details: 'Details',
-    workedWith: 'Worked With',
-    liveWebsites: 'Live Websites',
-    telegramBots: 'Telegram Bots',
-    
-    // Project Categories
-    projectsDescription: 'A collection of my digital work',
-    viewProject: 'View Project',
-    completedProjects: 'Completed Projects',
-    category: 'Category',
-    status: 'Status'
+    endOfFile: '--- End of File ---'
   },
   ar: {
     start: 'ابدأ',
@@ -263,15 +247,6 @@ export const translations: Record<string, Translation> = {
     retroNostalgia: 'الحنين للحوسبة القديمة',
     retroThought: 'لماذا لا يزال ويندوز 98 يبدو مُرضياً؟ ربما يكون التصميم المحاكي أو التسلسل الهرمي البصري الواضح أو مجرد الحنين. يمكن لواجهات المستخدم الحديثة أن تتعلم الكثير من الماضي.',
     quickThoughts: 'أفكار سريعة',
-    endOfFile: '--- نهاية الملف ---',
-    
-    // Projects Modal
-    readMore: 'اقرأ المزيد',
-    visitWebsite: 'زيارة الموقع',
-    openBot: 'فتح البوت',
-    details: 'التفاصيل',
-    workedWith: 'تعاملت مع',
-    liveWebsites: 'المواقع المباشرة',
-    telegramBots: 'بوتات تيليجرام'
+    endOfFile: '--- نهاية الملف ---'
   }
 };

@@ -122,27 +122,7 @@ SWAGY WORLD is a creative portfolio website that recreates the Windows 98 aesthe
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes
-
-- July 01, 2025: Enhanced Windows 98-style modal windows with proper sizing (480x600px)
-- July 01, 2025: Added company logos in modal title bars for authentic Windows experience  
-- July 01, 2025: Implemented A+ font scaling system for individual windows using fontSize CSS
-- July 01, 2025: Added minimize/maximize functionality to modal windows
-- July 01, 2025: Complete Arabic/English translation system with RTL/LTR support
-- July 01, 2025: Windows 98-style buttons for "Read More" functionality
-- July 01, 2025: Full bilingual interface with proper text direction handling
-
-## Font Scaling System
-
-The A+ font scaling feature works individually for each window:
-- A+ button increases font size by 0.2rem (max 2.5rem)
-- A- button decreases font size by 0.2rem (min 0.6rem)
-- Font scaling applies via CSS fontSize property to window content
-- Each window maintains its own font scale state
-- Scaling affects all text content within the active window only
-
 ## Changelog
 
 Changelog:
 - July 01, 2025. Initial setup
-- July 01, 2025. Added modal windows, font scaling, and complete bilingual support
