@@ -304,10 +304,10 @@ body {
 
   /* Mobile modal window fix */
   @media (max-width: 768px) {
-    .modal-window {
-      height: auto !important;
-      max-height: calc(100vh - 2rem) !important;
-      overflow-y: auto !important;
+    .win-window[style*="height: fit-content"] {
+      height: fit-content !important;
+      min-height: auto !important;
+      max-height: 90vh !important;
     }
     
     .boot-logo {
