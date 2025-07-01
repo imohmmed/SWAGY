@@ -164,7 +164,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '13',
     title: 'Altaraf.net',
-    description: 'A travel company I co-created that makes vacations feel like music videos. Clean branding, custom website, and golden vibes all the way.',
+    description: t('altarafNetFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Travel', 'Custom Design', 'Branding'],
     image: altarafNetImage,
@@ -182,7 +182,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '15',
     title: 'Filmora TV',
-    description: 'Like Netflix, but with more attitude 🎬\nA streaming platform with personality and style.',
+    description: t('filmoraTvFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Streaming', 'Video Platform', 'Entertainment'],
     image: filmoraTvImage,
@@ -193,7 +193,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '16',
     title: 'Quran Bot',
-    description: '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
+    description: t('quranBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Telegram Bot API', 'Prayer Times', 'Quran API'],
     image: botsMakerImage,
@@ -203,7 +203,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '17',
     title: 'Bots Maker Bot',
-    description: '1. Choose a bot type – Downloader, translator, whatever you need.\n2. Add your token – That\'s it, your bot is live!\n3. Full control – Your name, your bot, your rules.\n4. Broadcast ready – Send messages to your users anytime.\n5. No code needed – Just click and create.\nMake bots like a boss.',
+    description: t('botsMakerBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Bot Creation', 'Telegram API', 'Automation'],
     image: quranBotImage,
@@ -213,7 +213,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '18',
     title: 'Service Bot',
-    description: '1. All-in-one services – Need social media stuff? It\'s all here.\n2. Easy orders – Just pick a service and boom, you\'re done.\n3. Track everything – Orders, prices, account info – all in one place.\n4. Smooth payments – Supports AsiaCell and other methods.',
+    description: t('serviceBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Social Media Services', 'Payment Integration', 'Order Management'],
     image: serviceBotImage,
@@ -222,7 +222,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '19',
     title: 'Customer Service Bot',
-    description: '1. Welcome Message – Instantly greets users and guides them clearly.\n2. Job Applications – Allows users to apply for available job positions.\n3. FAQs Support – Quick answers to common questions like delivery, return, payment, etc.\n4. Live Help Option – If the bot doesn\'t solve it, customers can write directly and get a reply ASAP.\n5. Service Menu',
+    description: t('customerServiceBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Customer Support', 'FAQ System', 'Job Applications'],
     image: addToCloseFriendsBotImage,
@@ -232,7 +232,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '20',
     title: 'Add to Close Friends Bot',
-    description: '1. Main Function – Automatically adds all Instagram followers of a specific account to its Close Friends list.\n2. Who it\'s for – Perfect for creators, private sellers, or anyone who wants to post exclusive stories to all followers.\n3. Automation – No need to add users manually — the bot handles it for you in real time.',
+    description: t('addToCloseFriendsBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Instagram API', 'Automation', 'Social Media Management'],
     image: hrSystemBotImage,
@@ -242,7 +242,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '21',
     title: 'HR System Bot',
-    description: '1. Clock-in/out system – Tracks working hours like a digital fingerprint.\n2. Auto salary calculation – Daily + overtime pay done automatically.\n3. Role management – Add employees & managers with custom access.\n4. Department stats – See how many staff per section (online, store, etc.).\n5. Work reports – View full logs of hours and wages.',
+    description: t('hrSystemBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['HR Management', 'Time Tracking', 'Payroll System'],
     image: customerServiceBotImage,
@@ -252,7 +252,7 @@ const getProjects = (t: (key: string) => string) => [
   {
     id: '22',
     title: 'Downloader Bot',
-    description: '1. All-in-one downloader – Just send any media link.\n2. Supported sites – YouTube, Instagram, TikTok, Twitter, Facebook, Threads, Pinterest, SoundCloud, Spotify, Deezer, Google Drive, Snapchat, Likee, Kwai.\n3. Instant results – No waiting, just media.\n4. No limits – Download videos, music, reels & more.',
+    description: t('downloaderBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
     technologies: ['Media Downloader', 'Multi-platform Support', 'File Processing'],
     image: downloaderBotImage,

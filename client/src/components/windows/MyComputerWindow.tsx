@@ -605,7 +605,7 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
     if (currentPath.length === 0) {
       setCurrentFiles(updatedFiles);
     }
-  }, [language, t, currentPath.length]);
+  }, [language]);
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
   const [viewingContent, setViewingContent] = useState(false);
 

@@ -210,6 +210,18 @@ export const translations: Record<string, Translation> = {
     'crystal4giftFullDesc': 'Crystal gifts with luxury vibes. Clean Arabic support, RTL layout, and smooth shopping flow. Built for elegance and cultural authenticity.',
     'slsCafeFullDesc': 'All the café feels, none of the queue. An online menu experience that captures the cozy vibes of SLS Café — warm, inviting, and smooth as their coffee.',
     'altarafLinksFullDesc': 'All the links, none of the drama 🔗 Simple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
+    'altarafNetFullDesc': 'A travel company I co-created that makes vacations feel like music videos. Clean branding, custom website, and golden vibes all the way.',
+    'filmoraTvFullDesc': 'Like Netflix, but with more attitude 🎬 A streaming platform with personality and style.',
+    
+    // Telegram Bots descriptions
+    'quranBotDesc': '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
+    'serviceBotDesc': 'A general-purpose service bot that handles customer inquiries, provides automated responses, and streamlines business communication.',
+    'customerServiceBotDesc': 'Automated customer support system that handles common queries, escalates complex issues, and provides instant responses with conversation tracking.',
+    'addToCloseFriendsBotDesc': 'Social media automation tool for managing Instagram close friends lists and engagement tracking.',
+    'hrSystemBotDesc': 'Human resources management bot that automates employee onboarding, leave requests, and HR document processing.',
+    'downloaderBotDesc': 'Media downloader bot that fetches content from various platforms including YouTube, Instagram, and other social media sites.',
+    'newsAggregatorBotDesc': 'Daily news updates and summaries delivered directly to Telegram channels with category-based filtering and automated scheduling.',
+    'botsMakerBotDesc': '1. Choose a bot type – Downloader, translator, whatever you need.\n2. Add your token – That\'s it, your bot is live!\n3. Full control – Your name, your bot, your rules.\n4. Broadcast ready – Send messages to your users anytime.\n5. No code needed – Just click and create.\nMake bots like a boss.',
     
 
     
@@ -433,6 +445,18 @@ export const translations: Record<string, Translation> = {
     'crystal4giftFullDesc': 'هدايا كريستالية بأجواء فاخرة. دعم عربي نظيف، تخطيط RTL، وتدفق تسوق سلس. مبني للأناقة والأصالة الثقافية.',
     'slsCafeFullDesc': 'كل أحاسيس الكافيه، بدون طابور. تجربة قائمة طعام أونلاين تلتقط الأجواء المريحة لكافيه SLS — دافئة، مرحبة، وناعمة مثل قهوتهم.',
     'altarafLinksFullDesc': 'كل الروابط، بدون دراما 🔗 بسيط، نظيف، ومباشر للنقطة — مركز روابط أنيق لسفريات الأطراف. فكر فيه كبطاقة عمل رقمية، لكن بأجواء ✈️.',
+    'altarafNetFullDesc': 'شركة سفريات شاركت في إنشائها وتجعل العطلات تبدو مثل الفيديو كليبات. علامة تجارية نظيفة، موقع مخصص، وأجواء ذهبية طوال الطريق.',
+    'filmoraTvFullDesc': 'مثل نيتفلكس، لكن بطابع أكثر جرأة 🎬 منصة بث بشخصية وأسلوب.',
+    
+    // وصوفات بوتات التيليجرام
+    'quranBotDesc': '1. حدد بلدك - احصل على أوقات صلاة دقيقة بناءً على موقعك.\n2. أوقات الصلاة اليومية - من الفجر للعشاء، دائماً في الوقت.\n3. أذكار وأحاديث - تذكيرات تلقائية لتحافظ على قلبك منتعش.\n4. الوصول للقرآن - اقرأه. استمع إليه. في أي وقت.\n5. آيات عشوائية - مفاجآت روحية، يومياً.\n6. جهد قليل، ثواب كثير - أنت ترتاح، البوت يقوم بالباقي.',
+    'serviceBotDesc': 'بوت خدمة عام يتعامل مع استفسارات العملاء، ويقدم ردود تلقائية، ويبسط التواصل التجاري.',
+    'customerServiceBotDesc': 'نظام دعم عملاء تلقائي يتعامل مع الاستفسارات الشائعة، يصعد القضايا المعقدة، ويقدم ردود فورية مع تتبع المحادثات.',
+    'addToCloseFriendsBotDesc': 'أداة أتمتة وسائل التواصل الاجتماعي لإدارة قوائم الأصدقاء المقربين في انستجرام وتتبع التفاعل.',
+    'hrSystemBotDesc': 'بوت إدارة موارد بشرية يؤتمت تأهيل الموظفين، طلبات الإجازة، ومعالجة وثائق الموارد البشرية.',
+    'downloaderBotDesc': 'بوت تحميل وسائط يجلب المحتوى من منصات مختلفة بما في ذلك يوتيوب، انستجرام، ومواقع التواصل الاجتماعي الأخرى.',
+    'newsAggregatorBotDesc': 'تحديثات إخبارية يومية وملخصات تُرسل مباشرة لقنوات التيليجرام مع تصفية بناءً على الفئات وجدولة تلقائية.',
+    'botsMakerBotDesc': '1. اختر نوع البوت - تحميل، ترجمة، أي شي تحتاجه.\n2. أضف التوكن حقك - خلاص، البوت شغال!\n3. تحكم كامل - اسمك، البوت حقك، قوانينك.\n4. جاهز للبث - أرسل رسائل لمستخدمينك في أي وقت.\n5. ما يحتاج كود - بس كليك وخلق.\nاصنع بوتات مثل البوس.',
     
     // Projects
     projectsDescription: 'مجموعة من مشاريعي الرقمية',
