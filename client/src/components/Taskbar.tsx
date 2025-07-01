@@ -1,6 +1,8 @@
 import { WindowState } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
+import { useTextSize } from '../hooks/useTextSize';
 import { useState, useEffect } from 'react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface TaskbarProps {
   windows: WindowState[];
@@ -11,6 +13,8 @@ interface TaskbarProps {
 
 export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }: TaskbarProps) {
   const { t, language, toggleLanguage } = useLanguage();
+  const { increaseTextSize, decreaseTextSize, canIncrease, canDecrease } = useTextSize();
+  const isMobile = useIsMobile();
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -71,7 +75,29 @@ export function Taskbar({ windows, onWindowClick, onStartClick, showStartMenu }:
       </div>
       
       {/* System Tray */}
-      <div className="flex items-center gap-2 px-2 text-xs border-l border-[rgb(var(--win-border-dark))]">
+      <div className="flex items-center gap-1 px-2 text-xs border-l border-[rgb(var(--win-border-dark))]">
+        {/* Text Size Controls - Only on Mobile */}
+        {isMobile && (
+          <>
+            <button
+              className={`cursor-pointer px-1 text-xs font-bold win-button ${!canDecrease ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={decreaseTextSize}
+              disabled={!canDecrease}
+              title="Decrease text size"
+            >
+              A-
+            </button>
+            <button
+              className={`cursor-pointer px-1 text-xs font-bold win-button ${!canIncrease ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={increaseTextSize}
+              disabled={!canIncrease}
+              title="Increase text size"
+            >
+              A+
+            </button>
+          </>
+        )}
+        
         <button
           className="cursor-pointer px-1 hover:bg-[rgb(var(--win-light-gray))] border border-transparent hover:border-[rgb(var(--win-border-dark))]"
           onClick={toggleLanguage}

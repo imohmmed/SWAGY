@@ -49,7 +49,6 @@ export function Window({
 }: WindowProps) {
   const { t } = useLanguage();
   const { dragState, startDrag, updateDrag, endDrag } = useDrag();
-  const [isTextLarge, setIsTextLarge] = useState(false);
   const windowRef = useRef<HTMLDivElement>(null);
 
   const WindowContent = windowComponents[window.type];
@@ -114,12 +113,7 @@ export function Window({
   };
 
   const handleMaximizeClick = () => {
-    if (isMobile) {
-      // On mobile, maximize means toggle text size
-      setIsTextLarge(!isTextLarge);
-    } else {
-      onMaximize();
-    }
+    onMaximize();
   };
 
   const windowStyle = isMobile
@@ -173,9 +167,9 @@ export function Window({
               e.stopPropagation();
               handleMaximizeClick();
             }}
-            title={isMobile ? 'تكبير النص' : t('maximize')}
+            title={t('maximize')}
           >
-            {isMobile ? (isTextLarge ? 'A-' : 'A+') : '□'}
+            □
           </button>
           <button
             className="win-button px-1 py-0 text-xs ml-1"
@@ -192,7 +186,7 @@ export function Window({
       
       {/* Window Content */}
       <div 
-        className={`h-full ${isTextLarge ? 'text-lg' : ''}`} 
+        className="h-full window-content" 
         style={{ height: 'calc(100% - 24px)' }}
       >
         {window.type === 'mycomputer' ? (

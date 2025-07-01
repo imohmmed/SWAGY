@@ -315,3 +315,89 @@ body {
     }
   }
 }
+
+/* Text Size System */
+:root {
+  --text-scale: 1;
+}
+
+.text-size-small {
+  --text-scale: 0.8;
+}
+.text-size-normal {
+  --text-scale: 1;
+}
+.text-size-large {
+  --text-scale: 1.2;
+}
+.text-size-extra-large {
+  --text-scale: 1.4;
+}
+
+/* Apply text scaling to all window content and its children */
+.text-size-small .window-content *,
+.text-size-large .window-content *,
+.text-size-extra-large .window-content * {
+  font-size: calc(1em * var(--text-scale)) !important;
+}
+
+/* Specific scaling for different text sizes */
+.text-size-small .window-content .text-xs,
+.text-size-large .window-content .text-xs,
+.text-size-extra-large .window-content .text-xs {
+  font-size: calc(0.75rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-sm,
+.text-size-large .window-content .text-sm,
+.text-size-extra-large .window-content .text-sm {
+  font-size: calc(0.875rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-base,
+.text-size-large .window-content .text-base,
+.text-size-extra-large .window-content .text-base {
+  font-size: calc(1rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-lg,
+.text-size-large .window-content .text-lg,
+.text-size-extra-large .window-content .text-lg {
+  font-size: calc(1.125rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-xl,
+.text-size-large .window-content .text-xl,
+.text-size-extra-large .window-content .text-xl {
+  font-size: calc(1.25rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-2xl,
+.text-size-large .window-content .text-2xl,
+.text-size-extra-large .window-content .text-2xl {
+  font-size: calc(1.5rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content .text-3xl,
+.text-size-large .window-content .text-3xl,
+.text-size-extra-large .window-content .text-3xl {
+  font-size: calc(1.875rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content h1,
+.text-size-large .window-content h1,
+.text-size-extra-large .window-content h1 {
+  font-size: calc(2rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content h2,
+.text-size-large .window-content h2,
+.text-size-extra-large .window-content h2 {
+  font-size: calc(1.5rem * var(--text-scale)) !important;
+}
+
+.text-size-small .window-content h3,
+.text-size-large .window-content h3,
+.text-size-extra-large .window-content h3 {
+  font-size: calc(1.25rem * var(--text-scale)) !important;
+}
