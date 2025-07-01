@@ -234,9 +234,20 @@ const sampleProjects = [
 
 ];
 
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  category: ProjectCategory;
+  technologies: string[];
+  image: string;
+  link: string;
+}
+
 export function ProjectsWindow() {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const filteredProjects = selectedCategory
     ? sampleProjects.filter(p => p.category === selectedCategory)
@@ -302,8 +313,7 @@ export function ProjectsWindow() {
                 {filteredProjects.map((project) => (
                   <div
                     key={project.id}
-                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
-                    onClick={() => project.link && window.open(project.link, '_blank')}
+                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))]"
                   >
                     <div
                       className="w-full bg-gray-300 mb-2"
@@ -315,13 +325,34 @@ export function ProjectsWindow() {
                       }}
                     />
                     <div className="text-xs font-bold">{project.title}</div>
-                    <div className="text-xs text-gray-600 mb-1">{project.description}</div>
-                    <div className="text-xs text-gray-500 mb-1">{project.technologies.join(', ')}</div>
-                    {project.link && (
-                      <div className="text-xs text-blue-600 hover:underline">
-                        Visit Website →
-                      </div>
-                    )}
+                    <div className="text-xs text-gray-600 mb-2 line-clamp-2">
+                      {project.description.length > 100 ? project.description.substring(0, 100) + '...' : project.description}
+                    </div>
+                    <div className="text-xs text-gray-500 mb-2">{project.technologies.join(', ')}</div>
+                    <div className="flex gap-2">
+                      {project.description && (
+                        <button
+                          className="text-xs text-blue-600 hover:underline bg-transparent border-0 cursor-pointer p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProject(project as Project);
+                          }}
+                        >
+                          Read More
+                        </button>
+                      )}
+                      {project.link && (
+                        <button
+                          className="text-xs text-green-600 hover:underline bg-transparent border-0 cursor-pointer p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.link, '_blank');
+                          }}
+                        >
+                          {selectedCategory === 'telegram-bots' ? 'Open Bot →' : 'Visit Website →'}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -353,6 +384,63 @@ export function ProjectsWindow() {
           </div>
         )}
       </div>
+      
+      {/* Modal for project details */}
+      {selectedProject && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setSelectedProject(null)}>
+          <div className="bg-[rgb(var(--win-light-gray))] border-2 border-[rgb(var(--win-border-dark))] p-4 max-w-md w-full mx-4 max-h-[80vh] overflow-auto" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-3 border-b border-[rgb(var(--win-border-dark))] pb-2">
+              <h3 className="font-bold text-sm">{selectedProject.title}</h3>
+              <button
+                className="text-xs text-gray-500 hover:text-black border-0 bg-transparent cursor-pointer"
+                onClick={() => setSelectedProject(null)}
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div
+              className="w-full bg-gray-300 mb-3"
+              style={{
+                aspectRatio: '16/9',
+                backgroundImage: `url(${selectedProject.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+            
+            <div className="text-xs mb-3 whitespace-pre-line">
+              {selectedProject.description}
+            </div>
+            
+            {selectedProject.technologies.length > 0 && (
+              <div className="text-xs text-gray-500 mb-3">
+                <strong>Technologies:</strong> {selectedProject.technologies.join(', ')}
+              </div>
+            )}
+            
+            <div className="flex gap-2 justify-end">
+              <button
+                className="px-3 py-1 text-xs bg-gray-400 hover:bg-gray-500 text-white border-0 cursor-pointer"
+                onClick={() => setSelectedProject(null)}
+              >
+                Close
+              </button>
+              {selectedProject.link && (
+                <button
+                  className="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white border-0 cursor-pointer"
+                  onClick={() => {
+                    window.open(selectedProject.link, '_blank');
+                    setSelectedProject(null);
+                  }}
+                >
+                  {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
