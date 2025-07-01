@@ -79,7 +79,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: candyshopaliImage,
+    image: printday7Image,
     link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw==',
     instagramLink: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
   },
@@ -89,7 +89,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: printday7Image,
+    image: alaliPlusImage,
     link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ==',
     instagramLink: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
   },
@@ -109,8 +109,9 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: alaliPlusImage,
-    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
+    image: candyshopaliImage,
+    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw==',
+    instagramLink: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
   },
   {
     id: '8',
@@ -119,7 +120,8 @@ const sampleProjects = [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: altarafNetImage,
-    link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
+    link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0',
+    instagramLink: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },
   
   // Other Websites section - Full projects with descriptions
