@@ -7,54 +7,133 @@ import slsCafeImage from '@assets/0E99AB1D-C087-4E31-B7C2-C8F128BA1884.jpeg';
 import altarafLinksImage from '@assets/E4985A71-EE3B-4B5A-9710-74725AFEE3C7.jpeg';
 import altarafNetImage from '@assets/altaraf-net-logo.png';
 import filmoraTvImage from '@assets/1673C2B9-71D9-4A63-9746-6CA90FAB8EE7.jpeg';
+import printday7Image from '@assets/printday7-logo.jpeg';
+import alaliPlusImage from '@assets/alaliplus-logo.jpeg';
+import candyshopaliImage from '@assets/candyshopali-logo.jpeg';
+import swagyLogo from '@assets/IMG_6470_1751373028778.png';
 
-type ProjectCategory = 'shopping' | 'other-websites' | 'telegram-bots';
+type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
 const projectCategories = [
-  { id: 'shopping', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: 'Shopping Websites' },
+  { id: 'worked-with', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: 'Worked With' },
   { id: 'other-websites', icon: 'https://win98icons.alexmeub.com/icons/png/msie2-1.png', label: 'Other Websites' },
   { id: 'telegram-bots', icon: 'https://win98icons.alexmeub.com/icons/png/utopia_smiley.png', label: 'Telegram Bots' }
 ];
 
 const sampleProjects = [
+  // Worked With section - Companies I collaborated with
   {
     id: '1',
+    title: 'Mora',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: moraModaaImage,
+    link: 'https://www.instagram.com/mora.modaa?igsh=MXF5NXU2ZHZzZ3AzOQ=='
+  },
+  {
+    id: '2',
+    title: 'SLS',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: slsCafeImage,
+    link: 'https://www.instagram.com/sls___brand?igsh=MW01Zmt0ZGpjcDE3Mg=='
+  },
+  {
+    id: '3',
+    title: 'Pixel Suite',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: pixelSuiteImage,
+    link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
+  },
+  {
+    id: '4',
+    title: 'printday7',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: printday7Image,
+    link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
+  },
+  {
+    id: '5',
+    title: 'Alali Plus',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: alaliPlusImage,
+    link: 'https://www.instagram.com/alaliplus?igsh=MWx1MHg5ajRkcXRxbQ=='
+  },
+  {
+    id: '6',
+    title: 'crystal4gift',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: crystalGiftImage,
+    link: 'https://www.instagram.com/crystal4gifts?igsh=MTFjYjYwaXpza3Zkbw=='
+  },
+  {
+    id: '7',
+    title: 'candyshopali',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: candyshopaliImage,
+    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
+  },
+  {
+    id: '8',
+    title: 'Al Taraf',
+    description: '',
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: altarafNetImage,
+    link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
+  },
+  
+  // Other Websites section - Full projects with descriptions
+  {
+    id: '9',
     title: 'Mora Modaa',
     description: 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
-    category: 'shopping' as ProjectCategory,
+    category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'Liquid', 'CSS'],
     image: moraModaaImage,
     link: 'https://mora1.com/'
   },
   {
-    id: '2',
+    id: '10',
     title: 'SLS Cafe',
     description: 'Not just a coffee shop — it\'s a whole mood ☕\nBuilt to feel like your second home (but with better lighting). Clean layout, cozy colors, and the kind of website that makes you want to order a latte at 2AM.',
-    category: 'shopping' as ProjectCategory,
+    category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'E-commerce', 'Food & Beverage'],
     image: slsCafeImage,
     link: 'https://slscafe.com/'
   },
   {
-    id: '3',
+    id: '11',
     title: 'Pixel Suite',
     description: 'A digital loot cave for gamers — skins, bundles, and that "add to cart" itch. Dark theme, clean layout, and yeah… built on Shopify because we like life easy.',
-    category: 'shopping' as ProjectCategory,
+    category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'JavaScript', 'Dark Theme'],
     image: pixelSuiteImage,
     link: 'https://pixelsuite.vip/'
   },
   {
-    id: '4',
+    id: '12',
     title: 'Crystal for Gift',
     description: 'Gifts that scream "I tried" — with class. A fancy-looking Shopify store serving luxury product vibes and a full Arabic experience. For when flowers just aren\'t enough.',
-    category: 'shopping' as ProjectCategory,
+    category: 'other-websites' as ProjectCategory,
     technologies: ['Shopify', 'Arabic RTL', 'Luxury UI'],
     image: crystalGiftImage,
     link: 'https://crystal4gifts.com/'
   },
   {
-    id: '5',
+    id: '13',
     title: 'Altaraf.net',
     description: 'A travel company I co-created that makes vacations feel like music videos. Clean branding, custom website, and golden vibes all the way.',
     category: 'other-websites' as ProjectCategory,
@@ -63,7 +142,7 @@ const sampleProjects = [
     link: 'https://altaraf.net'
   },
   {
-    id: '6',
+    id: '14',
     title: 'Altaraf Links',
     description: 'All the links, none of the drama 🔗\nSimple, clean, and straight to the point — a stylish link hub for Al-Taraf Travel. Think of it like a digital business card, but with ✈️ vibes.',
     category: 'other-websites' as ProjectCategory,
@@ -72,7 +151,7 @@ const sampleProjects = [
     link: 'https://altaraf.link'
   },
   {
-    id: '7',
+    id: '15',
     title: 'Filmora TV',
     description: 'Like Netflix, but with more attitude 🎬\nA streaming platform with personality and style.',
     category: 'other-websites' as ProjectCategory,
@@ -120,35 +199,61 @@ export function ProjectsWindow() {
         {selectedCategory ? (
           <div>
             <h3 className="font-bold mb-4">
-              {projectCategories.find(c => c.id === selectedCategory)?.label} Projects
+              {selectedCategory === 'worked-with' ? 'Companies I Worked With' : `${projectCategories.find(c => c.id === selectedCategory)?.label} Projects`}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredProjects.map((project) => (
-                <div
-                  key={project.id}
-                  className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
-                  onClick={() => project.link && window.open(project.link, '_blank')}
-                >
+            {selectedCategory === 'worked-with' ? (
+              // Worked With - Simple grid layout with logos only
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {filteredProjects.map((project) => (
                   <div
-                    className="w-full bg-gray-300 mb-2"
-                    style={{
-                      aspectRatio: '16/9',
-                      backgroundImage: `url(${project.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center'
-                    }}
-                  />
-                  <div className="text-xs font-bold">{project.title}</div>
-                  <div className="text-xs text-gray-600 mb-1">{project.description}</div>
-                  <div className="text-xs text-gray-500 mb-1">{project.technologies.join(', ')}</div>
-                  {project.link && (
-                    <div className="text-xs text-blue-600 hover:underline">
-                      Visit Website →
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    key={project.id}
+                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer text-center"
+                    onClick={() => project.link && window.open(project.link, '_blank')}
+                  >
+                    <div
+                      className="w-full bg-gray-300 mb-2"
+                      style={{
+                        aspectRatio: '1/1',
+                        backgroundImage: `url(${project.image})`,
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                    <div className="text-xs font-bold">{project.title}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              // Other categories - Full project layout
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredProjects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="border-2 border-[rgb(var(--win-border-dark))] p-3 hover:bg-[rgb(var(--win-light-gray))] cursor-pointer"
+                    onClick={() => project.link && window.open(project.link, '_blank')}
+                  >
+                    <div
+                      className="w-full bg-gray-300 mb-2"
+                      style={{
+                        aspectRatio: '16/9',
+                        backgroundImage: `url(${project.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                    <div className="text-xs font-bold">{project.title}</div>
+                    <div className="text-xs text-gray-600 mb-1">{project.description}</div>
+                    <div className="text-xs text-gray-500 mb-1">{project.technologies.join(', ')}</div>
+                    {project.link && (
+                      <div className="text-xs text-blue-600 hover:underline">
+                        Visit Website →
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div>
