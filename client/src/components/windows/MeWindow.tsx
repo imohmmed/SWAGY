@@ -1,5 +1,8 @@
 import { useLanguage } from '../../hooks/useLanguage';
 import profileImage from '@assets/3B6EFCC2-C6BC-4D4A-852F-205EA754AD63.jpeg';
+import instagramIcon from '@assets/IMG_6441.png';
+import whatsappIcon from '@assets/IMG_6442.png';
+import telegramIcon from '@assets/IMG_6443.png';
 
 export function MeWindow() {
   const { t } = useLanguage();
@@ -18,7 +21,35 @@ export function MeWindow() {
             />
           </div>
           <h2 className="text-lg font-bold mb-2">SWAGY</h2>
-          <p className="text-sm">Creative Developer & Designer</p>
+          <p className="text-sm mb-3">Creative Developer & Designer</p>
+          
+          {/* Social Media Icons */}
+          <div className="flex justify-center gap-3 mb-2">
+            <a 
+              href="https://www.instagram.com/it.swagy?igsh=MW02Z2c1bzBqbG5zdg%3D%3D&utm_source=qr" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <img src={instagramIcon} alt="Instagram" className="w-6 h-6" draggable={false} />
+            </a>
+            <a 
+              href="https://t.me/mohmmed" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <img src={telegramIcon} alt="Telegram" className="w-6 h-6" draggable={false} />
+            </a>
+            <a 
+              href="https://wa.me/+9647724166086" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" className="w-6 h-6" draggable={false} />
+            </a>
+          </div>
         </div>
         
         <div className="bg-white border-2 border-[rgb(var(--win-border-dark))] p-3 text-sm">
