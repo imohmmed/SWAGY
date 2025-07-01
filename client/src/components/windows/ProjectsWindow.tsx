@@ -413,9 +413,9 @@ export function ProjectsWindow() {
             
             {/* Scrollable Window Content */}
             <div className="bg-[rgb(var(--win-gray))] overflow-y-auto flex-1">
-              <div className="p-2 space-y-2">
+              <div className="p-2">
                 <div
-                  className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))]"
+                  className="w-full bg-gray-300 border-2 border-[rgb(var(--win-border-dark))] border-r-[rgb(var(--win-border-light))] border-b-[rgb(var(--win-border-light))] mb-2"
                   style={{
                     aspectRatio: '16/9',
                     backgroundImage: `url(${selectedProject.image})`,
@@ -424,7 +424,7 @@ export function ProjectsWindow() {
                   }}
                 />
                 
-                <div className="text-xs whitespace-pre-line leading-snug">
+                <div className="text-sm whitespace-pre-line leading-relaxed mb-2">
                   {selectedProject.description}
                 </div>
                 
