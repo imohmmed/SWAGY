@@ -119,7 +119,7 @@ const sampleProjects = [
     description: '',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
-    image: altarafNetImage,
+    image: altarafLinksImage,
     link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0',
     instagramLink: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },
