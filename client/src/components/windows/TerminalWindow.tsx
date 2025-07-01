@@ -31,7 +31,7 @@ export function TerminalWindow() {
       '(C)Copyright Microsoft Corp 1981-1994.',
       '',
       'C:\\SWAGY>help',
-      'Available commands: about, swag, clear, music, ascii, exit, hack, matrix, love, play, open music, whoami',
+      t('helpCommand'),
       ''
     ];
     

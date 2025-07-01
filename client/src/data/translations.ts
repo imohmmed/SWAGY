@@ -120,6 +120,8 @@ export const translations: Record<string, Translation> = {
     recycleQuote: '"No regrets here — just past versions of you."',
     emptyBin: 'Empty Recycle Bin',
     properties: 'Properties',
+    recycleBinAlreadyEmpty: 'Recycle Bin is already empty!',
+    recycleBinProperties: 'Recycle Bin Properties:\nLocation: Desktop\nSize: 0 bytes\nContains: 0 files',
     recycleTip1: '💡 Pro Tip: Sometimes letting go is the best way forward.',
     recycleTip2: '🔄 Every deletion is a chance for something new.',
     
@@ -141,6 +143,26 @@ export const translations: Record<string, Translation> = {
     openBot: 'Open Bot',
     details: 'Details',
     
+    // Blog Window
+    blogTitle1: 'Why I Still Design Like It\'s 1998',
+    blogDate1: 'December 2024',
+    blogContent1: 'Modern design is cool, but nothing beats a chunky pixel button with a shadow you can trip over. Call it nostalgia... or taste.',
+    blogTitle2: '2 AM: Me vs One Stupid Semicolon',
+    blogDate2: 'November 2024',
+    blogContent2: 'Winner: The semicolon.\nLesson: Always respect the semicolon.',
+    blogTitle3: 'Who Said Developers Can\'t Be Stylish?',
+    blogDate3: 'October 2024',
+    blogContent3: 'I debug in AirPods Max and baggy pants. If the looks are clean, the code is cleaner.',
+    blogTitle4: 'Retro UIs > Modern Headaches',
+    blogDate4: 'September 2024',
+    blogContent4: 'Windows 98 taught me one thing:\nClick, drag, feel happy.\nModern apps?\nClick, wait, crash.',
+    showerThoughtsTitle: 'Shower Thoughts',
+    showerThoughtsDate: 'January 2025',
+    showerThought1: 'If you can\'t fix the bug, at least fix your look.',
+    showerThought2: 'My shoes? Too clean to walk.',
+    showerThought3: 'Coffee ≠ creativity, but music = genius.',
+    showerThought4: 'Why is it always "localhost:3000" and never "localhost: how are you?"',
+    showerThought5: 'Fashion rule #1: If it confuses your mom, you\'re doing it right.',
     // Company Names (English translations)
     'Mora': 'Mora',
     'SLS': 'SLS', 
@@ -293,6 +315,8 @@ export const translations: Record<string, Translation> = {
     recycleQuote: '"لا ندم هنا — فقط إصدارات سابقة منك."',
     emptyBin: 'إفراغ سلة المهملات',
     properties: 'خصائص',
+    recycleBinAlreadyEmpty: 'سلة المهملات فارغة بالفعل!',
+    recycleBinProperties: 'خصائص سلة المهملات:\nالموقع: سطح المكتب\nالحجم: 0 بايت\nيحتوي على: 0 ملفات',
     recycleTip1: '💡 نصيحة: أحياناً التخلي هو أفضل طريق للمضي قدماً.',
     recycleTip2: '🔄 كل حذف هو فرصة لشيء جديد.',
     
@@ -316,6 +340,27 @@ export const translations: Record<string, Translation> = {
     readMore: 'اقرأ المزيد',
     openBot: 'فتح البوت',
     details: 'التفاصيل',
+    
+    // Blog Window (Arabic)
+    blogTitle1: 'لماذا ما زلت أصمم كأنها 1998',
+    blogDate1: 'ديسمبر 2024',
+    blogContent1: 'التصميم الحديث رائع، لكن لا شيء يضاهي زر البكسل الضخم بظل يمكن أن تتعثر فيه. اسمه الحنين... أو الذوق.',
+    blogTitle2: 'الساعة 2 صباحاً: أنا ضد فاصلة منقوطة واحدة غبية',
+    blogDate2: 'نوفمبر 2024',
+    blogContent2: 'الفائز: الفاصلة المنقوطة.\nالدرس: احترم دائماً الفاصلة المنقوطة.',
+    blogTitle3: 'من قال أن المطورين لا يمكن أن يكونوا أنيقين؟',
+    blogDate3: 'أكتوبر 2024',
+    blogContent3: 'أقوم بإصلاح الأخطاء بسماعات AirPods Max وبنطلون واسع. إذا كان المظهر نظيفاً، فالكود أنظف.',
+    blogTitle4: 'واجهات المستخدم الرجعية > صداع العصر الحديث',
+    blogDate4: 'سبتمبر 2024',
+    blogContent4: 'علمني ويندوز 98 شيئاً واحداً:\nانقر، اسحب، اشعر بالسعادة.\nتطبيقات اليوم؟\nانقر، انتظر، تعطل.',
+    showerThoughtsTitle: 'أفكار الحمام',
+    showerThoughtsDate: 'يناير 2025',
+    showerThought1: 'إذا لم تستطع إصلاح الخطأ، على الأقل اصلح مظهرك.',
+    showerThought2: 'حذائي؟ نظيف جداً للمشي.',
+    showerThought3: 'القهوة ≠ الإبداع، لكن الموسيقى = العبقرية.',
+    showerThought4: 'لماذا دائماً "localhost:3000" وليس أبداً "localhost: كيف حالك؟"',
+    showerThought5: 'قاعدة الموضة #1: إذا أربكت والدتك، فأنت تفعل الشيء الصحيح.',
     
     // Company Names (Arabic translations)
     'Mora': 'مورا',

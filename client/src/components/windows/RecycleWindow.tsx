@@ -4,11 +4,11 @@ export function RecycleWindow() {
   const { t } = useLanguage();
 
   const handleEmptyBin = () => {
-    alert('Recycle Bin is already empty!');
+    alert(t('recycleBinAlreadyEmpty'));
   };
 
   const handleProperties = () => {
-    alert('Recycle Bin Properties:\nLocation: Desktop\nSize: 0 bytes\nContains: 0 files');
+    alert(t('recycleBinProperties'));
   };
 
   return (

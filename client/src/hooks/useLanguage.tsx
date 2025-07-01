@@ -13,8 +13,7 @@ export function useLanguage() {
     document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = newLang;
     
-    // Save to localStorage
-    localStorage.setItem('swagy-language', newLang);
+    // Don't save to localStorage - always reset to English on page refresh
   };
 
   const t = (key: string): string => {
@@ -22,17 +21,9 @@ export function useLanguage() {
   };
 
   useEffect(() => {
-    // Load saved language
-    const savedLang = localStorage.getItem('swagy-language') as Language;
-    if (savedLang && (savedLang === 'en' || savedLang === 'ar')) {
-      setLanguage(savedLang);
-      document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.lang = savedLang;
-    } else {
-      // Default to English
-      document.documentElement.dir = 'ltr';
-      document.documentElement.lang = 'en';
-    }
+    // Always start with English on page load
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'en';
   }, []);
 
   return {

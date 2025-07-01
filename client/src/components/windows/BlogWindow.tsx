@@ -3,36 +3,36 @@ import { useLanguage } from '../../hooks/useLanguage';
 const blogEntries = [
   {
     id: '1',
-    title: 'Why I Still Design Like It\'s 1998',
-    date: 'December 2024',
-    content: 'Modern design is cool, but nothing beats a chunky pixel button with a shadow you can trip over. Call it nostalgia... or taste.'
+    titleKey: 'blogTitle1',
+    dateKey: 'blogDate1',
+    contentKey: 'blogContent1'
   },
   {
     id: '2',
-    title: '2 AM: Me vs One Stupid Semicolon',
-    date: 'November 2024',
-    content: 'Winner: The semicolon.\nLesson: Always respect the semicolon.'
+    titleKey: 'blogTitle2',
+    dateKey: 'blogDate2', 
+    contentKey: 'blogContent2'
   },
   {
     id: '3',
-    title: 'Who Said Developers Can\'t Be Stylish?',
-    date: 'October 2024',
-    content: 'I debug in AirPods Max and baggy pants. If the looks are clean, the code is cleaner.'
+    titleKey: 'blogTitle3',
+    dateKey: 'blogDate3',
+    contentKey: 'blogContent3'
   },
   {
     id: '4',
-    title: 'Retro UIs > Modern Headaches',
-    date: 'September 2024',
-    content: 'Windows 98 taught me one thing:\nClick, drag, feel happy.\nModern apps?\nClick, wait, crash.'
+    titleKey: 'blogTitle4',
+    dateKey: 'blogDate4',
+    contentKey: 'blogContent4'
   }
 ];
 
 const showerThoughts = [
-  'If you can\'t fix the bug, at least fix your look.',
-  'My shoes? Too clean to walk.',
-  'Coffee ≠ creativity, but music = genius.',
-  'Why is it always "localhost:3000" and never "localhost: how are you?"',
-  'Fashion rule #1: If it confuses your mom, you\'re doing it right.'
+  'showerThought1',
+  'showerThought2', 
+  'showerThought3',
+  'showerThought4',
+  'showerThought5'
 ];
 
 export function BlogWindow() {
@@ -48,28 +48,28 @@ export function BlogWindow() {
           <hr className="border-gray-300 mb-4" />
         </div>
         
-        <div className="space-y-4" dir="ltr">
+        <div className="space-y-4">
           {blogEntries.map((entry) => (
             <div key={entry.id} className="blog-entry">
-              <div className="font-bold mb-1">💭 {entry.title}</div>
-              <div className="text-xs text-gray-500 mb-2">{entry.date}</div>
-              <p className="mb-4 whitespace-pre-line">{entry.content}</p>
+              <div className="font-bold mb-1">💭 {t(entry.titleKey)}</div>
+              <div className="text-xs text-gray-500 mb-2">{t(entry.dateKey)}</div>
+              <p className="mb-4 whitespace-pre-line">{t(entry.contentKey)}</p>
               <hr className="border-gray-300" />
             </div>
           ))}
           
           <div className="blog-entry">
-            <div className="font-bold mb-1">⚡ Shower Thoughts</div>
-            <div className="text-xs text-gray-500 mb-2">January 2025</div>
+            <div className="font-bold mb-1">⚡ {t('showerThoughtsTitle')}</div>
+            <div className="text-xs text-gray-500 mb-2">{t('showerThoughtsDate')}</div>
             <ul className="space-y-1 text-xs">
-              {showerThoughts.map((thought, index) => (
-                <li key={index}>• {thought}</li>
+              {showerThoughts.map((thoughtKey, index) => (
+                <li key={index}>• {t(thoughtKey)}</li>
               ))}
             </ul>
           </div>
           
           <div className="mt-8 text-center">
-            <div className="text-xs text-gray-500">--- End of File ---</div>
+            <div className="text-xs text-gray-500">--- {t('endOfFile')} ---</div>
             <div className="blink text-xs mt-2">█</div>
           </div>
         </div>
