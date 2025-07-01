@@ -134,6 +134,33 @@ export const translations: Record<string, Translation> = {
     liveWebsites: 'Live Websites', 
     telegramBots: 'Telegram Bots',
     
+    // Project Buttons
+    instagram: 'Instagram',
+    visitWebsite: 'Visit Website',
+    readMore: 'Read More',
+    openBot: 'Open Bot',
+    details: 'Details',
+    
+    // Company Names (English translations)
+    'Mora': 'Mora',
+    'SLS': 'SLS', 
+    'Pixel Suite': 'Pixel Suite',
+    'printday7': 'printday7',
+    'Alali Plus': 'Alali Plus',
+    'crystal4gift': 'crystal4gift',
+    'candyshopali': 'candyshopali',
+    'Al Taraf': 'Al Taraf',
+    
+    // Company Descriptions (English)
+    'moraDesc': 'Mobile applications and technology solutions company',
+    'slsDesc': 'Logistics and shipping solutions company',
+    'pixelSuiteDesc': 'Design and website development studio',
+    'printday7Desc': 'Professional printing services',
+    'alaliPlusDesc': 'E-commerce platform',
+    'crystal4giftDesc': 'Gifts and accessories store',
+    'candyshopaliDesc': 'Sweets and food store',
+    'altarafDesc': 'Integrated services and solutions company',
+    
 
     
     // Blog
@@ -282,6 +309,33 @@ export const translations: Record<string, Translation> = {
     workedWith: 'تعاونت معهم',
     liveWebsites: 'مواقع مباشرة',
     telegramBots: 'بوتات تيليجرام',
+    
+    // Project Buttons
+    instagram: 'انستجرام',
+    visitWebsite: 'زيارة الموقع',
+    readMore: 'اقرأ المزيد',
+    openBot: 'فتح البوت',
+    details: 'التفاصيل',
+    
+    // Company Names (Arabic translations)
+    'Mora': 'مورا',
+    'SLS': 'سلس',
+    'Pixel Suite': 'بكسل سوت',
+    'printday7': 'برينت داي ٧',
+    'Alali Plus': 'العالي بلس',
+    'crystal4gift': 'كريستال فور جيفت',
+    'candyshopali': 'كاندي شوب علي',
+    'Al Taraf': 'الأطراف',
+    
+    // Company Descriptions (Arabic)
+    'moraDesc': 'شركة موبايل تطبيقات وحلول تقنية',
+    'slsDesc': 'شركة حلول لوجستية وشحن',
+    'pixelSuiteDesc': 'استوديو تصميم وتطوير مواقع',
+    'printday7Desc': 'خدمات طباعة احترافية',
+    'alaliPlusDesc': 'منصة تجارة إلكترونية',
+    'crystal4giftDesc': 'متجر هدايا وإكسسوارات',
+    'candyshopaliDesc': 'متجر حلويات ومأكولات',
+    'altarafDesc': 'شركة خدمات وحلول متكاملة',
     
     // Projects
     projectsDescription: 'مجموعة من مشاريعي الرقمية',

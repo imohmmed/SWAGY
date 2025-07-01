@@ -46,7 +46,7 @@ const sampleProjects = [
   {
     id: '1',
     title: 'Mora',
-    description: '',
+    description: 'moraDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: moraModaaImage,
@@ -56,7 +56,7 @@ const sampleProjects = [
   {
     id: '2',
     title: 'SLS',
-    description: '',
+    description: 'slsDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: slsCafeImage,
@@ -66,7 +66,7 @@ const sampleProjects = [
   {
     id: '3',
     title: 'Pixel Suite',
-    description: '',
+    description: 'pixelSuiteDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: pixelSuiteImage,
@@ -76,7 +76,7 @@ const sampleProjects = [
   {
     id: '4',
     title: 'printday7',
-    description: '',
+    description: 'printday7Desc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: candyshopaliImage,
@@ -86,7 +86,7 @@ const sampleProjects = [
   {
     id: '5',
     title: 'Alali Plus',
-    description: '',
+    description: 'alaliPlusDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: printday7Image,
@@ -96,7 +96,7 @@ const sampleProjects = [
   {
     id: '6',
     title: 'crystal4gift',
-    description: '',
+    description: 'crystal4giftDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: crystalGiftImage,
@@ -106,7 +106,7 @@ const sampleProjects = [
   {
     id: '7',
     title: 'candyshopali',
-    description: '',
+    description: 'candyshopaliDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: alaliPlusImage,
@@ -116,7 +116,7 @@ const sampleProjects = [
   {
     id: '8',
     title: 'Al Taraf',
-    description: '',
+    description: 'altarafDesc',
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: altarafLinksImage,
@@ -332,7 +332,7 @@ export function ProjectsWindow() {
                         backgroundPosition: 'center'
                       }}
                     />
-                    <div className="text-xs font-bold text-left mb-2">{project.title}</div>
+                    <div className="text-xs font-bold text-left mb-2">{t(project.title) || project.title}</div>
                     {project.instagramLink && (
                       <button
                         className="win-button px-2 py-1 text-xs flex items-center gap-1"
@@ -345,7 +345,7 @@ export function ProjectsWindow() {
                           className="w-3 h-3" 
                           draggable={false}
                         />
-                        Instagram
+                        {t('instagram')}
                       </button>
                     )}
                   </div>
@@ -368,9 +368,12 @@ export function ProjectsWindow() {
                         backgroundPosition: 'center'
                       }}
                     />
-                    <div className="text-xs font-bold">{project.title}</div>
+                    <div className="text-xs font-bold">{t(project.title) || project.title}</div>
                     <div className="text-xs text-gray-600 mb-2 line-clamp-2">
-                      {project.description.length > 100 ? project.description.substring(0, 100) + '...' : project.description}
+                      {(() => {
+                        const translatedDesc = t(project.description) || project.description;
+                        return translatedDesc.length > 100 ? translatedDesc.substring(0, 100) + '...' : translatedDesc;
+                      })()}
                     </div>
                     <div className="text-xs text-gray-500 mb-2">{project.technologies.join(', ')}</div>
                     <div className="flex gap-2">
@@ -382,7 +385,7 @@ export function ProjectsWindow() {
                             setSelectedProject(project as Project);
                           }}
                         >
-                          Read More
+                          {t('readMore')}
                         </button>
                       )}
                       {project.link && (
@@ -393,7 +396,7 @@ export function ProjectsWindow() {
                             window.open(project.link, '_blank');
                           }}
                         >
-                          {selectedCategory === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                          {selectedCategory === 'telegram-bots' ? t('openBot') || 'Open Bot' : t('visitWebsite')}
                         </button>
                       )}
                     </div>
@@ -446,7 +449,7 @@ export function ProjectsWindow() {
                   className="w-4 h-4 object-cover" 
                   draggable={false}
                 />
-                <span className="text-[11px] truncate">{selectedProject.title} - Details</span>
+                <span className="text-[11px] truncate">{t(selectedProject.title) || selectedProject.title} - {t('details') || 'Details'}</span>
               </div>
               <div className="flex gap-1">
                 <button
@@ -471,7 +474,7 @@ export function ProjectsWindow() {
               />
               
               <div className="text-sm whitespace-pre-line leading-snug mb-2">
-                {selectedProject.description}
+                {t(selectedProject.description) || selectedProject.description}
               </div>
               
               {selectedProject.technologies.length > 0 && (
@@ -486,7 +489,7 @@ export function ProjectsWindow() {
                   className="win-button px-3 py-1 text-xs"
                   onClick={() => setSelectedProject(null)}
                 >
-                  Close
+                  {t('close')}
                 </button>
                 {selectedProject.link && (
                   <button
@@ -496,7 +499,7 @@ export function ProjectsWindow() {
                       setSelectedProject(null);
                     }}
                   >
-                    {selectedProject.category === 'telegram-bots' ? 'Open Bot' : 'Visit Website'}
+                    {selectedProject.category === 'telegram-bots' ? t('openBot') : t('visitWebsite')}
                   </button>
                 )}
               </div>
