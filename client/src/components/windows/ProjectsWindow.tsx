@@ -35,10 +35,10 @@ interface Project {
   instagramLink?: string;
 }
 
-const projectCategories = [
-  { id: 'worked-with', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: 'Worked With' },
-  { id: 'other-websites', icon: 'https://win98icons.alexmeub.com/icons/png/msie2-1.png', label: 'Live Websites' },
-  { id: 'telegram-bots', icon: 'https://win98icons.alexmeub.com/icons/png/utopia_smiley.png', label: 'Telegram Bots' }
+const getProjectCategories = (t: (key: string) => string) => [
+  { id: 'worked-with', icon: 'https://win98icons.alexmeub.com/icons/png/address_book_users.png', label: t('workedWith') },
+  { id: 'other-websites', icon: 'https://win98icons.alexmeub.com/icons/png/msie2-1.png', label: t('liveWebsites') },
+  { id: 'telegram-bots', icon: 'https://win98icons.alexmeub.com/icons/png/utopia_smiley.png', label: t('telegramBots') }
 ];
 
 const sampleProjects = [
@@ -276,6 +276,8 @@ export function ProjectsWindow() {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  
+  const projectCategories = getProjectCategories(t);
 
   const filteredProjects = selectedCategory
     ? sampleProjects.filter(p => p.category === selectedCategory)
@@ -287,7 +289,7 @@ export function ProjectsWindow() {
       <div className="w-1/3 border-r-2 border-[rgb(var(--win-border-dark))] p-2 bg-[rgb(var(--win-light-gray))]">
         <div className="text-xs font-bold mb-2 flex items-center gap-1">
           <img src="https://win98icons.alexmeub.com/icons/png/directory_open_cool-5.png" alt="" className="w-4 h-4" draggable={false} />
-          Project Categories
+          {t('projectCategories') || 'Project Categories'}
         </div>
         <div className="space-y-1 text-xs">
           {projectCategories.map((category) => (

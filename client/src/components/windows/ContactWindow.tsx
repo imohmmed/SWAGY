@@ -104,7 +104,7 @@ export function ContactWindow() {
     <div className="p-4 h-full overflow-auto scrollbar">
       <div className="text-sm font-bold mb-4 flex items-center gap-2">
         <img src="https://win98icons.alexmeub.com/icons/png/modem-3.png" alt="" className="w-4 h-4" draggable={false} />
-        Send Email to SWAGY
+        {t('sendEmailTo')}
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-3">
@@ -134,7 +134,7 @@ export function ContactWindow() {
             onChange={handleChange}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            placeholder="Your Full Name"
+            placeholder={t('yourFullName')}
             className="w-full p-1 win-input"
             required
           />
@@ -165,7 +165,7 @@ export function ContactWindow() {
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             rows={8}
-            placeholder="Type your message here..."
+            placeholder={t('typeMessage')}
             className="w-full p-2 win-textarea scrollbar"
             required
           />
@@ -211,7 +211,7 @@ export function ContactWindow() {
             className="win-button px-4 py-2 text-xs font-bold flex items-center gap-1"
           >
             <img src="https://win98icons.alexmeub.com/icons/png/check-0.png" alt="" className="w-4 h-4" draggable={false} />
-            {isSubmitting ? 'Sending...' : t('send')}
+            {isSubmitting ? t('sending') : t('send')}
           </button>
           <button
             type="button"

@@ -78,6 +78,25 @@ export const translations: Record<string, Translation> = {
     assetsDesc: 'High-resolution project images and mockups',
     presentationDesc: 'Detailed project showcase and case studies',
     brandDesc: 'Logo, colors, and brand identity package',
+    resumeDescription: 'My official CV — aka "how I look on paper"',
+    brandDescription: 'Logos, colors, brand rules — basically the SWAGY style guide.',
+    downloadInstruction1: 'Right-click and "Save As" for smooth downloading',
+    downloadInstruction2: 'All files are clean and virus-free 🧼',
+    downloadInstruction3: 'Need a different format? Just hit me up',
+    downloadInstruction4: 'Updated regularly (because I actually care)',
+    downloadNow: 'Download Now',
+    
+    // Contact Form
+    sendEmailTo: 'Send Email to SWAGY',
+    yourFullName: 'Your Full Name',
+    typeMessage: 'Type your message here...',
+    sending: 'Sending...',
+    
+    // My Computer
+    back: '← Back',
+    address: 'Address:',
+    emptyFolder: 'This folder is empty',
+    systemType: 'System Type: 90s kid / Modern dev hybrid',
     
     // Terminal
     terminalWelcome: 'Microsoft(R) MS-DOS(R) Version 6.22',
@@ -104,9 +123,16 @@ export const translations: Record<string, Translation> = {
     recycleTip1: '💡 Pro Tip: Sometimes letting go is the best way forward.',
     recycleTip2: '🔄 Every deletion is a chance for something new.',
     
-    // Music
+    // Music  
+    musicPlayer: 'Music Player',
     nowPlaying: 'Now Playing:',
     playlist: 'Playlist:',
+    
+    // Projects Categories
+    projectCategories: 'Project Categories',
+    workedWith: 'Worked With',
+    liveWebsites: 'Live Websites', 
+    telegramBots: 'Telegram Bots',
     
 
     
@@ -198,6 +224,25 @@ export const translations: Record<string, Translation> = {
     assetsDesc: 'صور المشاريع عالية الدقة والنماذج الأولية',
     presentationDesc: 'عرض تفصيلي للمشاريع ودراسات الحالة',
     brandDesc: 'الشعار والألوان وحزمة الهوية التجارية',
+    resumeDescription: 'سيرتي الذاتية الرسمية — كيف أبدو على الورق',
+    brandDescription: 'الشعارات والألوان وقواعد العلامة التجارية — دليل أسلوب SWAGY.',
+    downloadInstruction1: 'انقر بالزر الأيمن واختر "حفظ باسم" للتحميل السلس',
+    downloadInstruction2: 'جميع الملفات نظيفة وخالية من الفيروسات 🧼',
+    downloadInstruction3: 'تحتاج صيغة أخرى؟ فقط راسلني',
+    downloadInstruction4: 'يتم التحديث بانتظام (لأنني أهتم فعلاً)',
+    downloadNow: 'تحميل الآن',
+    
+    // Contact Form
+    sendEmailTo: 'إرسال إيميل إلى SWAGY',
+    yourFullName: 'اسمك الكامل',
+    typeMessage: 'اكتب رسالتك هنا...',
+    sending: 'جاري الإرسال...',
+    
+    // My Computer
+    back: '← رجوع',
+    address: 'العنوان:',
+    emptyFolder: 'هذا المجلد فارغ',
+    systemType: 'نوع النظام: هجين بين طفل التسعينات ومطور حديث',
     
     // Terminal
     terminalWelcome: 'Microsoft(R) MS-DOS(R) Version 6.22',
@@ -225,11 +270,18 @@ export const translations: Record<string, Translation> = {
     recycleTip2: '🔄 كل حذف هو فرصة لشيء جديد.',
     
     // Music
+    musicPlayer: 'مشغل الموسيقى',
     nowPlaying: 'يُشغل الآن:',
     playlist: 'قائمة التشغيل:',
     volume: 'مستوى الصوت',
     shuffle: 'عشوائي',
     repeat: 'تكرار',
+    
+    // Projects Categories
+    projectCategories: 'فئات المشاريع',
+    workedWith: 'تعاونت معهم',
+    liveWebsites: 'مواقع مباشرة',
+    telegramBots: 'بوتات تيليجرام',
     
     // Projects
     projectsDescription: 'مجموعة من مشاريعي الرقمية',

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { WindowType } from '../../types';
+import { useLanguage } from '../../hooks/useLanguage';
 
 interface FileItem {
   id: string;
@@ -593,6 +594,7 @@ interface MyComputerWindowProps {
 }
 
 export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
+  const { t } = useLanguage();
   const [currentPath, setCurrentPath] = useState<FileItem[]>([]);
   const [currentFiles, setCurrentFiles] = useState<FileItem[]>(desktopFiles);
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
@@ -657,7 +659,7 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
             onClick={() => setViewingContent(false)}
             className="px-3 py-1 bg-gray-300 hover:bg-gray-400 text-black text-sm border border-gray-400 rounded"
           >
-            ← Back
+            {t('back')}
           </button>
           <span className="text-sm font-bold">{selectedFile.name}</span>
         </div>
@@ -682,9 +684,9 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
             disabled={currentPath.length === 0}
             className="px-3 py-1 bg-gray-300 hover:bg-gray-400 disabled:bg-gray-200 disabled:text-gray-500 text-black text-sm border border-gray-400 rounded"
           >
-            ← Back
+            {t('back')}
           </button>
-          <span className="text-sm">Address:</span>
+          <span className="text-sm">{t('address')}</span>
           <div className="flex-1 bg-white border border-gray-400 px-2 py-1 text-sm">
             {getCurrentPathString()}
           </div>
@@ -715,7 +717,7 @@ export function MyComputerWindow({ onOpenWindow }: MyComputerWindowProps = {}) {
 
         {currentFiles.length === 0 && (
           <div className="text-center text-gray-500 mt-8">
-            This folder is empty
+            {t('emptyFolder')}
           </div>
         )}
       </div>

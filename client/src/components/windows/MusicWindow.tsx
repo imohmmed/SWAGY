@@ -298,7 +298,7 @@ export function MusicWindow() {
         style={{ background: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }}
       >
         <div className="text-center mb-4">
-          <div className="text-lg font-bold">🎵 Music Player</div>
+          <div className="text-lg font-bold">🎵 {t('musicPlayer')}</div>
           <div className="text-xs">SWAGY_playlist.m3u</div>
         </div>
         
