@@ -86,20 +86,22 @@ export function Snake({ onClose }: SnakeProps) {
         return currentSnake;
       }
 
-      // Check self collision
-      if (newSnake.some(segment => segment.x === head.x && segment.y === head.y)) {
-        setGameStatus('gameOver');
-        return currentSnake;
-      }
-
       newSnake.unshift(head);
 
       // Check food collision
-      if (head.x === food.x && head.y === food.y) {
+      const ateFood = head.x === food.x && head.y === food.y;
+      if (ateFood) {
         setScore(prev => prev + 10);
         setFood(generateFood(newSnake));
       } else {
         newSnake.pop();
+      }
+
+      // Check self collision (exclude head only)
+      const bodyToCheck = newSnake.slice(1);
+      if (bodyToCheck.some(segment => segment.x === head.x && segment.y === head.y)) {
+        setGameStatus('gameOver');
+        return currentSnake;
       }
 
       return newSnake;
@@ -127,6 +129,16 @@ export function Snake({ onClose }: SnakeProps) {
   // Handle keyboard input
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Handle pause/unpause only for playing/paused states
+      if (e.key === ' ') {
+        e.preventDefault();
+        if (gameStatus === 'playing' || gameStatus === 'paused') {
+          setGameStatus(prev => prev === 'playing' ? 'paused' : 'playing');
+        }
+        return;
+      }
+
+      // Handle direction only when playing
       if (gameStatus !== 'playing') return;
 
       const newDirection = (() => {
@@ -147,10 +159,6 @@ export function Snake({ onClose }: SnakeProps) {
           case 'd':
           case 'D':
             return 'right';
-          case ' ':
-            // Spacebar to pause/unpause
-            setGameStatus(prev => prev === 'playing' ? 'paused' : 'playing');
-            return null;
           default:
             return null;
         }
@@ -251,6 +259,7 @@ export function Snake({ onClose }: SnakeProps) {
           <button
             onClick={togglePause}
             className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            disabled={gameStatus === 'gameOver'}
             data-testid="button-pause-snake"
           >
             {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
@@ -287,7 +296,10 @@ export function Snake({ onClose }: SnakeProps) {
 
       {/* Game grid */}
       <div className="flex-1 flex items-center justify-center">
-        <div className="grid grid-cols-20 gap-0 border-2 border-[rgb(var(--win-border-dark))] bg-black p-1">
+        <div 
+          className="grid gap-0 border-2 border-[rgb(var(--win-border-dark))] bg-black p-1"
+          style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 1rem)` }}
+        >
           {Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, index) => {
             const x = index % GRID_SIZE;
             const y = Math.floor(index / GRID_SIZE);
