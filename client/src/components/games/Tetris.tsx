@@ -101,8 +101,6 @@ export function Tetris({ onClose }: TetrisProps) {
   const [nextPiece, setNextPiece] = useState<TetrominoType>(() => 
     TETROMINO_TYPES[Math.floor(Math.random() * TETROMINO_TYPES.length)]
   );
-  const [heldPiece, setHeldPiece] = useState<TetrominoType | null>(null);
-  const [canHold, setCanHold] = useState(true);
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
@@ -234,7 +232,6 @@ export function Tetris({ onClose }: TetrisProps) {
       if (isValidPosition(newPiece, clearedBoard)) {
         setCurrentPiece(newPiece);
         setNextPiece(getRandomPiece());
-        setCanHold(true);
       } else {
         setGameStatus('gameOver');
       }
@@ -306,41 +303,11 @@ export function Tetris({ onClose }: TetrisProps) {
     if (isValidPosition(newPiece, clearedBoard)) {
       setCurrentPiece(newPiece);
       setNextPiece(getRandomPiece());
-      setCanHold(true);
     } else {
       setGameStatus('gameOver');
     }
   };
 
-  const holdPiece = (): void => {
-    if (!currentPiece || !canHold || gameStatus !== 'playing') return;
-
-    const currentType = currentPiece.type;
-    
-    if (heldPiece) {
-      // Swap current piece with held piece
-      const newPiece: Piece = {
-        type: heldPiece,
-        position: { x: Math.floor(BOARD_WIDTH / 2) - 1, y: 0 },
-        rotation: 0,
-      };
-      
-      if (isValidPosition(newPiece, board)) {
-        setCurrentPiece(newPiece);
-        setHeldPiece(currentType);
-      }
-    } else {
-      // Hold current piece and spawn new one
-      setHeldPiece(currentType);
-      const newPiece = spawnPiece();
-      if (isValidPosition(newPiece, board)) {
-        setCurrentPiece(newPiece);
-        setNextPiece(getRandomPiece());
-      }
-    }
-    
-    setCanHold(false);
-  };
 
   const togglePause = (): void => {
     if (gameStatus === 'gameOver') return;
@@ -353,8 +320,6 @@ export function Tetris({ onClose }: TetrisProps) {
     ));
     setCurrentPiece(null);
     setNextPiece(getRandomPiece());
-    setHeldPiece(null);
-    setCanHold(true);
     setScore(0);
     setLevel(1);
     setLines(0);
@@ -394,10 +359,6 @@ export function Tetris({ onClose }: TetrisProps) {
             hardDrop();
           }
         }
-        break;
-      case 'c':
-        e.preventDefault();
-        holdPiece();
         break;
       case 'p':
         e.preventDefault();
@@ -644,27 +605,9 @@ export function Tetris({ onClose }: TetrisProps) {
               >
                 {t('tetrisDrop') || 'Drop'}
               </button>
-              <button
-                onClick={holdPiece}
-                className="w-full px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-                data-testid="button-hold-tetris"
-                disabled={gameStatus !== 'playing' || !canHold}
-              >
-                {t('tetrisHold') || 'Hold'}
-              </button>
-              <button
-                onClick={togglePause}
-                className="w-full px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-                data-testid="button-pause-control-tetris"
-                disabled={gameStatus === 'gameOver'}
-              >
-                {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
-              </button>
             </div>
           </div>
 
-          {/* Held Piece */}
-          {renderMiniBoard(heldPiece, t('tetrisHold') || 'Hold')}
         </div>
       </div>
 
