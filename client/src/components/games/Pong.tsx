@@ -33,15 +33,15 @@ interface Block {
 }
 
 // Game constants for Breakout experience
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+const GAME_WIDTH = 400;
+const GAME_HEIGHT = 300;
 const PADDLE_HEIGHT = 15;
-const PADDLE_WIDTH = 120;
-const BALL_SIZE = 12.5;
-const INITIAL_BALL_SPEED = 4;
-const BLOCK_WIDTH = 12.5;
-const BLOCK_HEIGHT = 12.5;
-const BLOCKS_PER_ROW = 64;
+const PADDLE_WIDTH = 80;
+const BALL_SIZE = 8;
+const INITIAL_BALL_SPEED = 3;
+const BLOCK_WIDTH = 20;
+const BLOCK_HEIGHT = 20;
+const BLOCKS_PER_ROW = 20;
 const BLOCK_ROWS = 6;
 const BLOCK_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3'];
 const BLOCK_SPACING = 0;
@@ -86,7 +86,7 @@ export function Pong({ onClose }: PongProps) {
   });
   
   const [ball, setBall] = useState<Ball>({
-    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 150 },
+    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 50 },
     velocity: { x: INITIAL_BALL_SPEED, y: -INITIAL_BALL_SPEED },
     size: BALL_SIZE,
   });
@@ -98,7 +98,7 @@ export function Pong({ onClose }: PongProps) {
   // Helper functions
   const resetBall = (): Ball => {
     return {
-      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 150 },
+      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 50 },
       velocity: { 
         x: (Math.random() > 0.5 ? 1 : -1) * INITIAL_BALL_SPEED,
         y: -INITIAL_BALL_SPEED 
@@ -401,7 +401,7 @@ export function Pong({ onClose }: PongProps) {
       {/* Game Area - Breakout Style */}
       <div className="flex-1 flex justify-center">
         <div
-          className="relative bg-black border-4 border-white cursor-crosshair"
+          className="relative bg-black border-4 border-white cursor-crosshair overflow-hidden box-content"
           style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
           data-testid="breakout-game-area"
           onMouseDown={handleMouseDown}
@@ -417,14 +417,15 @@ export function Pong({ onClose }: PongProps) {
             block.visible && (
               <div
                 key={index}
-                className="absolute border border-gray-700 rounded-sm"
+                className="absolute border border-gray-800 rounded-sm"
                 style={{
                   left: block.x,
                   top: block.y,
                   width: block.width,
                   height: block.height,
                   backgroundColor: block.color,
-                  boxShadow: '0 0 4px rgba(0,0,0,0.5)',
+                  boxShadow: '0 0 4px rgba(0,0,0,0.7)',
+                  border: '1px solid rgba(255,255,255,0.2)'
                 }}
                 data-testid={`block-${index}`}
               />
