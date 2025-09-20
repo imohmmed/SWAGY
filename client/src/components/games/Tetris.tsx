@@ -584,6 +584,47 @@ export function Tetris({ onClose }: TetrisProps) {
 
           {/* Next Piece */}
           {renderMiniBoard(nextPiece, t('tetrisNext') || 'Next')}
+          
+          {/* Directional Controls under NEXT */}
+          <div className="mb-4">
+            <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">{t('tetrisControls') || 'Controls'}</div>
+            <div className="flex flex-col gap-1">
+              {/* Top row - empty for alignment */}
+              <div className="flex justify-center">
+                <div className="w-8 h-8"></div>
+              </div>
+              {/* Middle row - Left and Right */}
+              <div className="flex justify-between gap-1">
+                <button
+                  onClick={() => movePiece('left')}
+                  className="w-8 h-8 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] flex items-center justify-center"
+                  data-testid="button-control-left-tetris"
+                  disabled={gameStatus !== 'playing'}
+                >
+                  ←
+                </button>
+                <button
+                  onClick={() => movePiece('right')}
+                  className="w-8 h-8 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] flex items-center justify-center"
+                  data-testid="button-control-right-tetris"
+                  disabled={gameStatus !== 'playing'}
+                >
+                  →
+                </button>
+              </div>
+              {/* Bottom row - Down */}
+              <div className="flex justify-center">
+                <button
+                  onClick={() => movePiece('down')}
+                  className="w-8 h-8 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] flex items-center justify-center"
+                  data-testid="button-control-down-tetris"
+                  disabled={gameStatus !== 'playing'}
+                >
+                  ↓
+                </button>
+              </div>
+            </div>
+          </div>
 
           {/* Held Piece */}
           {renderMiniBoard(heldPiece, t('tetrisHold') || 'Hold')}
