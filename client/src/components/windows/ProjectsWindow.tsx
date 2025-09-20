@@ -131,8 +131,8 @@ const getProjects = (t: (key: string) => string) => [
     category: 'worked-with' as ProjectCategory,
     technologies: [],
     image: caravanLogo,
-    link: 'https://caravan-iq.com',
-    instagramLink: ''
+    link: 'https://www.instagram.com/caravan.iq',
+    instagramLink: 'https://www.instagram.com/caravan.iq'
   },
   
   // Other Websites section - Full projects with descriptions
