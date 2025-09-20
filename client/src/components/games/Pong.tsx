@@ -433,7 +433,7 @@ export function Pong({ onClose }: PongProps) {
               className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
               data-testid="button-options-dropdown"
             >
-              {t('options')} ▼
+              Difficulty ▼
             </button>
             
             {showOptionsDropdown && (
@@ -527,9 +527,9 @@ export function Pong({ onClose }: PongProps) {
           <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="lives-count">{'❤️'.repeat(lives)}</div>
         </div>
         <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-          <div className="text-xs font-bold text-[rgb(var(--win-text))]">المستوى</div>
+          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Level</div>
           <div className="text-lg font-bold text-[rgb(var(--win-text))]" data-testid="difficulty-display">
-            {difficulty === 'easy' ? 'سهل' : difficulty === 'normal' ? 'عادي' : 'صعب'}
+            {difficulty === 'easy' ? 'Easy' : difficulty === 'normal' ? 'Normal' : 'Hard'}
           </div>
         </div>
       </div>
