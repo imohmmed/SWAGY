@@ -417,16 +417,7 @@ export function Pong({ onClose }: PongProps) {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-[rgb(var(--win-text))]">{t('pongTitle')}</h2>
         <div className="flex gap-2">
-          <button
-            onClick={togglePause}
-            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-            disabled={gameStatus === 'gameOver'}
-            data-testid="button-pause-pong"
-          >
-            {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
-          </button>
-          
-          {/* Options Dropdown */}
+          {/* Difficulty Dropdown - First */}
           <div className="relative options-dropdown-container">
             <button
               onClick={() => setShowOptionsDropdown(!showOptionsDropdown)}
@@ -480,6 +471,16 @@ export function Pong({ onClose }: PongProps) {
               </div>
             )}
           </div>
+          
+          {/* Pause Button - Second */}
+          <button
+            onClick={togglePause}
+            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            disabled={gameStatus === 'gameOver'}
+            data-testid="button-pause-pong"
+          >
+            {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
+          </button>
           <button
             onClick={resetGame}
             className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
