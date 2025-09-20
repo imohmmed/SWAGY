@@ -211,6 +211,15 @@ const getProjects = (t: (key: string) => string) => [
 
   // Telegram Bots section
   {
+    id: '24',
+    title: 'Downloader Bot',
+    description: t('downloaderBotDesc'),
+    category: 'telegram-bots' as ProjectCategory,
+    technologies: ['Media Downloader', 'Multi-platform Support', 'File Processing'],
+    image: downloaderBotImage,
+    link: 'https://t.me/Biobot'
+  },
+  {
     id: '18',
     title: 'Quran Bot',
     description: t('quranBotDesc'),
@@ -268,15 +277,6 @@ const getProjects = (t: (key: string) => string) => [
     image: customerServiceBotImage,
     logo: customerServiceBotImage,
     link: 'https://t.me/mohmmed'
-  },
-  {
-    id: '24',
-    title: 'Downloader Bot',
-    description: t('downloaderBotDesc'),
-    category: 'telegram-bots' as ProjectCategory,
-    technologies: ['Media Downloader', 'Multi-platform Support', 'File Processing'],
-    image: downloaderBotImage,
-    link: 'https://t.me/Biobot'
   },
 
 ];
