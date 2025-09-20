@@ -119,6 +119,8 @@ export const translations: Record<string, Translation> = {
     solitaireInstructions1: 'Click stock to draw cards',
     solitaireInstructions2: 'Drag cards to build sequences',
     solitaireInstructions3: 'Build foundations from Ace to King',
+    solitaireInstructions4: 'Double-click to auto-move cards',
+    solitaireInstructions5: 'Use mobile buttons: Draw, Undo, New Game',
     
     // Snake specific
     gameOver: 'Game Over!',
@@ -436,6 +438,8 @@ export const translations: Record<string, Translation> = {
     solitaireInstructions1: 'انقر على المخزون لسحب الأوراق',
     solitaireInstructions2: 'اسحب الأوراق لبناء التسلسلات',
     solitaireInstructions3: 'ابني الأسس من الآس إلى الملك',
+    solitaireInstructions4: 'اضغط مرتين للنقل التلقائي',
+    solitaireInstructions5: 'استخدم أزرار الموبايل: سحب، تراجع، لعبة جديدة',
     
     // Snake specific
     gameOver: 'انتهت اللعبة!',

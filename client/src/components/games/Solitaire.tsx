@@ -506,11 +506,23 @@ export function Solitaire({ onClose }: SolitaireProps) {
         onClick={onClick}
         onDoubleClick={onDoubleClick}
         draggable={card.faceUp && isClickable}
-        onDragStart={onDragStart}
+        onDragStart={(e) => {
+          e.dataTransfer.effectAllowed = 'move';
+          if (onDragStart) onDragStart();
+        }}
         onDragEnd={handleDragEnd}
-        onTouchStart={source ? (e) => handleTouchStart(e, card, source) : undefined}
-        onTouchEnd={source ? (e) => handleTouchEnd(e, card, source) : undefined}
-        onTouchMove={handleTouchMove}
+        onTouchStart={source ? (e) => {
+          e.stopPropagation();
+          handleTouchStart(e, card, source);
+        } : undefined}
+        onTouchEnd={source ? (e) => {
+          e.stopPropagation();
+          handleTouchEnd(e, card, source);
+        } : undefined}
+        onTouchMove={(e) => {
+          e.stopPropagation();
+          handleTouchMove(e);
+        }}
         data-testid={`card-${card.id}`}
       >
         {card.faceUp ? (
@@ -526,7 +538,7 @@ export function Solitaire({ onClose }: SolitaireProps) {
   };
 
   return (
-    <div className="h-full flex flex-col bg-green-800 p-4">
+    <div className="h-full flex flex-col bg-green-800 p-4 overflow-auto">
       {/* Header with controls */}
       <div className="flex flex-col gap-2 mb-4">
         <div className="flex items-center justify-between p-2 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
@@ -637,8 +649,16 @@ export function Solitaire({ onClose }: SolitaireProps) {
               <div
                 key={index}
                 className="w-16 h-20 border-2 border-dashed border-gray-400 rounded-sm bg-green-700 flex items-center justify-center"
-                onDrop={() => handleDropOnFoundation(index)}
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  console.log('Dropped on foundation', index);
+                  handleDropOnFoundation(index);
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = 'move';
+                }}
+                onDragEnter={(e) => e.preventDefault()}
                 data-testid={`foundation-${index}`}
               >
                 {foundation.length > 0 && renderCard(
@@ -656,8 +676,16 @@ export function Solitaire({ onClose }: SolitaireProps) {
             <div
               key={colIndex}
               className="flex-1 min-h-24 border-2 border-dashed border-gray-400 rounded-sm bg-green-700 p-1"
-              onDrop={() => handleDropOnTableau(colIndex)}
-              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                console.log('Dropped on tableau', colIndex);
+                handleDropOnTableau(colIndex);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+              }}
+              onDragEnter={(e) => e.preventDefault()}
               data-testid={`tableau-${colIndex}`}
             >
               <div className="flex flex-col gap-1">
@@ -701,12 +729,14 @@ export function Solitaire({ onClose }: SolitaireProps) {
         </div>
       </div>
 
-      {/* Instructions */}
-      <div className="mt-4 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] text-xs">
-        <div className="font-bold mb-1">{t('gameInstructions') || 'Instructions:'}</div>
+      {/* Instructions - Always visible */}
+      <div className="mt-4 p-3 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] text-xs space-y-1 min-h-[80px]">
+        <div className="font-bold mb-2">{t('gameInstructions') || 'Instructions:'}</div>
         <div>• {t('solitaireInstructions1') || 'Click stock to draw cards'}</div>
         <div>• {t('solitaireInstructions2') || 'Drag cards to build sequences'}</div>
         <div>• {t('solitaireInstructions3') || 'Build foundations from Ace to King'}</div>
+        <div>• {t('solitaireInstructions4') || 'Double-click to auto-move cards'}</div>
+        <div>• {t('solitaireInstructions5') || 'Use mobile buttons: Draw, Undo, New Game'}</div>
       </div>
     </div>
   );
