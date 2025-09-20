@@ -134,6 +134,18 @@ export const translations: Record<string, Translation> = {
     tetrisInstructions3: 'C to hold piece',
     tetrisInstructions4: 'P to pause/resume',
     
+    // Pong specific
+    pongScore: 'Score',
+    pongPlayer: 'Player',
+    pongComputer: 'Computer',
+    pongGameOver: 'Game Over!',
+    pongWinner: 'Winner',
+    pongFirstTo: 'First to 11 points wins',
+    pongInstructions1: 'Arrow keys or WASD to move paddle',
+    pongInstructions2: 'Hit the ball back to opponent',
+    pongInstructions3: 'First to 11 points wins',
+    pongInstructions4: 'P to pause/resume',
+    
     // Downloads
     availableDownloads: 'Available Downloads',
     downloadInstructions: 'Download Instructions:',
@@ -429,6 +441,18 @@ export const translations: Record<string, Translation> = {
     tetrisInstructions2: 'مسافة للإسقاط السريع',
     tetrisInstructions3: 'C للاحتفاظ بالقطعة',
     tetrisInstructions4: 'P للإيقاف/الاستكمال',
+    
+    // Pong specific
+    pongScore: 'النقاط',
+    pongPlayer: 'اللاعب',
+    pongComputer: 'الكمبيوتر',
+    pongGameOver: 'انتهت اللعبة!',
+    pongWinner: 'الفائز',
+    pongFirstTo: 'أول من يصل 11 نقطة يفوز',
+    pongInstructions1: 'أسهم الاتجاه أو WASD لتحريك المضرب',
+    pongInstructions2: 'ارجع الكرة للخصم',
+    pongInstructions3: 'أول من يصل 11 نقطة يفوز',
+    pongInstructions4: 'P للإيقاف/الاستكمال',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',

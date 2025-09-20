@@ -4,6 +4,7 @@ import { Minesweeper } from '../games/Minesweeper';
 import { Solitaire } from '../games/Solitaire';
 import { Snake } from '../games/Snake';
 import { Tetris } from '../games/Tetris';
+import { Pong } from '../games/Pong';
 
 // Games components
 interface Game {
@@ -83,23 +84,7 @@ export function GamesWindow() {
         case 'tetris':
           return <Tetris onClose={handleGameClose} />;
         case 'pong':
-          // TODO: Implement Pong component
-          return (
-            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
-              <div className="text-center">
-                <div className="text-lg mb-4">🏓</div>
-                <div className="text-sm mb-4">{t('pongTitle') || 'Pong'}</div>
-                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
-                <button
-                  onClick={handleGameClose}
-                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-                  data-testid="button-close-game"
-                >
-                  {t('close') || 'Close'}
-                </button>
-              </div>
-            </div>
-          );
+          return <Pong onClose={handleGameClose} />;
         default:
           return null;
       }
