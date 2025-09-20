@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 
 type CellState = 'hidden' | 'revealed' | 'flagged';
@@ -24,9 +24,11 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
   const [flagCount, setFlagCount] = useState(MINE_COUNT);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
+  const [firstClick, setFirstClick] = useState(true);
+  const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Initialize game
-  const initializeGame = useCallback(() => {
+  // Place mines avoiding a specific cell (for first-click safety)
+  const placeMines = useCallback((avoidRow?: number, avoidCol?: number) => {
     const newGrid: Cell[][] = Array(GRID_SIZE).fill(null).map(() =>
       Array(GRID_SIZE).fill(null).map(() => ({
         isMine: false,
@@ -35,13 +37,14 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       }))
     );
 
-    // Place mines randomly
+    // Place mines randomly, avoiding the first clicked cell
     let minesPlaced = 0;
     while (minesPlaced < MINE_COUNT) {
       const row = Math.floor(Math.random() * GRID_SIZE);
       const col = Math.floor(Math.random() * GRID_SIZE);
       
-      if (!newGrid[row][col].isMine) {
+      if (!newGrid[row][col].isMine && 
+          !(avoidRow !== undefined && avoidCol !== undefined && row === avoidRow && col === avoidCol)) {
         newGrid[row][col].isMine = true;
         minesPlaced++;
       }
@@ -70,16 +73,23 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       }
     }
 
+    return newGrid;
+  }, []);
+
+  // Initialize game
+  const initializeGame = useCallback(() => {
+    const newGrid = placeMines();
     setGrid(newGrid);
     setGameStatus('playing');
     setFlagCount(MINE_COUNT);
     setTimeElapsed(0);
     setGameStarted(false);
-  }, []);
+    setFirstClick(true);
+  }, [placeMines]);
 
   // Timer effect
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
     if (gameStarted && gameStatus === 'playing') {
       interval = setInterval(() => {
         setTimeElapsed(prev => prev + 1);
@@ -99,6 +109,19 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     
     if (!gameStarted) {
       setGameStarted(true);
+    }
+
+    // If this is the first click, place mines avoiding this cell
+    if (firstClick) {
+      const newGrid = placeMines(row, col);
+      setGrid(newGrid);
+      setFirstClick(false);
+      
+      // Now reveal the cell safely
+      setTimeout(() => {
+        revealCell(row, col);
+      }, 0);
+      return;
     }
 
     setGrid(prevGrid => {
@@ -221,6 +244,21 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     toggleFlag(row, col);
   };
 
+  // Handle touch start for long press
+  const handleTouchStart = (row: number, col: number) => {
+    longPressTimerRef.current = setTimeout(() => {
+      handleCellLongPress(row, col);
+    }, 500);
+  };
+
+  // Handle touch end/move to cancel long press
+  const handleTouchEnd = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  };
+
   // Get cell display content
   const getCellContent = (cell: Cell) => {
     if (cell.state === 'flagged') return '🚩';
@@ -308,32 +346,20 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       <div className="flex-1 flex items-center justify-center">
         <div className="grid grid-cols-16 gap-0 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-shadow))] p-1">
           {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => {
-              let longPressTimer: NodeJS.Timeout;
-              
-              return (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  className={getCellClasses(cell)}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                  onContextMenu={(e) => handleCellRightClick(e, rowIndex, colIndex)}
-                  onTouchStart={() => {
-                    longPressTimer = setTimeout(() => {
-                      handleCellLongPress(rowIndex, colIndex);
-                    }, 500);
-                  }}
-                  onTouchEnd={() => {
-                    clearTimeout(longPressTimer);
-                  }}
-                  onTouchMove={() => {
-                    clearTimeout(longPressTimer);
-                  }}
-                  data-testid={`cell-${rowIndex}-${colIndex}`}
-                >
-                  {getCellContent(cell)}
-                </div>
-              );
-            })
+            row.map((cell, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                className={getCellClasses(cell)}
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+                onContextMenu={(e) => handleCellRightClick(e, rowIndex, colIndex)}
+                onTouchStart={() => handleTouchStart(rowIndex, colIndex)}
+                onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchEnd}
+                data-testid={`cell-${rowIndex}-${colIndex}`}
+              >
+                {getCellContent(cell)}
+              </div>
+            ))
           )}
         </div>
       </div>
