@@ -29,7 +29,7 @@ const getDesktopFiles = (t: (key: string) => string): FileItem[] => [
     type: 'file',
     icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
     windowType: 'me',
-    content: `SWAGY - Creative Developer & Designer
+    content: `MoHmmeD - Creative Developer & Designer
 
 About Me:
 Creative developer passionate about building unique digital experiences.
@@ -243,7 +243,7 @@ Status: Live streaming platform`
             name: 'Windows 98 Portfolio',
             type: 'file',
             icon: 'https://win98icons.alexmeub.com/icons/png/computer_3-2.png',
-            content: `SWAGY Windows 98 Portfolio
+            content: `MoHmmeD Windows 98 Portfolio
 
 Description:
 Current project - A meticulously crafted Windows 98-inspired personal portfolio website delivering an authentic retro computing experience.
@@ -451,13 +451,13 @@ Uptime: Running since the dial-up era`
     children: [
       {
         id: 'resume',
-        name: 'SWAGY_Resume.pdf',
+        name: 'MoHmmeD_Resume.pdf',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/document-0.png',
-        content: `SWAGY - Creative Developer Resume
+        content: `MoHmmeD - Creative Developer Resume
 
 Personal Information:
-Name: SWAGY
+Name: MoHmmeD
 Title: Creative Developer & Designer
 Experience: 3+ years in web development
 Location: Available for remote work
@@ -571,7 +571,7 @@ Resolution: Perfectly blurry, just like 1998`
         name: 'System Properties',
         type: 'file',
         icon: 'https://win98icons.alexmeub.com/icons/png/joystick-5.png',
-        content: `Username: SWAGY.exe  
+        content: `Username: MoHmmeD.exe  
 Processor: Dual-core creativity  
 RAM: 16GB of unfinished ideas  
 System Type: 90s kid / Modern dev hybrid  

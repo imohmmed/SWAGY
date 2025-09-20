@@ -32,7 +32,7 @@ export function ContactWindow() {
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
-        to_name: 'SWAGY',
+        to_name: 'MoHmmeD',
         to_email: 'it.mohmmed@yahoo.com',
         subject: formData.subject,
         message: formData.message + (attachedFiles.length > 0 ? `\n\nAttached Files: ${attachedFiles.map(f => f.name).join(', ')}` : ''),

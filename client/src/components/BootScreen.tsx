@@ -99,12 +99,12 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
           <div className="mb-8 animate-pulse-slow">
             <img 
               src={swalyLogo} 
-              alt="SWAGY" 
+              alt="MoHmmeD" 
               className="boot-logo mx-auto"
             />
           </div>
           <div className="text-white text-2xl font-bold mb-4">
-            Welcome to SWAGY's Windows 98
+            Welcome to MoHmmeD's Windows 98
           </div>
           <div className="text-gray-400 text-sm mb-4">
             Loading desktop...

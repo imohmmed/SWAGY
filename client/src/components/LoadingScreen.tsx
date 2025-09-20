@@ -23,7 +23,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
 
       // Boot sequence messages
       const messages = [
-        'Booting up SWAGY OS...',
+        'Booting up MoHmmeD OS...',
         'Syncing style modules...',
         'Loading vintage interface...',
         'System dripped ✓'
@@ -69,14 +69,14 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
           <div className="mb-8 animate-pulse-slow">
             <img 
               src={swalyLogo} 
-              alt="SWAGY" 
+              alt="MoHmmeD" 
               className="boot-logo mx-auto"
             />
           </div>
           {!isStarted && (
             <>
               <div className="text-white text-xl font-bold mb-8">
-                Welcome to the drip OS — SWAGY Edition
+                Welcome to the drip OS — MoHmmeD Edition
               </div>
               <button
                 onClick={handleStartClick}

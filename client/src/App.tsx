@@ -136,10 +136,10 @@ function App() {
         <div class="h-screen bg-black flex items-center justify-center text-white">
           <div class="text-center">
             <div class="mb-4">
-              <img src="${swalyLogo}" alt="SWAGY" class="w-32 h-auto mx-auto" />
+              <img src="${swalyLogo}" alt="MoHmmeD" class="w-32 h-auto mx-auto" />
             </div>
             <div class="text-2xl font-bold mb-4">Windows is shutting down...</div>
-            <div class="text-sm">Thank you for visiting SWAGY's portfolio!</div>
+            <div class="text-sm">Thank you for visiting MoHmmeD's portfolio!</div>
             <div class="mt-8">
               <button onclick="location.reload()" class="win-button px-4 py-2 text-black">Restart System</button>
             </div>

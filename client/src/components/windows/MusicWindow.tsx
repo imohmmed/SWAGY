@@ -299,7 +299,7 @@ export function MusicWindow() {
       >
         <div className="text-center mb-4">
           <div className="text-lg font-bold">🎵 {t('musicPlayer')}</div>
-          <div className="text-xs">SWAGY_playlist.m3u</div>
+          <div className="text-xs">MoHmmeD_playlist.m3u</div>
         </div>
         
         <div className="bg-gray-800 p-2 rounded mb-4">

@@ -15,7 +15,7 @@ export function MeWindow() {
           <div className="w-24 h-24 mx-auto mb-1 border-2 border-[rgb(var(--win-border-dark))] bg-white p-1" style={{ boxShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
             <img 
               src={profileImage} 
-              alt="SWAGY Profile" 
+              alt="MoHmmeD Profile" 
               className="w-full h-full object-cover"
               draggable={false}
             />

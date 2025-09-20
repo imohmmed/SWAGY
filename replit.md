@@ -1,8 +1,8 @@
-# SWAGY WORLD - Portfolio Website
+# MoHmmeD WORLD - Portfolio Website
 
 ## Overview
 
-SWAGY WORLD is a creative portfolio website that recreates the Windows 98 aesthetic as a modern web application. Built with React, TypeScript, and Express.js, it features a nostalgic desktop environment with draggable windows, classic UI elements, and interactive applications showcasing the developer's work and personality.
+MoHmmeD WORLD is a creative portfolio website that recreates the Windows 98 aesthetic as a modern web application. Built with React, TypeScript, and Express.js, it features a nostalgic desktop environment with draggable windows, classic UI elements, and interactive applications showcasing the developer's work and personality.
 
 ## System Architecture
 

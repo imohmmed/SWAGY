@@ -32,7 +32,7 @@ export function StartMenu({ isVisible, onClose, onMenuAction }: StartMenuProps) 
       >
         {/* Header */}
         <div className="bg-gradient-to-r from-[rgb(var(--win-blue))] to-blue-600 text-white p-2 text-sm font-bold">
-          <div>SWAGY</div>
+          <div>MoHmmeD</div>
           <div className="text-xs opacity-80">Windows 98</div>
         </div>
         

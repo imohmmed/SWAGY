@@ -30,7 +30,7 @@ export function TerminalWindow() {
       'Microsoft(R) MS-DOS(R) Version 6.22',
       '(C)Copyright Microsoft Corp 1981-1994.',
       '',
-      'C:\\SWAGY>help',
+      'C:\\MoHmmeD>help',
       t('helpCommand'),
       ''
     ];
@@ -65,10 +65,10 @@ export function TerminalWindow() {
   const executeCommand = (command: string) => {
     const cmd = command.toLowerCase().trim();
     
-    setOutput(prev => [...prev, `C:\\SWAGY>${command}`]);
+    setOutput(prev => [...prev, `C:\\MoHmmeD>${command}`]);
     
     if (cmd === 'clear') {
-      setOutput(['C:\\SWAGY>', '']);
+      setOutput(['C:\\MoHmmeD>', '']);
       return;
     }
     
@@ -92,7 +92,7 @@ export function TerminalWindow() {
           '01111000 00100000 01001100 01101111 01100001',
           '01100100 01100101 01100100 00101110 00101110',
           '',
-          'Wake up, SWAGY... The Matrix has you...',
+          'Wake up, MoHmmeD... The Matrix has you...',
           ''
         ];
         setOutput(prev => [...prev, ...matrixLines]);
@@ -117,7 +117,7 @@ export function TerminalWindow() {
       if (currentInput.trim()) {
         executeCommand(currentInput);
       } else {
-        setOutput(prev => [...prev, 'C:\\SWAGY>', '']);
+        setOutput(prev => [...prev, 'C:\\MoHmmeD>', '']);
       }
       setCurrentInput('');
     }
@@ -141,7 +141,7 @@ export function TerminalWindow() {
           ))}
           
           <div className="flex items-center text-xs">
-            <span>C:\SWAGY{'>'}</span>
+            <span>C:\MoHmmeD{'>'}</span>
             <div className="ml-1 flex items-center flex-1 relative">
               <input
                 type="text"
