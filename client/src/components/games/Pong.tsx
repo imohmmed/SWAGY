@@ -439,7 +439,7 @@ export function Pong({ onClose }: PongProps) {
             {showOptionsDropdown && (
               <div className="absolute top-full left-0 mt-1 bg-[rgb(var(--win-button-face))] border border-[rgb(var(--win-border-dark))] shadow-lg z-10 min-w-[120px]">
                 <div className="px-2 py-1 text-xs font-bold text-[rgb(var(--win-text))] bg-[rgb(var(--win-button-light))] border-b border-[rgb(var(--win-border-dark))]">
-                  {t('difficulty')}
+                  Level
                 </div>
                 <button
                   onClick={() => {
@@ -451,7 +451,7 @@ export function Pong({ onClose }: PongProps) {
                   }`}
                   data-testid="option-easy"
                 >
-                  Easy / سهل
+                  Easy
                 </button>
                 <button
                   onClick={() => {
@@ -463,7 +463,7 @@ export function Pong({ onClose }: PongProps) {
                   }`}
                   data-testid="option-normal"
                 >
-                  Normal / عادي
+                  Normal
                 </button>
                 <button
                   onClick={() => {
@@ -475,7 +475,7 @@ export function Pong({ onClose }: PongProps) {
                   }`}
                   data-testid="option-hard"
                 >
-                  Hard / صعب
+                  Hard
                 </button>
               </div>
             )}
