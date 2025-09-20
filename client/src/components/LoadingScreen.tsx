@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import swalyLogo from '@assets/IMG_6470.png';
+import mohmmedLogo from '@assets/fontbolt_1758341229533.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
@@ -68,7 +68,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
         <div className="text-center">
           <div className="mb-8 animate-pulse-slow">
             <img 
-              src={swalyLogo} 
+              src={mohmmedLogo} 
               alt="MoHmmeD" 
               className="boot-logo mx-auto"
             />
