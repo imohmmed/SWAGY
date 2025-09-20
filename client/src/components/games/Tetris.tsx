@@ -585,13 +585,22 @@ export function Tetris({ onClose }: TetrisProps) {
           {/* Next Piece */}
           {renderMiniBoard(nextPiece, t('tetrisNext') || 'Next')}
           
-          {/* Directional Controls under NEXT */}
+          {/* All Game Controls under NEXT */}
           <div className="mb-4">
             <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">{t('tetrisControls') || 'Controls'}</div>
-            <div className="flex flex-col gap-1">
-              {/* Top row - empty for alignment */}
+            
+            {/* Movement Controls */}
+            <div className="flex flex-col gap-1 mb-3">
+              {/* Top row - Rotate */}
               <div className="flex justify-center">
-                <div className="w-8 h-8"></div>
+                <button
+                  onClick={rotatePieceAction}
+                  className="w-8 h-8 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] flex items-center justify-center"
+                  data-testid="button-rotate-tetris"
+                  disabled={gameStatus !== 'playing'}
+                >
+                  ↻
+                </button>
               </div>
               {/* Middle row - Left and Right */}
               <div className="flex justify-between gap-1">
@@ -624,6 +633,34 @@ export function Tetris({ onClose }: TetrisProps) {
                 </button>
               </div>
             </div>
+            
+            {/* Action Controls */}
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={hardDrop}
+                className="w-full px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
+                data-testid="button-drop-tetris"
+                disabled={gameStatus !== 'playing'}
+              >
+                {t('tetrisDrop') || 'Drop'}
+              </button>
+              <button
+                onClick={holdPiece}
+                className="w-full px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
+                data-testid="button-hold-tetris"
+                disabled={gameStatus !== 'playing' || !canHold}
+              >
+                {t('tetrisHold') || 'Hold'}
+              </button>
+              <button
+                onClick={togglePause}
+                className="w-full px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
+                data-testid="button-pause-control-tetris"
+                disabled={gameStatus === 'gameOver'}
+              >
+                {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
+              </button>
+            </div>
           </div>
 
           {/* Held Piece */}
@@ -632,74 +669,6 @@ export function Tetris({ onClose }: TetrisProps) {
       </div>
 
 
-      {/* Mobile Controls */}
-      <div className="mt-4 space-y-2 md:hidden">
-        {/* Movement Controls */}
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={() => movePiece('left')}
-            className="px-4 py-3 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[48px]"
-            data-testid="button-move-left-tetris"
-            disabled={gameStatus !== 'playing'}
-          >
-            ←
-          </button>
-          <div className="flex flex-col gap-1">
-            <button
-              onClick={rotatePieceAction}
-              className="px-4 py-2 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[48px]"
-              data-testid="button-rotate-tetris"
-              disabled={gameStatus !== 'playing'}
-            >
-              ↻
-            </button>
-            <button
-              onClick={() => movePiece('down')}
-              className="px-4 py-3 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[48px]"
-              data-testid="button-move-down-tetris"
-              disabled={gameStatus !== 'playing'}
-            >
-              ↓
-            </button>
-          </div>
-          <button
-            onClick={() => movePiece('right')}
-            className="px-4 py-3 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[48px]"
-            data-testid="button-move-right-tetris"
-            disabled={gameStatus !== 'playing'}
-          >
-            →
-          </button>
-        </div>
-        
-        {/* Action Controls */}
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={hardDrop}
-            className="px-3 py-2 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-            data-testid="button-drop-tetris"
-            disabled={gameStatus !== 'playing'}
-          >
-            Hard Drop
-          </button>
-          <button
-            onClick={holdPiece}
-            className="px-3 py-2 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-            data-testid="button-hold-tetris"
-            disabled={gameStatus !== 'playing' || !canHold}
-          >
-            {t('tetrisHold') || 'Hold'}
-          </button>
-          <button
-            onClick={togglePause}
-            className="px-3 py-2 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-            data-testid="button-pause-mobile-tetris"
-            disabled={gameStatus === 'gameOver'}
-          >
-            {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

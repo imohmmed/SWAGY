@@ -138,6 +138,7 @@ export const translations: Record<string, Translation> = {
     tetrisNext: 'Next',
     tetrisHold: 'Hold',
     tetrisControls: 'Controls',
+    tetrisDrop: 'Drop',
     tetrisGameOver: 'Game Over!',
     tetrisPaused: 'Paused',
     
@@ -453,6 +454,7 @@ export const translations: Record<string, Translation> = {
     tetrisNext: 'التالي',
     tetrisHold: 'احتفظ',
     tetrisControls: 'التحكم',
+    tetrisDrop: 'إسقاط',
     tetrisGameOver: 'انتهت اللعبة!',
     tetrisPaused: 'متوقف',
     
