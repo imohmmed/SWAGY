@@ -23,14 +23,16 @@ interface Paddle {
   speed: number;
 }
 
-const GAME_WIDTH = 600;
-const GAME_HEIGHT = 400;
-const PADDLE_HEIGHT = 80;
-const PADDLE_WIDTH = 12;
-const BALL_SIZE = 8;
-const PADDLE_SPEED = 5;
-const INITIAL_BALL_SPEED = 4;
-const WINNING_SCORE = 11;
+// Enhanced game constants for classic Pong experience
+const GAME_WIDTH = 800;
+const GAME_HEIGHT = 500;
+const PADDLE_HEIGHT = 100;
+const PADDLE_WIDTH = 15;
+const BALL_SIZE = 12;
+const PADDLE_SPEED = 8;
+const INITIAL_BALL_SPEED = 5;
+const WINNING_SCORE = 10;
+const AI_SPEED_FACTOR = 0.85; // Make AI slightly slower for better gameplay
 
 export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
@@ -101,21 +103,37 @@ export function Pong({ onClose }: PongProps) {
     }
 
     // Check collision with player paddle (left side)
-    if (newBall.velocity.x < 0 && checkCollision(newBall, playerPaddle, 20)) {
-      newBall.velocity.x = -newBall.velocity.x;
-      // Add some spin based on where ball hits paddle
-      const hitPosition = (newBall.position.y - playerPaddle.y) / playerPaddle.height;
-      newBall.velocity.y = (hitPosition - 0.5) * INITIAL_BALL_SPEED * 2;
-      newBall.position.x = 20 + PADDLE_WIDTH;
+    if (newBall.velocity.x < 0 && checkCollision(newBall, playerPaddle, 30)) {
+      newBall.velocity.x = Math.abs(newBall.velocity.x); // Ensure positive direction
+      
+      // Enhanced spin mechanics - add variety to gameplay
+      const hitPosition = (newBall.position.y + newBall.size/2 - playerPaddle.y) / playerPaddle.height;
+      const spinFactor = (hitPosition - 0.5) * 2; // -1 to 1
+      newBall.velocity.y = spinFactor * INITIAL_BALL_SPEED * 1.5;
+      
+      // Increase speed slightly for more excitement
+      const speedIncrease = 1.05;
+      newBall.velocity.x *= speedIncrease;
+      newBall.velocity.y *= speedIncrease;
+      
+      newBall.position.x = 30 + PADDLE_WIDTH + 2; // Small buffer to prevent sticking
     }
 
-    // Check collision with computer paddle (right side)
-    if (newBall.velocity.x > 0 && checkCollision(newBall, computerPaddle, GAME_WIDTH - 20 - PADDLE_WIDTH)) {
-      newBall.velocity.x = -newBall.velocity.x;
-      // Add some spin based on where ball hits paddle
-      const hitPosition = (newBall.position.y - computerPaddle.y) / computerPaddle.height;
-      newBall.velocity.y = (hitPosition - 0.5) * INITIAL_BALL_SPEED * 2;
-      newBall.position.x = GAME_WIDTH - 20 - PADDLE_WIDTH - newBall.size;
+    // Check collision with computer paddle (right side)  
+    if (newBall.velocity.x > 0 && checkCollision(newBall, computerPaddle, GAME_WIDTH - 30 - PADDLE_WIDTH)) {
+      newBall.velocity.x = -Math.abs(newBall.velocity.x); // Ensure negative direction
+      
+      // Enhanced spin mechanics
+      const hitPosition = (newBall.position.y + newBall.size/2 - computerPaddle.y) / computerPaddle.height;
+      const spinFactor = (hitPosition - 0.5) * 2; // -1 to 1
+      newBall.velocity.y = spinFactor * INITIAL_BALL_SPEED * 1.5;
+      
+      // Increase speed slightly
+      const speedIncrease = 1.05;
+      newBall.velocity.x *= speedIncrease;
+      newBall.velocity.y *= speedIncrease;
+      
+      newBall.position.x = GAME_WIDTH - 30 - PADDLE_WIDTH - newBall.size - 2; // Small buffer
     }
 
     return newBall;
@@ -123,15 +141,28 @@ export function Pong({ onClose }: PongProps) {
 
   const updateComputerPaddle = (currentBall: Ball): void => {
     setComputerPaddle(prev => {
+      // Only move when ball is coming towards computer
+      if (currentBall.velocity.x <= 0) return prev;
+      
       const ballY = currentBall.position.y + currentBall.size / 2;
       const paddleCenterY = prev.y + prev.height / 2;
       const diff = ballY - paddleCenterY;
       
-      // Simple AI: move towards ball but with some imperfection
+      // Enhanced AI with difficulty scaling and imperfection
       let newY = prev.y;
-      if (Math.abs(diff) > 10) {
-        const moveSpeed = Math.min(prev.speed * 0.8, Math.abs(diff));
-        newY += diff > 0 ? moveSpeed : -moveSpeed;
+      const reactionThreshold = 15;
+      
+      if (Math.abs(diff) > reactionThreshold) {
+        // Calculate move speed based on ball speed and distance
+        const maxSpeed = prev.speed * AI_SPEED_FACTOR;
+        const urgency = Math.min(1, Math.abs(currentBall.velocity.x) / 8);
+        const moveSpeed = maxSpeed * urgency;
+        
+        // Add slight imperfection to make it beatable
+        const imperfection = Math.random() * 0.3;
+        const actualSpeed = moveSpeed * (1 - imperfection);
+        
+        newY += diff > 0 ? actualSpeed : -actualSpeed;
       }
       
       // Keep paddle within bounds
@@ -233,21 +264,41 @@ export function Pong({ onClose }: PongProps) {
     keysRef.current.delete(e.key);
   }, []);
 
-  // Mobile controls
-  const movePaddleUp = (): void => {
+  // Enhanced mobile controls with continuous movement
+  const mobileControlsRef = useRef<{ up: boolean; down: boolean }>({ up: false, down: false });
+
+  const startPaddleUp = (): void => {
     if (gameStatus !== 'playing') return;
-    setPlayerPaddle(prev => ({
-      ...prev,
-      y: Math.max(0, prev.y - PADDLE_SPEED * 3)
-    }));
+    mobileControlsRef.current.up = true;
   };
 
-  const movePaddleDown = (): void => {
+  const stopPaddleUp = (): void => {
+    mobileControlsRef.current.up = false;
+  };
+
+  const startPaddleDown = (): void => {
     if (gameStatus !== 'playing') return;
-    setPlayerPaddle(prev => ({
-      ...prev,
-      y: Math.min(GAME_HEIGHT - prev.height, prev.y + PADDLE_SPEED * 3)
-    }));
+    mobileControlsRef.current.down = true;
+  };
+
+  const stopPaddleDown = (): void => {
+    mobileControlsRef.current.down = false;
+  };
+
+  const updateMobileControls = (): void => {
+    const controls = mobileControlsRef.current;
+    if (gameStatus !== 'playing') return;
+    
+    let deltaY = 0;
+    if (controls.up) deltaY -= PADDLE_SPEED * 2;
+    if (controls.down) deltaY += PADDLE_SPEED * 2;
+    
+    if (deltaY !== 0) {
+      setPlayerPaddle(prev => ({
+        ...prev,
+        y: Math.max(0, Math.min(GAME_HEIGHT - prev.height, prev.y + deltaY))
+      }));
+    }
   };
 
   // Game loop
@@ -261,6 +312,7 @@ export function Pong({ onClose }: PongProps) {
           return updatedBall;
         });
         updatePlayerPaddle();
+        updateMobileControls(); // Include mobile controls in game loop
       }
       gameLoopRef.current = requestAnimationFrame(gameLoop);
     };
@@ -341,58 +393,61 @@ export function Pong({ onClose }: PongProps) {
         </div>
       </div>
 
-      {/* Game Area */}
+      {/* Game Area - Classic Pong Style */}
       <div className="flex-1 flex justify-center">
         <div
-          className="relative border-2 border-[rgb(var(--win-border-dark))] bg-black"
+          className="relative bg-black border-4 border-white"
           style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
           data-testid="pong-game-area"
         >
-          {/* Center line */}
+          {/* Center line - Classic dashed white line */}
           <div 
-            className="absolute bg-white"
+            className="absolute bg-white opacity-80"
             style={{
-              left: GAME_WIDTH / 2 - 1,
+              left: GAME_WIDTH / 2 - 2,
               top: 0,
-              width: 2,
+              width: 4,
               height: GAME_HEIGHT,
-              backgroundImage: 'linear-gradient(white 10px, transparent 10px)',
-              backgroundSize: '2px 20px',
+              backgroundImage: 'linear-gradient(white 15px, transparent 15px)',
+              backgroundSize: '4px 30px',
             }}
           />
           
-          {/* Player paddle (left) */}
+          {/* Player paddle (left) - Classic white rectangle */}
           <div
-            className="absolute bg-white"
+            className="absolute bg-white rounded-sm"
             style={{
-              left: 20,
+              left: 30,
               top: playerPaddle.y,
               width: playerPaddle.width,
               height: playerPaddle.height,
+              boxShadow: '0 0 8px rgba(255,255,255,0.5)',
             }}
             data-testid="player-paddle"
           />
           
-          {/* Computer paddle (right) */}
+          {/* Computer paddle (right) - Classic white rectangle */}
           <div
-            className="absolute bg-white"
+            className="absolute bg-white rounded-sm"
             style={{
-              left: GAME_WIDTH - 20 - computerPaddle.width,
+              left: GAME_WIDTH - 30 - computerPaddle.width,
               top: computerPaddle.y,
               width: computerPaddle.width,
               height: computerPaddle.height,
+              boxShadow: '0 0 8px rgba(255,255,255,0.5)',
             }}
             data-testid="computer-paddle"
           />
           
-          {/* Ball */}
+          {/* Ball - Classic square ball */}
           <div
-            className="absolute bg-white rounded-full"
+            className="absolute bg-white"
             style={{
               left: ball.position.x,
               top: ball.position.y,
               width: ball.size,
               height: ball.size,
+              boxShadow: '0 0 12px rgba(255,255,255,0.7)',
             }}
             data-testid="pong-ball"
           />
@@ -403,28 +458,34 @@ export function Pong({ onClose }: PongProps) {
       <div className="mt-4 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
         <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">{t('gameInstructions')}</div>
         <div className="text-xs text-[rgb(var(--win-text))] space-y-1">
-          <div>• {t('pongInstructions1') || 'Arrow keys or WASD to move paddle'}</div>
-          <div>• {t('pongInstructions2') || 'Hit the ball back to opponent'}</div>
-          <div>• {t('pongInstructions3') || 'First to 11 points wins'}</div>
-          <div>• {t('pongInstructions4') || 'P to pause/resume'}</div>
+          <div>• {t('pongInstructions1') || 'Use ↑↓ arrow keys or W/S to control your paddle'}</div>
+          <div>• {t('pongInstructions2') || 'Don\'t let the ball escape from your side!'}</div>
+          <div>• {t('pongInstructions3') || 'First player to reach 10 points wins'}</div>
+          <div>• {t('pongInstructions4') || 'Press P to pause/resume the game'}</div>
         </div>
       </div>
 
-      {/* Mobile Controls */}
+      {/* Mobile Controls - Enhanced with continuous touch */}
       <div className="mt-4 flex justify-center gap-4 md:hidden">
         <button
-          onTouchStart={movePaddleUp}
-          onMouseDown={movePaddleUp}
-          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px]"
+          onTouchStart={startPaddleUp}
+          onTouchEnd={stopPaddleUp}
+          onMouseDown={startPaddleUp}
+          onMouseUp={stopPaddleUp}
+          onMouseLeave={stopPaddleUp}
+          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
           data-testid="button-paddle-up-pong"
           disabled={gameStatus !== 'playing'}
         >
           ↑
         </button>
         <button
-          onTouchStart={movePaddleDown}
-          onMouseDown={movePaddleDown}
-          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px]"
+          onTouchStart={startPaddleDown}
+          onTouchEnd={stopPaddleDown}
+          onMouseDown={startPaddleDown}
+          onMouseUp={stopPaddleDown}
+          onMouseLeave={stopPaddleDown}
+          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
           data-testid="button-paddle-down-pong"
           disabled={gameStatus !== 'playing'}
         >

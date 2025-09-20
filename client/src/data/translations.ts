@@ -94,7 +94,7 @@ export const translations: Record<string, Translation> = {
     tetrisTitle: 'Tetris',
     tetrisDescription: 'Arrange falling blocks to complete lines and score points.',
     pongTitle: 'Pong',
-    pongDescription: 'Classic arcade game. Hit the ball with your paddle and score points.',
+    pongDescription: 'Classic tennis-style game. Don\'t let the ball escape from your side!',
     comingSoon: 'Coming Soon...',
     
     // Minesweeper specific
@@ -148,11 +148,11 @@ export const translations: Record<string, Translation> = {
     pongComputer: 'Computer',
     pongGameOver: 'Game Over!',
     pongWinner: 'Winner',
-    pongFirstTo: 'First to 11 points wins',
-    pongInstructions1: 'Arrow keys or WASD to move paddle',
-    pongInstructions2: 'Hit the ball back to opponent',
-    pongInstructions3: 'First to 11 points wins',
-    pongInstructions4: 'P to pause/resume',
+    pongFirstTo: 'First to 10 points wins',
+    pongInstructions1: 'Use ↑↓ arrow keys or W/S to control your paddle',
+    pongInstructions2: 'Don\'t let the ball escape from your side!',
+    pongInstructions3: 'First player to reach 10 points wins',
+    pongInstructions4: 'Press P to pause/resume the game',
     
     // Downloads
     availableDownloads: 'Available Downloads',
@@ -410,7 +410,7 @@ export const translations: Record<string, Translation> = {
     tetrisTitle: 'تتريس',
     tetrisDescription: 'رتب القطع المتساقطة لإكمال الصفوف واكسب النقاط.',
     pongTitle: 'بونغ',
-    pongDescription: 'لعبة أركيد كلاسيكية. اضرب الكرة بالمضرب واكسب النقاط.',
+    pongDescription: 'لعبة تنس كلاسيكية. لا تدع الكرة تفلت من جهتك!',
     comingSoon: 'قريباً...',
     
     // Minesweeper specific
@@ -464,11 +464,11 @@ export const translations: Record<string, Translation> = {
     pongComputer: 'الكمبيوتر',
     pongGameOver: 'انتهت اللعبة!',
     pongWinner: 'الفائز',
-    pongFirstTo: 'أول من يصل 11 نقطة يفوز',
-    pongInstructions1: 'أسهم الاتجاه أو WASD لتحريك المضرب',
-    pongInstructions2: 'ارجع الكرة للخصم',
-    pongInstructions3: 'أول من يصل 11 نقطة يفوز',
-    pongInstructions4: 'P للإيقاف/الاستكمال',
+    pongFirstTo: 'أول من يصل 10 نقاط يفوز',
+    pongInstructions1: 'استخدم أسهم ↑↓ أو W/S للتحكم في المضرب',
+    pongInstructions2: 'لا تدع الكرة تفلت من جهتك!',
+    pongInstructions3: 'أول من يصل 10 نقاط يفوز',
+    pongInstructions4: 'اضغط P للإيقاف/الاستكمال',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',
