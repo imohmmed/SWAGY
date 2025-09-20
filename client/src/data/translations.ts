@@ -47,6 +47,8 @@ export const translations: Record<string, Translation> = {
     pause: 'Pause',
     next: 'Next',
     previous: 'Previous',
+    draw: 'Draw',
+    undo: 'Undo',
     
     // About content
     aboutMe: 'About Me:',
@@ -362,6 +364,8 @@ export const translations: Record<string, Translation> = {
     pause: 'إيقاف مؤقت',
     next: 'التالي',
     previous: 'السابق',
+    draw: 'سحب',
+    undo: 'تراجع',
     
     // About content
     aboutMe: 'نبذة عني:',

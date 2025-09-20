@@ -27,6 +27,14 @@ export function Solitaire({ onClose }: SolitaireProps) {
   const [draggedCard, setDraggedCard] = useState<Card | null>(null);
   const [draggedSequence, setDraggedSequence] = useState<Card[]>([]);
   const [dragSource, setDragSource] = useState<{ type: string; index: number; start?: number } | null>(null);
+  const [gameHistory, setGameHistory] = useState<any[]>([]);
+  
+  // Touch handling for mobile
+  const [touchStartTime, setTouchStartTime] = useState<number>(0);
+  const [lastTouchTime, setLastTouchTime] = useState<number>(0);
+  const [touchPosition, setTouchPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartCard, setDragStartCard] = useState<{ card: Card; source: { type: string; index: number; start?: number } } | null>(null);
 
   // Create a full deck of cards
   const createDeck = useCallback((): Card[] => {
@@ -79,6 +87,7 @@ export function Solitaire({ onClose }: SolitaireProps) {
     setGameStatus('playing');
     setDraggedCard(null);
     setDragSource(null);
+    setGameHistory([]); // Clear history on new game
   }, [createDeck]);
 
   // Initialize on mount
@@ -112,6 +121,8 @@ export function Solitaire({ onClose }: SolitaireProps) {
 
   // Draw cards from stock to waste
   const drawFromStock = () => {
+    saveGameState();
+    
     if (stock.length === 0) {
       // Reset stock from waste
       const newStock = [...waste].reverse().map(card => ({ ...card, faceUp: false }));
@@ -136,6 +147,81 @@ export function Solitaire({ onClose }: SolitaireProps) {
     return card.suit === topCard.suit && getCardValue(card) === getCardValue(topCard) + 1;
   };
 
+  // Find suitable foundation for a card
+  const findSuitableFoundation = (card: Card): number => {
+    for (let i = 0; i < foundations.length; i++) {
+      if (canPlaceOnFoundation(card, i)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+
+  // Save game state for undo (deep clone)
+  const saveGameState = () => {
+    const state = {
+      stock: stock.map(card => ({ ...card })),
+      waste: waste.map(card => ({ ...card })),
+      foundations: foundations.map(f => f.map(card => ({ ...card }))),
+      tableau: tableau.map(col => col.map(card => ({ ...card })))
+    };
+    setGameHistory(prev => [...prev, state].slice(-10)); // Keep last 10 moves
+  };
+
+  // Auto-move card to foundation
+  const autoMoveToFoundation = (card: Card, source: { type: string; index: number; start?: number }) => {
+    const foundationIndex = findSuitableFoundation(card);
+    if (foundationIndex === -1) return false;
+
+    // Only allow auto-move from waste or top tableau card
+    if (source.type === 'tableau') {
+      const column = tableau[source.index];
+      if (source.start !== column.length - 1) {
+        return false; // Not the topmost card
+      }
+    }
+
+    saveGameState();
+    
+    // Add to foundation
+    setFoundations(prev => {
+      const newFoundations = [...prev];
+      newFoundations[foundationIndex] = [...newFoundations[foundationIndex], { ...card }];
+      return newFoundations;
+    });
+
+    // Remove from source
+    if (source.type === 'waste') {
+      setWaste(prev => prev.slice(0, -1));
+    } else if (source.type === 'tableau') {
+      setTableau(prev => {
+        const newTableau = [...prev];
+        newTableau[source.index] = newTableau[source.index].slice(0, -1);
+        // Flip top card if it exists and is face down (immutably)
+        const column = newTableau[source.index];
+        if (column.length > 0 && !column[column.length - 1].faceUp) {
+          const topCard = { ...column[column.length - 1], faceUp: true };
+          newTableau[source.index] = [...column.slice(0, -1), topCard];
+        }
+        return newTableau;
+      });
+    }
+    
+    return true;
+  };
+
+  // Undo last move
+  const undoLastMove = () => {
+    if (gameHistory.length === 0) return;
+    
+    const lastState = gameHistory[gameHistory.length - 1];
+    setStock(lastState.stock);
+    setWaste(lastState.waste);
+    setFoundations(lastState.foundations);
+    setTableau(lastState.tableau);
+    setGameHistory(prev => prev.slice(0, -1));
+  };
+
   // Can place sequence on tableau
   const canPlaceOnTableau = (sequence: Card[], tableauIndex: number): boolean => {
     if (sequence.length === 0) return false;
@@ -152,6 +238,22 @@ export function Solitaire({ onClose }: SolitaireProps) {
            getCardValue(firstCard) === getCardValue(topCard) - 1;
   };
 
+  // Check if cards form a valid sequence (alternating colors, descending)
+  const isValidSequence = (cards: Card[]): boolean => {
+    for (let i = 0; i < cards.length - 1; i++) {
+      const current = cards[i];
+      const next = cards[i + 1];
+      
+      if (
+        getCardColor(current) === getCardColor(next) ||
+        getCardValue(current) !== getCardValue(next) + 1
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   // Handle card drag start
   const handleDragStart = (card: Card, source: { type: string; index: number; start?: number }) => {
     setDraggedCard(card);
@@ -161,7 +263,13 @@ export function Solitaire({ onClose }: SolitaireProps) {
     if (source.type === 'tableau' && source.start !== undefined) {
       const column = tableau[source.index];
       const sequence = column.slice(source.start);
-      setDraggedSequence(sequence);
+      
+      // Only allow dragging if it's a valid sequence
+      if (isValidSequence(sequence)) {
+        setDraggedSequence(sequence);
+      } else {
+        setDraggedSequence([card]);
+      }
     } else {
       setDraggedSequence([card]);
     }
@@ -171,11 +279,23 @@ export function Solitaire({ onClose }: SolitaireProps) {
   const handleDropOnFoundation = (foundationIndex: number) => {
     if (!draggedCard || !dragSource) return;
 
+    // Only allow drops from waste or top tableau card
+    if (dragSource.type === 'tableau') {
+      const column = tableau[dragSource.index];
+      if (dragSource.start !== column.length - 1) {
+        setDraggedCard(null);
+        setDragSource(null);
+        return; // Not the topmost card
+      }
+    }
+
     if (canPlaceOnFoundation(draggedCard, foundationIndex)) {
+      saveGameState();
+      
       // Add to foundation
       setFoundations(prev => {
         const newFoundations = [...prev];
-        newFoundations[foundationIndex] = [...newFoundations[foundationIndex], draggedCard];
+        newFoundations[foundationIndex] = [...newFoundations[foundationIndex], { ...draggedCard }];
         return newFoundations;
       });
 
@@ -185,11 +305,12 @@ export function Solitaire({ onClose }: SolitaireProps) {
       } else if (dragSource.type === 'tableau') {
         setTableau(prev => {
           const newTableau = [...prev];
-          newTableau[dragSource.index] = newTableau[dragSource.index].slice(0, -1);
-          // Flip top card if it exists and is face down
+          newTableau[dragSource.index] = newTableau[dragSource.index].slice(0, dragSource.start!);
+          // Flip top card if it exists and is face down (immutably)
           const column = newTableau[dragSource.index];
           if (column.length > 0 && !column[column.length - 1].faceUp) {
-            column[column.length - 1].faceUp = true;
+            const topCard = { ...column[column.length - 1], faceUp: true };
+            newTableau[dragSource.index] = [...column.slice(0, -1), topCard];
           }
           return newTableau;
         });
@@ -205,10 +326,13 @@ export function Solitaire({ onClose }: SolitaireProps) {
     if (!draggedCard || !dragSource || draggedSequence.length === 0) return;
 
     if (canPlaceOnTableau(draggedSequence, tableauIndex)) {
-      // Add sequence to tableau
+      saveGameState();
+      
+      // Add sequence to tableau (deep clone)
       setTableau(prev => {
         const newTableau = [...prev];
-        newTableau[tableauIndex] = [...newTableau[tableauIndex], ...draggedSequence];
+        const clonedSequence = draggedSequence.map(card => ({ ...card }));
+        newTableau[tableauIndex] = [...newTableau[tableauIndex], ...clonedSequence];
         return newTableau;
       });
 
@@ -218,12 +342,13 @@ export function Solitaire({ onClose }: SolitaireProps) {
       } else if (dragSource.type === 'tableau') {
         setTableau(prev => {
           const newTableau = [...prev];
-          const startIndex = dragSource.start || newTableau[dragSource.index].length - 1;
+          const startIndex = dragSource.start ?? (newTableau[dragSource.index].length - 1);
           newTableau[dragSource.index] = newTableau[dragSource.index].slice(0, startIndex);
-          // Flip top card if it exists and is face down
+          // Flip top card if it exists and is face down (immutably)
           const column = newTableau[dragSource.index];
           if (column.length > 0 && !column[column.length - 1].faceUp) {
-            column[column.length - 1].faceUp = true;
+            const topCard = { ...column[column.length - 1], faceUp: true };
+            newTableau[dragSource.index] = [...column.slice(0, -1), topCard];
           }
           return newTableau;
         });
@@ -248,8 +373,126 @@ export function Solitaire({ onClose }: SolitaireProps) {
     setDraggedSequence([]);
   };
 
+  // Handle double click/tap to auto-move to foundation
+  const handleDoubleClick = (card: Card, source: { type: string; index: number; start?: number }) => {
+    if (card.faceUp) {
+      autoMoveToFoundation(card, source);
+    }
+  };
+
+  // Handle single click/tap - try auto-move or start drag
+  const handleSingleClick = (card: Card, source: { type: string; index: number; start?: number }) => {
+    if (!card.faceUp) return;
+    
+    // Try auto-move to foundation first
+    if (autoMoveToFoundation(card, source)) {
+      return;
+    }
+    
+    // If can't auto-move, prepare for drag
+    handleDragStart(card, source);
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent, card: Card, source: { type: string; index: number; start?: number }) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const now = Date.now();
+    
+    setTouchStartTime(now);
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+    setIsDragging(false);
+    setDragStartCard({ card, source });
+    
+    // Check for double tap (within 300ms)
+    if (now - lastTouchTime < 300) {
+      handleDoubleClick(card, source);
+      return;
+    }
+    
+    setLastTouchTime(now);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent, card: Card, source: { type: string; index: number; start?: number }) => {
+    e.preventDefault();
+    const touchDuration = Date.now() - touchStartTime;
+    
+    if (isDragging && draggedCard && touchPosition) {
+      // Handle drop
+      const touch = e.changedTouches[0];
+      const dropTarget = findDropTarget(touch.clientX, touch.clientY);
+      
+      if (dropTarget) {
+        if (dropTarget.type === 'foundation') {
+          handleDropOnFoundation(dropTarget.index);
+        } else if (dropTarget.type === 'tableau') {
+          handleDropOnTableau(dropTarget.index);
+        }
+      } else {
+        // Cancel drag
+        handleDragEnd();
+      }
+    } else if (touchDuration < 300 && !isDragging) {
+      // Quick tap - try auto-move
+      handleSingleClick(card, source);
+    }
+    
+    // Reset touch states
+    setTouchPosition(null);
+    setIsDragging(false);
+    setDragStartCard(null);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+    if (!touchPosition || !dragStartCard) return;
+    
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchPosition.x);
+    const deltaY = Math.abs(touch.clientY - touchPosition.y);
+    
+    // Start dragging if moved more than 10px
+    if (deltaX > 10 || deltaY > 10) {
+      setIsDragging(true);
+      if (!draggedCard) {
+        handleDragStart(dragStartCard.card, dragStartCard.source);
+      }
+    }
+  };
+
+  // Find drop target from touch coordinates
+  const findDropTarget = (x: number, y: number): { type: 'foundation' | 'tableau'; index: number } | null => {
+    const element = document.elementFromPoint(x, y);
+    if (!element) return null;
+    
+    // Check for foundation
+    const foundationElement = element.closest('[data-testid^="foundation-"]');
+    if (foundationElement) {
+      const testId = foundationElement.getAttribute('data-testid');
+      const index = parseInt(testId?.split('-')[1] || '0');
+      return { type: 'foundation', index };
+    }
+    
+    // Check for tableau
+    const tableauElement = element.closest('[data-testid^="tableau-"]');
+    if (tableauElement) {
+      const testId = tableauElement.getAttribute('data-testid');
+      const index = parseInt(testId?.split('-')[1] || '0');
+      return { type: 'tableau', index };
+    }
+    
+    return null;
+  };
+
   // Render card
-  const renderCard = (card: Card, isClickable: boolean = false, onClick?: () => void, onDragStart?: () => void) => {
+  const renderCard = (
+    card: Card, 
+    isClickable: boolean = false, 
+    source?: { type: string; index: number; start?: number },
+    onClick?: () => void, 
+    onDoubleClick?: () => void,
+    onDragStart?: () => void
+  ) => {
     const colorClass = getCardColor(card) === 'red' ? 'text-red-600' : 'text-black';
     
     return (
@@ -261,9 +504,13 @@ export function Solitaire({ onClose }: SolitaireProps) {
             : 'bg-blue-800 text-white'
         } ${isClickable ? 'hover:shadow-md' : ''}`}
         onClick={onClick}
+        onDoubleClick={onDoubleClick}
         draggable={card.faceUp && isClickable}
         onDragStart={onDragStart}
         onDragEnd={handleDragEnd}
+        onTouchStart={source ? (e) => handleTouchStart(e, card, source) : undefined}
+        onTouchEnd={source ? (e) => handleTouchEnd(e, card, source) : undefined}
+        onTouchMove={handleTouchMove}
         data-testid={`card-${card.id}`}
       >
         {card.faceUp ? (
@@ -281,32 +528,63 @@ export function Solitaire({ onClose }: SolitaireProps) {
   return (
     <div className="h-full flex flex-col bg-green-800 p-4">
       {/* Header with controls */}
-      <div className="flex items-center justify-between mb-4 p-2 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={initializeGame}
-            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-            data-testid="button-restart-solitaire"
-          >
-            {t('newGame') || 'New Game'}
-          </button>
+      <div className="flex flex-col gap-2 mb-4">
+        <div className="flex items-center justify-between p-2 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={initializeGame}
+              className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+              data-testid="button-restart-solitaire"
+            >
+              {t('newGame') || 'New Game'}
+            </button>
+            
+            {gameStatus === 'won' && (
+              <div className="text-green-600 font-bold">
+                {t('congratulations') || 'Congratulations! You won!'}
+              </div>
+            )}
+          </div>
           
-          {gameStatus === 'won' && (
-            <div className="text-green-600 font-bold">
-              {t('congratulations') || 'Congratulations! You won!'}
-            </div>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+              data-testid="button-close-solitaire"
+            >
+              {t('close') || 'Close'}
+            </button>
           )}
         </div>
         
-        {onClose && (
+        {/* Mobile helper buttons */}
+        <div className="md:hidden flex items-center justify-center gap-2 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
           <button
-            onClick={onClose}
-            className="px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-            data-testid="button-close-solitaire"
+            onClick={drawFromStock}
+            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            data-testid="button-draw-mobile"
+            disabled={stock.length === 0 && waste.length === 0}
           >
-            {t('close') || 'Close'}
+            📤 {t('draw') || 'Draw'}
           </button>
-        )}
+          
+          <button
+            onClick={undoLastMove}
+            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            data-testid="button-undo-mobile"
+            disabled={gameHistory.length === 0}
+          >
+            ↶ {t('undo') || 'Undo'}
+          </button>
+          
+          <button
+            onClick={initializeGame}
+            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            data-testid="button-new-game-mobile"
+          >
+            🔄 {t('newGame') || 'New Game'}
+          </button>
+        </div>
       </div>
 
       {/* Game area */}
@@ -335,10 +613,15 @@ export function Solitaire({ onClose }: SolitaireProps) {
             >
               {waste.length > 0 && renderCard(
                 waste[waste.length - 1], 
-                true, 
+                true,
+                { type: 'waste', index: 0 },
                 () => {
                   const topCard = waste[waste.length - 1];
-                  handleDragStart(topCard, { type: 'waste', index: 0 });
+                  handleSingleClick(topCard, { type: 'waste', index: 0 });
+                },
+                () => {
+                  const topCard = waste[waste.length - 1];
+                  handleDoubleClick(topCard, { type: 'waste', index: 0 });
                 },
                 () => {
                   const topCard = waste[waste.length - 1];
@@ -358,7 +641,10 @@ export function Solitaire({ onClose }: SolitaireProps) {
                 onDragOver={(e) => e.preventDefault()}
                 data-testid={`foundation-${index}`}
               >
-                {foundation.length > 0 && renderCard(foundation[foundation.length - 1])}
+                {foundation.length > 0 && renderCard(
+                  foundation[foundation.length - 1],
+                  false
+                )}
               </div>
             ))}
           </div>
@@ -383,14 +669,26 @@ export function Solitaire({ onClose }: SolitaireProps) {
                   >
                     {renderCard(
                       card, 
-                      card.faceUp && cardIndex === column.length - 1, 
+                      card.faceUp,
+                      { type: 'tableau', index: colIndex, start: cardIndex },
                       () => {
-                        if (card.faceUp && cardIndex === column.length - 1) {
-                          handleDragStart(card, { type: 'tableau', index: colIndex, start: cardIndex });
+                        if (card.faceUp) {
+                          // If it's the last card, try single click auto-move
+                          if (cardIndex === column.length - 1) {
+                            handleSingleClick(card, { type: 'tableau', index: colIndex, start: cardIndex });
+                          } else {
+                            // Otherwise, start drag sequence from this card
+                            handleDragStart(card, { type: 'tableau', index: colIndex, start: cardIndex });
+                          }
                         }
                       },
                       () => {
                         if (card.faceUp && cardIndex === column.length - 1) {
+                          handleDoubleClick(card, { type: 'tableau', index: colIndex, start: cardIndex });
+                        }
+                      },
+                      () => {
+                        if (card.faceUp) {
                           handleDragStart(card, { type: 'tableau', index: colIndex, start: cardIndex });
                         }
                       }
