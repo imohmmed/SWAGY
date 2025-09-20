@@ -631,16 +631,6 @@ export function Tetris({ onClose }: TetrisProps) {
         </div>
       </div>
 
-      {/* Instructions */}
-      <div className="mt-4 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-        <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">{t('gameInstructions')}</div>
-        <div className="text-xs text-[rgb(var(--win-text))] space-y-1">
-          <div>• {t('tetrisInstructions1') || 'Arrow keys to move/rotate'}</div>
-          <div>• {t('tetrisInstructions2') || 'Space to drop fast'}</div>
-          <div>• {t('tetrisInstructions3') || 'C to hold piece'}</div>
-          <div>• {t('tetrisInstructions4') || 'P to pause/resume'}</div>
-        </div>
-      </div>
 
       {/* Mobile Controls */}
       <div className="mt-4 space-y-2 md:hidden">

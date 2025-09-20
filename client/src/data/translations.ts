@@ -112,10 +112,11 @@ export const translations: Record<string, Translation> = {
     mobileToggleMode: 'Toggle mode: Reveal/Flag',
     currentMode: 'Current mode',
     
+    gameInstructions: 'Instructions:',
+    
     // Solitaire specific
     newGame: 'New Game',
     congratulations: 'Congratulations! You won!',
-    gameInstructions: 'Instructions:',
     solitaireInstructions1: 'Click stock to draw cards',
     solitaireInstructions2: 'Drag cards to build sequences',
     solitaireInstructions3: 'Build foundations from Ace to King',
@@ -139,10 +140,6 @@ export const translations: Record<string, Translation> = {
     tetrisControls: 'Controls',
     tetrisGameOver: 'Game Over!',
     tetrisPaused: 'Paused',
-    tetrisInstructions1: 'Arrow keys to move/rotate',
-    tetrisInstructions2: 'Space to drop fast',
-    tetrisInstructions3: 'C to hold piece',
-    tetrisInstructions4: 'P to pause/resume',
     
     // Pong specific
     pongScore: 'Score',
@@ -430,10 +427,11 @@ export const translations: Record<string, Translation> = {
     mobileToggleMode: 'تبديل الوضع: كشف/علم',
     currentMode: 'الوضع الحالي',
     
+    gameInstructions: 'التعليمات:',
+    
     // Solitaire specific
     newGame: 'لعبة جديدة',
     congratulations: 'تهانينا! لقد فزت!',
-    gameInstructions: 'التعليمات:',
     solitaireInstructions1: 'انقر على المخزون لسحب الأوراق',
     solitaireInstructions2: 'اسحب الأوراق لبناء التسلسلات',
     solitaireInstructions3: 'ابني الأسس من الآس إلى الملك',
@@ -457,10 +455,6 @@ export const translations: Record<string, Translation> = {
     tetrisControls: 'التحكم',
     tetrisGameOver: 'انتهت اللعبة!',
     tetrisPaused: 'متوقف',
-    tetrisInstructions1: 'أسهم الاتجاه للحركة/الدوران',
-    tetrisInstructions2: 'مسافة للإسقاط السريع',
-    tetrisInstructions3: 'C للاحتفاظ بالقطعة',
-    tetrisInstructions4: 'P للإيقاف/الاستكمال',
     
     // Pong specific
     pongScore: 'النقاط',
