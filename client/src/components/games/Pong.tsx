@@ -37,14 +37,14 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 const PADDLE_HEIGHT = 15;
 const PADDLE_WIDTH = 120;
-const BALL_SIZE = 12;
+const BALL_SIZE = 12.5;
 const INITIAL_BALL_SPEED = 4;
-const BLOCK_WIDTH = 75;
-const BLOCK_HEIGHT = 30;
-const BLOCKS_PER_ROW = 10;
+const BLOCK_WIDTH = 12.5;
+const BLOCK_HEIGHT = 12.5;
+const BLOCKS_PER_ROW = 64;
 const BLOCK_ROWS = 6;
 const BLOCK_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3'];
-const BLOCK_SPACING = 5;
+const BLOCK_SPACING = 0;
 
 export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
@@ -58,14 +58,14 @@ export function Pong({ onClose }: PongProps) {
   // Initialize blocks
   const initializeBlocks = (): Block[] => {
     const blocks: Block[] = [];
-    const startY = 80;
-    const startX = (GAME_WIDTH - (BLOCKS_PER_ROW * BLOCK_WIDTH + (BLOCKS_PER_ROW - 1) * BLOCK_SPACING)) / 2;
+    const startY = 0; // Start from top with no spacing
+    const startX = 0; // Start from left edge
     
     for (let row = 0; row < BLOCK_ROWS; row++) {
       for (let col = 0; col < BLOCKS_PER_ROW; col++) {
         blocks.push({
-          x: startX + col * (BLOCK_WIDTH + BLOCK_SPACING),
-          y: startY + row * (BLOCK_HEIGHT + BLOCK_SPACING),
+          x: startX + col * BLOCK_WIDTH,
+          y: startY + row * BLOCK_HEIGHT,
           width: BLOCK_WIDTH,
           height: BLOCK_HEIGHT,
           color: BLOCK_COLORS[row % BLOCK_COLORS.length],
@@ -86,7 +86,7 @@ export function Pong({ onClose }: PongProps) {
   });
   
   const [ball, setBall] = useState<Ball>({
-    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 100 },
+    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 150 },
     velocity: { x: INITIAL_BALL_SPEED, y: -INITIAL_BALL_SPEED },
     size: BALL_SIZE,
   });
@@ -98,7 +98,7 @@ export function Pong({ onClose }: PongProps) {
   // Helper functions
   const resetBall = (): Ball => {
     return {
-      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 100 },
+      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 150 },
       velocity: { 
         x: (Math.random() > 0.5 ? 1 : -1) * INITIAL_BALL_SPEED,
         y: -INITIAL_BALL_SPEED 
@@ -459,17 +459,6 @@ export function Pong({ onClose }: PongProps) {
         </div>
       </div>
 
-      {/* Instructions */}
-      <div className="mt-4 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-        <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">Instructions:</div>
-        <div className="text-xs text-[rgb(var(--win-text))] space-y-1">
-          <div>• Drag the paddle to move it left or right</div>
-          <div>• Don't let the ball fall off the bottom!</div>
-          <div>• Hit the colored blocks to destroy them and score points</div>
-          <div>• Destroy all blocks to win the level</div>
-          <div>• Press P to pause/resume the game</div>
-        </div>
-      </div>
 
       {/* Mobile Controls - Arrow keys for mobile */}
       <div className="mt-4 flex justify-center gap-4 md:hidden">
