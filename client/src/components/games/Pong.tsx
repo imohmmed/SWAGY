@@ -17,73 +17,113 @@ interface Ball {
 }
 
 interface Paddle {
-  y: number;
+  x: number;
   height: number;
   width: number;
-  speed: number;
 }
 
-// Enhanced game constants for classic Pong experience
+interface Block {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  color: string;
+  visible: boolean;
+  points: number;
+}
+
+// Game constants for Breakout experience
 const GAME_WIDTH = 800;
-const GAME_HEIGHT = 500;
-const PADDLE_HEIGHT = 100;
-const PADDLE_WIDTH = 15;
+const GAME_HEIGHT = 600;
+const PADDLE_HEIGHT = 15;
+const PADDLE_WIDTH = 120;
 const BALL_SIZE = 12;
-const PADDLE_SPEED = 8;
-const INITIAL_BALL_SPEED = 5;
-const WINNING_SCORE = 10;
-const AI_SPEED_FACTOR = 0.85; // Make AI slightly slower for better gameplay
+const INITIAL_BALL_SPEED = 4;
+const BLOCK_WIDTH = 75;
+const BLOCK_HEIGHT = 30;
+const BLOCKS_PER_ROW = 10;
+const BLOCK_ROWS = 6;
+const BLOCK_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3'];
+const BLOCK_SPACING = 5;
 
 export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
   
   // Game state
-  const [gameStatus, setGameStatus] = useState<'playing' | 'paused' | 'gameOver'>('playing');
-  const [playerScore, setPlayerScore] = useState(0);
-  const [computerScore, setComputerScore] = useState(0);
-  const [winner, setWinner] = useState<'player' | 'computer' | null>(null);
+  const [gameStatus, setGameStatus] = useState<'playing' | 'paused' | 'gameOver' | 'won'>('playing');
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [level, setLevel] = useState(1);
   
-  const [playerPaddle, setPlayerPaddle] = useState<Paddle>({
-    y: GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2,
+  // Initialize blocks
+  const initializeBlocks = (): Block[] => {
+    const blocks: Block[] = [];
+    const startY = 80;
+    const startX = (GAME_WIDTH - (BLOCKS_PER_ROW * BLOCK_WIDTH + (BLOCKS_PER_ROW - 1) * BLOCK_SPACING)) / 2;
+    
+    for (let row = 0; row < BLOCK_ROWS; row++) {
+      for (let col = 0; col < BLOCKS_PER_ROW; col++) {
+        blocks.push({
+          x: startX + col * (BLOCK_WIDTH + BLOCK_SPACING),
+          y: startY + row * (BLOCK_HEIGHT + BLOCK_SPACING),
+          width: BLOCK_WIDTH,
+          height: BLOCK_HEIGHT,
+          color: BLOCK_COLORS[row % BLOCK_COLORS.length],
+          visible: true,
+          points: (BLOCK_ROWS - row) * 10 // Higher rows = more points
+        });
+      }
+    }
+    return blocks;
+  };
+  
+  const [blocks, setBlocks] = useState<Block[]>(initializeBlocks);
+  
+  const [paddle, setPaddle] = useState<Paddle>({
+    x: GAME_WIDTH / 2 - PADDLE_WIDTH / 2,
     height: PADDLE_HEIGHT,
     width: PADDLE_WIDTH,
-    speed: PADDLE_SPEED,
-  });
-  
-  const [computerPaddle, setComputerPaddle] = useState<Paddle>({
-    y: GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2,
-    height: PADDLE_HEIGHT,
-    width: PADDLE_WIDTH,
-    speed: PADDLE_SPEED,
   });
   
   const [ball, setBall] = useState<Ball>({
-    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2 },
-    velocity: { x: INITIAL_BALL_SPEED, y: INITIAL_BALL_SPEED },
+    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 100 },
+    velocity: { x: INITIAL_BALL_SPEED, y: -INITIAL_BALL_SPEED },
     size: BALL_SIZE,
   });
 
   const gameLoopRef = useRef<number>();
-  const keysRef = useRef<Set<string>>(new Set());
+  const isDraggingRef = useRef<boolean>(false);
+  const dragOffsetRef = useRef<number>(0);
 
   // Helper functions
-  const resetBall = (direction: 1 | -1 = 1): Ball => {
+  const resetBall = (): Ball => {
     return {
-      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2 },
+      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 100 },
       velocity: { 
-        x: INITIAL_BALL_SPEED * direction, 
-        y: (Math.random() - 0.5) * INITIAL_BALL_SPEED 
+        x: (Math.random() > 0.5 ? 1 : -1) * INITIAL_BALL_SPEED,
+        y: -INITIAL_BALL_SPEED 
       },
       size: BALL_SIZE,
     };
   };
 
-  const checkCollision = (ball: Ball, paddle: Paddle, paddleX: number): boolean => {
+  const checkBallPaddleCollision = (ball: Ball, paddle: Paddle): boolean => {
+    const paddleTop = GAME_HEIGHT - paddle.height - 10;
     return (
-      ball.position.x < paddleX + paddle.width &&
-      ball.position.x + ball.size > paddleX &&
-      ball.position.y < paddle.y + paddle.height &&
-      ball.position.y + ball.size > paddle.y
+      ball.position.x < paddle.x + paddle.width &&
+      ball.position.x + ball.size > paddle.x &&
+      ball.position.y < paddleTop + paddle.height &&
+      ball.position.y + ball.size > paddleTop
+    );
+  };
+
+  const checkBallBlockCollision = (ball: Ball, block: Block): boolean => {
+    return (
+      block.visible &&
+      ball.position.x < block.x + block.width &&
+      ball.position.x + ball.size > block.x &&
+      ball.position.y < block.y + block.height &&
+      ball.position.y + ball.size > block.y
     );
   };
 
@@ -96,158 +136,142 @@ export function Pong({ onClose }: PongProps) {
       },
     };
 
-    // Bounce off top and bottom walls
-    if (newBall.position.y <= 0 || newBall.position.y >= GAME_HEIGHT - newBall.size) {
+    // Bounce off top wall
+    if (newBall.position.y <= 0) {
       newBall.velocity.y = -newBall.velocity.y;
-      newBall.position.y = Math.max(0, Math.min(GAME_HEIGHT - newBall.size, newBall.position.y));
+      newBall.position.y = 0;
     }
 
-    // Check collision with player paddle (left side)
-    if (newBall.velocity.x < 0 && checkCollision(newBall, playerPaddle, 30)) {
-      newBall.velocity.x = Math.abs(newBall.velocity.x); // Ensure positive direction
-      
-      // Enhanced spin mechanics - add variety to gameplay
-      const hitPosition = (newBall.position.y + newBall.size/2 - playerPaddle.y) / playerPaddle.height;
-      const spinFactor = (hitPosition - 0.5) * 2; // -1 to 1
-      newBall.velocity.y = spinFactor * INITIAL_BALL_SPEED * 1.5;
-      
-      // Increase speed slightly for more excitement
-      const speedIncrease = 1.05;
-      newBall.velocity.x *= speedIncrease;
-      newBall.velocity.y *= speedIncrease;
-      
-      newBall.position.x = 30 + PADDLE_WIDTH + 2; // Small buffer to prevent sticking
+    // Bounce off left and right walls
+    if (newBall.position.x <= 0 || newBall.position.x >= GAME_WIDTH - newBall.size) {
+      newBall.velocity.x = -newBall.velocity.x;
+      newBall.position.x = Math.max(0, Math.min(GAME_WIDTH - newBall.size, newBall.position.x));
     }
 
-    // Check collision with computer paddle (right side)  
-    if (newBall.velocity.x > 0 && checkCollision(newBall, computerPaddle, GAME_WIDTH - 30 - PADDLE_WIDTH)) {
-      newBall.velocity.x = -Math.abs(newBall.velocity.x); // Ensure negative direction
+    // Check collision with paddle
+    if (newBall.velocity.y > 0 && checkBallPaddleCollision(newBall, paddle)) {
+      newBall.velocity.y = -Math.abs(newBall.velocity.y);
       
-      // Enhanced spin mechanics
-      const hitPosition = (newBall.position.y + newBall.size/2 - computerPaddle.y) / computerPaddle.height;
+      // Add spin based on where ball hits paddle
+      const hitPosition = (newBall.position.x - paddle.x) / paddle.width;
       const spinFactor = (hitPosition - 0.5) * 2; // -1 to 1
-      newBall.velocity.y = spinFactor * INITIAL_BALL_SPEED * 1.5;
+      newBall.velocity.x = spinFactor * INITIAL_BALL_SPEED;
       
-      // Increase speed slightly
-      const speedIncrease = 1.05;
-      newBall.velocity.x *= speedIncrease;
-      newBall.velocity.y *= speedIncrease;
-      
-      newBall.position.x = GAME_WIDTH - 30 - PADDLE_WIDTH - newBall.size - 2; // Small buffer
+      const paddleTop = GAME_HEIGHT - paddle.height - 10;
+      newBall.position.y = paddleTop - newBall.size;
     }
+
+    // Check collision with blocks
+    setBlocks(currentBlocks => {
+      let newBlocks = [...currentBlocks];
+      let hitBlock = false;
+      
+      for (let i = 0; i < newBlocks.length; i++) {
+        if (checkBallBlockCollision(newBall, newBlocks[i])) {
+          newBlocks[i] = { ...newBlocks[i], visible: false };
+          setScore(prev => prev + newBlocks[i].points);
+          newBall.velocity.y = -newBall.velocity.y;
+          hitBlock = true;
+          
+          // Check win condition
+          const visibleBlocks = newBlocks.filter(block => block.visible);
+          if (visibleBlocks.length === 0) {
+            setGameStatus('won');
+          }
+          break;
+        }
+      }
+      
+      return newBlocks;
+    });
 
     return newBall;
   };
 
-  const updateComputerPaddle = (currentBall: Ball): void => {
-    setComputerPaddle(prev => {
-      // Only move when ball is coming towards computer
-      if (currentBall.velocity.x <= 0) return prev;
-      
-      const ballY = currentBall.position.y + currentBall.size / 2;
-      const paddleCenterY = prev.y + prev.height / 2;
-      const diff = ballY - paddleCenterY;
-      
-      // Enhanced AI with difficulty scaling and imperfection
-      let newY = prev.y;
-      const reactionThreshold = 15;
-      
-      if (Math.abs(diff) > reactionThreshold) {
-        // Calculate move speed based on ball speed and distance
-        const maxSpeed = prev.speed * AI_SPEED_FACTOR;
-        const urgency = Math.min(1, Math.abs(currentBall.velocity.x) / 8);
-        const moveSpeed = maxSpeed * urgency;
-        
-        // Add slight imperfection to make it beatable
-        const imperfection = Math.random() * 0.3;
-        const actualSpeed = moveSpeed * (1 - imperfection);
-        
-        newY += diff > 0 ? actualSpeed : -actualSpeed;
-      }
-      
-      // Keep paddle within bounds
-      newY = Math.max(0, Math.min(GAME_HEIGHT - prev.height, newY));
-      
-      return { ...prev, y: newY };
-    });
-  };
-
-  const updatePlayerPaddle = (): void => {
-    const keys = keysRef.current;
-    let deltaY = 0;
-    
-    if (keys.has('ArrowUp') || keys.has('w') || keys.has('W')) {
-      deltaY = -PADDLE_SPEED;
-    }
-    if (keys.has('ArrowDown') || keys.has('s') || keys.has('S')) {
-      deltaY = PADDLE_SPEED;
-    }
-    
-    if (deltaY !== 0) {
-      setPlayerPaddle(prev => ({
-        ...prev,
-        y: Math.max(0, Math.min(GAME_HEIGHT - prev.height, prev.y + deltaY))
-      }));
+  // Check for game end conditions
+  const checkGameEnd = (currentBall: Ball): void => {
+    // Ball fell off bottom - lose a life
+    if (currentBall.position.y > GAME_HEIGHT) {
+      setLives(prev => {
+        const newLives = prev - 1;
+        if (newLives <= 0) {
+          setGameStatus('gameOver');
+        }
+        return newLives;
+      });
+      setBall(resetBall());
     }
   };
 
-  const checkScore = (currentBall: Ball): void => {
-    // Ball goes off left side (computer scores)
-    if (currentBall.position.x < 0) {
-      setComputerScore(prev => {
-        const newScore = prev + 1;
-        if (newScore >= WINNING_SCORE) {
-          setWinner('computer');
-          setGameStatus('gameOver');
-        }
-        return newScore;
-      });
-      setBall(resetBall(1)); // Ball goes towards player
-    }
-    
-    // Ball goes off right side (player scores)
-    if (currentBall.position.x > GAME_WIDTH) {
-      setPlayerScore(prev => {
-        const newScore = prev + 1;
-        if (newScore >= WINNING_SCORE) {
-          setWinner('player');
-          setGameStatus('gameOver');
-        }
-        return newScore;
-      });
-      setBall(resetBall(-1)); // Ball goes towards computer
-    }
+  // Drag controls for paddle
+  const handleMouseDown = (e: React.MouseEvent): void => {
+    if (gameStatus !== 'playing') return;
+    isDraggingRef.current = true;
+    const rect = e.currentTarget.getBoundingClientRect();
+    dragOffsetRef.current = e.clientX - rect.left - paddle.x;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent): void => {
+    if (!isDraggingRef.current || gameStatus !== 'playing') return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const newX = e.clientX - rect.left - dragOffsetRef.current;
+    setPaddle(prev => ({
+      ...prev,
+      x: Math.max(0, Math.min(GAME_WIDTH - prev.width, newX))
+    }));
+  };
+
+  const handleMouseUp = (): void => {
+    isDraggingRef.current = false;
+  };
+
+  const handleTouchStart = (e: React.TouchEvent): void => {
+    if (gameStatus !== 'playing') return;
+    isDraggingRef.current = true;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    dragOffsetRef.current = touch.clientX - rect.left - paddle.x;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent): void => {
+    if (!isDraggingRef.current || gameStatus !== 'playing') return;
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    const newX = touch.clientX - rect.left - dragOffsetRef.current;
+    setPaddle(prev => ({
+      ...prev,
+      x: Math.max(0, Math.min(GAME_WIDTH - prev.width, newX))
+    }));
+  };
+
+  const handleTouchEnd = (): void => {
+    isDraggingRef.current = false;
   };
 
   // Game actions
   const togglePause = (): void => {
-    if (gameStatus === 'gameOver') return;
+    if (gameStatus === 'gameOver' || gameStatus === 'won') return;
     setGameStatus(prev => prev === 'playing' ? 'paused' : 'playing');
   };
 
   const resetGame = (): void => {
     setGameStatus('playing');
-    setPlayerScore(0);
-    setComputerScore(0);
-    setWinner(null);
-    setPlayerPaddle({
-      y: GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2,
+    setScore(0);
+    setLives(3);
+    setLevel(1);
+    setBlocks(initializeBlocks());
+    setPaddle({
+      x: GAME_WIDTH / 2 - PADDLE_WIDTH / 2,
       height: PADDLE_HEIGHT,
       width: PADDLE_WIDTH,
-      speed: PADDLE_SPEED,
-    });
-    setComputerPaddle({
-      y: GAME_HEIGHT / 2 - PADDLE_HEIGHT / 2,
-      height: PADDLE_HEIGHT,
-      width: PADDLE_WIDTH,
-      speed: PADDLE_SPEED,
     });
     setBall(resetBall());
   };
 
   // Keyboard controls
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (gameStatus === 'gameOver') return;
+    if (gameStatus === 'gameOver' || gameStatus === 'won') return;
 
     if (e.key.toLowerCase() === 'p') {
       e.preventDefault();
@@ -255,51 +279,25 @@ export function Pong({ onClose }: PongProps) {
       return;
     }
 
+    // Arrow keys for paddle movement (alternative to drag)
     if (gameStatus === 'playing') {
-      keysRef.current.add(e.key);
+      if (e.key === 'ArrowLeft') {
+        setPaddle(prev => ({
+          ...prev,
+          x: Math.max(0, prev.x - 20)
+        }));
+      } else if (e.key === 'ArrowRight') {
+        setPaddle(prev => ({
+          ...prev,
+          x: Math.min(GAME_WIDTH - prev.width, prev.x + 20)
+        }));
+      }
     }
   }, [gameStatus]);
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
-    keysRef.current.delete(e.key);
+    // No continuous key handling needed for Breakout
   }, []);
-
-  // Enhanced mobile controls with continuous movement
-  const mobileControlsRef = useRef<{ up: boolean; down: boolean }>({ up: false, down: false });
-
-  const startPaddleUp = (): void => {
-    if (gameStatus !== 'playing') return;
-    mobileControlsRef.current.up = true;
-  };
-
-  const stopPaddleUp = (): void => {
-    mobileControlsRef.current.up = false;
-  };
-
-  const startPaddleDown = (): void => {
-    if (gameStatus !== 'playing') return;
-    mobileControlsRef.current.down = true;
-  };
-
-  const stopPaddleDown = (): void => {
-    mobileControlsRef.current.down = false;
-  };
-
-  const updateMobileControls = (): void => {
-    const controls = mobileControlsRef.current;
-    if (gameStatus !== 'playing') return;
-    
-    let deltaY = 0;
-    if (controls.up) deltaY -= PADDLE_SPEED * 2;
-    if (controls.down) deltaY += PADDLE_SPEED * 2;
-    
-    if (deltaY !== 0) {
-      setPlayerPaddle(prev => ({
-        ...prev,
-        y: Math.max(0, Math.min(GAME_HEIGHT - prev.height, prev.y + deltaY))
-      }));
-    }
-  };
 
   // Game loop
   useEffect(() => {
@@ -307,12 +305,9 @@ export function Pong({ onClose }: PongProps) {
       if (gameStatus === 'playing') {
         setBall(currentBall => {
           const updatedBall = updateBall(currentBall);
-          checkScore(updatedBall);
-          updateComputerPaddle(updatedBall);
+          checkGameEnd(updatedBall);
           return updatedBall;
         });
-        updatePlayerPaddle();
-        updateMobileControls(); // Include mobile controls in game loop
       }
       gameLoopRef.current = requestAnimationFrame(gameLoop);
     };
@@ -324,7 +319,7 @@ export function Pong({ onClose }: PongProps) {
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [gameStatus, playerPaddle, computerPaddle]);
+  }, [gameStatus, paddle, blocks]);
 
   // Event listeners
   useEffect(() => {
@@ -375,73 +370,83 @@ export function Pong({ onClose }: PongProps) {
         </div>
       )}
 
-      {gameStatus === 'gameOver' && winner && (
+      {gameStatus === 'gameOver' && (
+        <div className="text-center py-2 mb-4 bg-red-200 border border-red-400 text-red-800 rounded">
+          <strong>Game Over!</strong> - Final Score: {score}
+        </div>
+      )}
+
+      {gameStatus === 'won' && (
         <div className="text-center py-2 mb-4 bg-green-200 border border-green-400 text-green-800 rounded">
-          <strong>{t('pongGameOver') || 'Game Over!'}</strong> - {t('pongWinner') || 'Winner'}: {winner === 'player' ? (t('pongPlayer') || 'Player') : (t('pongComputer') || 'Computer')}
+          <strong>You Won!</strong> - All blocks destroyed! Score: {score}
         </div>
       )}
 
       {/* Score Display */}
       <div className="flex justify-center gap-8 mb-4">
         <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-          <div className="text-xs font-bold text-[rgb(var(--win-text))]">{t('pongPlayer') || 'Player'}</div>
-          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="player-score">{playerScore}</div>
+          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Score</div>
+          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="player-score">{score}</div>
         </div>
         <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-          <div className="text-xs font-bold text-[rgb(var(--win-text))]">{t('pongComputer') || 'Computer'}</div>
-          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="computer-score">{computerScore}</div>
+          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Lives</div>
+          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="lives-count">{'❤️'.repeat(lives)}</div>
+        </div>
+        <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
+          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Level</div>
+          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="level-count">{level}</div>
         </div>
       </div>
 
-      {/* Game Area - Classic Pong Style */}
+      {/* Game Area - Breakout Style */}
       <div className="flex-1 flex justify-center">
         <div
-          className="relative bg-black border-4 border-white"
+          className="relative bg-black border-4 border-white cursor-crosshair"
           style={{ width: GAME_WIDTH, height: GAME_HEIGHT }}
-          data-testid="pong-game-area"
+          data-testid="breakout-game-area"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
-          {/* Center line - Classic dashed white line */}
-          <div 
-            className="absolute bg-white opacity-80"
-            style={{
-              left: GAME_WIDTH / 2 - 2,
-              top: 0,
-              width: 4,
-              height: GAME_HEIGHT,
-              backgroundImage: 'linear-gradient(white 15px, transparent 15px)',
-              backgroundSize: '4px 30px',
-            }}
-          />
+          {/* Colored blocks */}
+          {blocks.map((block, index) => (
+            block.visible && (
+              <div
+                key={index}
+                className="absolute border border-gray-700 rounded-sm"
+                style={{
+                  left: block.x,
+                  top: block.y,
+                  width: block.width,
+                  height: block.height,
+                  backgroundColor: block.color,
+                  boxShadow: '0 0 4px rgba(0,0,0,0.5)',
+                }}
+                data-testid={`block-${index}`}
+              />
+            )
+          ))}
           
-          {/* Player paddle (left) - Classic white rectangle */}
+          {/* Player paddle (bottom) - Draggable */}
           <div
-            className="absolute bg-white rounded-sm"
+            className="absolute bg-white rounded-sm cursor-grab active:cursor-grabbing"
             style={{
-              left: 30,
-              top: playerPaddle.y,
-              width: playerPaddle.width,
-              height: playerPaddle.height,
+              left: paddle.x,
+              top: GAME_HEIGHT - paddle.height - 10,
+              width: paddle.width,
+              height: paddle.height,
               boxShadow: '0 0 8px rgba(255,255,255,0.5)',
             }}
-            data-testid="player-paddle"
+            data-testid="breakout-paddle"
           />
           
-          {/* Computer paddle (right) - Classic white rectangle */}
+          {/* Ball */}
           <div
-            className="absolute bg-white rounded-sm"
-            style={{
-              left: GAME_WIDTH - 30 - computerPaddle.width,
-              top: computerPaddle.y,
-              width: computerPaddle.width,
-              height: computerPaddle.height,
-              boxShadow: '0 0 8px rgba(255,255,255,0.5)',
-            }}
-            data-testid="computer-paddle"
-          />
-          
-          {/* Ball - Classic square ball */}
-          <div
-            className="absolute bg-white"
+            className="absolute bg-white rounded-full"
             style={{
               left: ball.position.x,
               top: ball.position.y,
@@ -449,55 +454,50 @@ export function Pong({ onClose }: PongProps) {
               height: ball.size,
               boxShadow: '0 0 12px rgba(255,255,255,0.7)',
             }}
-            data-testid="pong-ball"
+            data-testid="breakout-ball"
           />
         </div>
       </div>
 
       {/* Instructions */}
       <div className="mt-4 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-        <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">{t('gameInstructions')}</div>
+        <div className="text-xs font-bold mb-2 text-[rgb(var(--win-text))]">Instructions:</div>
         <div className="text-xs text-[rgb(var(--win-text))] space-y-1">
-          <div>• {t('pongInstructions1') || 'Use ↑↓ arrow keys or W/S to control your paddle'}</div>
-          <div>• {t('pongInstructions2') || 'Don\'t let the ball escape from your side!'}</div>
-          <div>• {t('pongInstructions3') || 'First player to reach 10 points wins'}</div>
-          <div>• {t('pongInstructions4') || 'Press P to pause/resume the game'}</div>
+          <div>• Drag the paddle to move it left or right</div>
+          <div>• Don't let the ball fall off the bottom!</div>
+          <div>• Hit the colored blocks to destroy them and score points</div>
+          <div>• Destroy all blocks to win the level</div>
+          <div>• Press P to pause/resume the game</div>
         </div>
       </div>
 
-      {/* Mobile Controls - Enhanced with continuous touch */}
+      {/* Mobile Controls - Arrow keys for mobile */}
       <div className="mt-4 flex justify-center gap-4 md:hidden">
         <button
-          onTouchStart={startPaddleUp}
-          onTouchEnd={stopPaddleUp}
-          onMouseDown={startPaddleUp}
-          onMouseUp={stopPaddleUp}
-          onMouseLeave={stopPaddleUp}
+          onTouchStart={() => setPaddle(prev => ({ ...prev, x: Math.max(0, prev.x - 30) }))}
+          onMouseDown={() => setPaddle(prev => ({ ...prev, x: Math.max(0, prev.x - 30) }))}
           className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
-          data-testid="button-paddle-up-pong"
+          data-testid="button-paddle-left-breakout"
           disabled={gameStatus !== 'playing'}
         >
-          ↑
+          ←
         </button>
         <button
-          onTouchStart={startPaddleDown}
-          onTouchEnd={stopPaddleDown}
-          onMouseDown={startPaddleDown}
-          onMouseUp={stopPaddleDown}
-          onMouseLeave={stopPaddleDown}
+          onTouchStart={() => setPaddle(prev => ({ ...prev, x: Math.min(GAME_WIDTH - prev.width, prev.x + 30) }))}
+          onMouseDown={() => setPaddle(prev => ({ ...prev, x: Math.min(GAME_WIDTH - prev.width, prev.x + 30) }))}
           className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
-          data-testid="button-paddle-down-pong"
+          data-testid="button-paddle-right-breakout"
           disabled={gameStatus !== 'playing'}
         >
-          ↓
+          →
         </button>
         <button
           onClick={togglePause}
           className="px-4 py-4 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-          data-testid="button-pause-mobile-pong"
-          disabled={gameStatus === 'gameOver'}
+          data-testid="button-pause-mobile-breakout"
+          disabled={gameStatus === 'gameOver' || gameStatus === 'won'}
         >
-          {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
+          {gameStatus === 'paused' ? 'Resume' : 'Pause'}
         </button>
       </div>
     </div>
