@@ -44,6 +44,23 @@ MoHmmeD WORLD is a creative portfolio website that recreates the Windows 98 aest
 7. **Terminal Window**: Interactive command-line interface with custom commands
 8. **My Computer**: File explorer mimicking Windows 98 file system
 9. **Recycle Bin**: Empty recycle bin with classic functionality
+10. **Games Window**: Complete retro gaming center with five classic Windows 98-style games
+
+### Games Collection
+The Games Window features a comprehensive collection of classic games recreated with authentic Windows 98 styling:
+
+1. **Minesweeper**: Classic mine detection game with timer, flagging system, and first-click safety
+2. **Solitaire**: Traditional Klondike solitaire with drag-and-drop card mechanics and win detection
+3. **Snake**: Modern take on the classic snake game with collision detection and high score tracking
+4. **Tetris**: Full-featured block puzzle game with rotation, line clearing, and level progression
+5. **Pong**: Retro arcade tennis game with AI opponent and scoring system
+
+Each game includes:
+- Authentic Windows 98 visual styling with proper borders and color schemes
+- Mobile-optimized touch controls for smartphone gameplay
+- Pause/resume functionality and game state management
+- Complete English and Arabic language support
+- Comprehensive scoring and progress tracking systems
 
 ### Interactive Features
 - **Multi-language Support**: English and Arabic with RTL support
@@ -127,3 +144,4 @@ Preferred communication style: Simple, everyday language.
 Changelog:
 - July 01, 2025. Initial setup
 - July 01, 2025. Comprehensive i18n implementation: Complete translation coverage for all UI components, RTL support for Arabic, English as default language, dynamic language switching with localStorage persistence
+- September 20, 2025. Complete Games section implementation: Added five classic Windows 98-style games (Minesweeper, Solitaire, Snake, Tetris, Pong) with mobile controls, pause/resume functionality, scoring systems, and full English/Arabic translations
