@@ -121,6 +121,19 @@ export const translations: Record<string, Translation> = {
     snakeInstructions3: 'Avoid walls and your own tail',
     snakeInstructions4: 'Press Space to pause/resume',
     
+    // Tetris specific
+    tetrisScore: 'Score',
+    tetrisLevel: 'Level',
+    tetrisLines: 'Lines',
+    tetrisNext: 'Next',
+    tetrisHold: 'Hold',
+    tetrisGameOver: 'Game Over!',
+    tetrisPaused: 'Paused',
+    tetrisInstructions1: 'Arrow keys to move/rotate',
+    tetrisInstructions2: 'Space to drop fast',
+    tetrisInstructions3: 'C to hold piece',
+    tetrisInstructions4: 'P to pause/resume',
+    
     // Downloads
     availableDownloads: 'Available Downloads',
     downloadInstructions: 'Download Instructions:',
@@ -403,6 +416,19 @@ export const translations: Record<string, Translation> = {
     snakeInstructions2: 'كل الطعام الأحمر لتنمو',
     snakeInstructions3: 'تجنب الجدران وذيلك',
     snakeInstructions4: 'اضغط مسافة للإيقاف/الاستكمال',
+    
+    // Tetris specific
+    tetrisScore: 'النقاط',
+    tetrisLevel: 'المستوى',
+    tetrisLines: 'الخطوط',
+    tetrisNext: 'التالي',
+    tetrisHold: 'احتفظ',
+    tetrisGameOver: 'انتهت اللعبة!',
+    tetrisPaused: 'متوقف',
+    tetrisInstructions1: 'أسهم الاتجاه للحركة/الدوران',
+    tetrisInstructions2: 'مسافة للإسقاط السريع',
+    tetrisInstructions3: 'C للاحتفاظ بالقطعة',
+    tetrisInstructions4: 'P للإيقاف/الاستكمال',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',
