@@ -79,8 +79,7 @@ export function Pong({ onClose }: PongProps) {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
-  const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
-  const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
+  const [difficulty] = useState<'easy' | 'normal' | 'hard'>('hard'); // Fixed to hard mode
   
   
   // Initialize blocks with proper spacing and centered layout
@@ -180,10 +179,10 @@ export function Pong({ onClose }: PongProps) {
       newBall.position.y = 0;
     }
 
-    // Bounce off left and right walls
-    if (newBall.position.x <= 0 || newBall.position.x >= GAME_WIDTH - newBall.size) {
+    // Bounce off left and right walls - with stricter bounds
+    if (newBall.position.x <= 2 || newBall.position.x >= GAME_WIDTH - newBall.size - 2) {
       newBall.velocity.x = -newBall.velocity.x;
-      newBall.position.x = Math.max(0, Math.min(GAME_WIDTH - newBall.size, newBall.position.x));
+      newBall.position.x = Math.max(2, Math.min(GAME_WIDTH - newBall.size - 2, newBall.position.x));
     }
 
     // Check collision with paddle
@@ -299,39 +298,27 @@ export function Pong({ onClose }: PongProps) {
     setGameStatus(prev => prev === 'playing' ? 'paused' : 'playing');
   };
 
-  const startGame = (selectedDifficulty: 'easy' | 'normal' | 'hard'): void => {
-    const settings = difficultySettings[selectedDifficulty];
+  const startGame = (): void => {
+    const settings = difficultySettings[difficulty];
     
-    // Set all states using the selected difficulty directly
-    setDifficulty(selectedDifficulty);
+    // Set all states using hard difficulty (fixed)
     setScore(0);
     setLives(settings.lives);
     setLevel(1);
-    setBlocks(initializeBlocks(selectedDifficulty));
+    setBlocks(initializeBlocks(difficulty));
     setPaddle({
       x: GAME_WIDTH / 2 - PADDLE_WIDTH / 2,
       height: PADDLE_HEIGHT,
       width: PADDLE_WIDTH,
     });
-    setBall(resetBall(selectedDifficulty));
+    setBall(resetBall(difficulty));
     setGameStatus('playing'); // Set this last
   };
   
   const resetGame = (): void => {
-    startGame(difficulty); // Restart with current difficulty
+    startGame(); // Restart with hard difficulty
   };
 
-  // Handle difficulty changes during gameplay
-  const changeDifficulty = (newDifficulty: 'easy' | 'normal' | 'hard'): void => {
-    const wasPaused = gameStatus === 'paused';
-    setDifficulty(newDifficulty);
-    // Reset the game with new difficulty
-    startGame(newDifficulty);
-    // Keep game paused if it was paused before
-    if (wasPaused) {
-      setGameStatus('paused');
-    }
-  };
 
   // Keyboard controls
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -390,25 +377,17 @@ export function Pong({ onClose }: PongProps) {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     
-    // Close dropdown when clicking outside
-    const handleClickOutside = (e: Event) => {
-      if (showOptionsDropdown && !(e.target as Element)?.closest('.options-dropdown-container')) {
-        setShowOptionsDropdown(false);
-      }
-    };
-    window.addEventListener('click', handleClickOutside);
     
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
-      window.removeEventListener('click', handleClickOutside);
     };
-  }, [handleKeyDown, handleKeyUp, showOptionsDropdown]);
+  }, [handleKeyDown, handleKeyUp]);
 
   // Initialize game when component mounts
   useEffect(() => {
-    // Start with easy difficulty by default
-    startGame('easy');
+    // Start with hard difficulty (fixed)
+    startGame();
   }, []);
 
   return (
@@ -417,62 +396,7 @@ export function Pong({ onClose }: PongProps) {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-[rgb(var(--win-text))]">{t('pongTitle')}</h2>
         <div className="flex gap-2">
-          {/* Difficulty Dropdown - First */}
-          <div className="relative options-dropdown-container">
-            <button
-              onClick={() => setShowOptionsDropdown(!showOptionsDropdown)}
-              className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-              data-testid="button-options-dropdown"
-            >
-              Difficulty ▼
-            </button>
-            
-            {showOptionsDropdown && (
-              <div className="absolute top-full left-0 mt-1 bg-[rgb(var(--win-button-face))] border border-[rgb(var(--win-border-dark))] shadow-lg z-10 min-w-[120px]">
-                <div className="px-2 py-1 text-xs font-bold text-[rgb(var(--win-text))] bg-[rgb(var(--win-button-light))] border-b border-[rgb(var(--win-border-dark))]">
-                  Level
-                </div>
-                <button
-                  onClick={() => {
-                    changeDifficulty('easy');
-                    setShowOptionsDropdown(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
-                    difficulty === 'easy' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
-                  }`}
-                  data-testid="option-easy"
-                >
-                  Easy
-                </button>
-                <button
-                  onClick={() => {
-                    changeDifficulty('normal');
-                    setShowOptionsDropdown(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
-                    difficulty === 'normal' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
-                  }`}
-                  data-testid="option-normal"
-                >
-                  Normal
-                </button>
-                <button
-                  onClick={() => {
-                    changeDifficulty('hard');
-                    setShowOptionsDropdown(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
-                    difficulty === 'hard' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
-                  }`}
-                  data-testid="option-hard"
-                >
-                  Hard
-                </button>
-              </div>
-            )}
-          </div>
-          
-          {/* Pause Button - Second */}
+          {/* Pause Button */}
           <button
             onClick={togglePause}
             className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
@@ -525,12 +449,16 @@ export function Pong({ onClose }: PongProps) {
         </div>
         <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
           <div className="text-xs font-bold text-[rgb(var(--win-text))]">Lives</div>
-          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="lives-count">{'❤️'.repeat(lives)}</div>
-        </div>
-        <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Level</div>
-          <div className="text-lg font-bold text-[rgb(var(--win-text))]" data-testid="difficulty-display">
-            {difficulty === 'easy' ? 'Easy' : difficulty === 'normal' ? 'Normal' : 'Hard'}
+          <div className="flex justify-center gap-1 mt-1" data-testid="lives-count">
+            {Array.from({ length: lives }, (_, index) => (
+              <img 
+                key={index}
+                src="https://g.top4top.io/p_3550ctjku0.png" 
+                alt="Heart"
+                className="w-6 h-6"
+                style={{ filter: 'drop-shadow(0 0 2px rgba(255,0,0,0.5))' }}
+              />
+            ))}
           </div>
         </div>
       </div>
