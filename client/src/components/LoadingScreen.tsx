@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import mohmmedLogo from '@assets/fontbolt_1758341229533.png';
+import mohmmedLogo from '@assets/fontbolt_1758342863036.png';
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
