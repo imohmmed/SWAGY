@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { Minesweeper } from '../games/Minesweeper';
+import { Solitaire } from '../games/Solitaire';
+import { Snake } from '../games/Snake';
 
 // Games components
 interface Game {
@@ -74,41 +76,9 @@ export function GamesWindow() {
         case 'minesweeper':
           return <Minesweeper onClose={handleGameClose} />;
         case 'solitaire':
-          // TODO: Implement Solitaire component
-          return (
-            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
-              <div className="text-center">
-                <div className="text-lg mb-4">🃏</div>
-                <div className="text-sm mb-4">{t('solitaireTitle') || 'Solitaire'}</div>
-                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
-                <button
-                  onClick={handleGameClose}
-                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-                  data-testid="button-close-game"
-                >
-                  {t('close') || 'Close'}
-                </button>
-              </div>
-            </div>
-          );
+          return <Solitaire onClose={handleGameClose} />;
         case 'snake':
-          // TODO: Implement Snake component
-          return (
-            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
-              <div className="text-center">
-                <div className="text-lg mb-4">🐍</div>
-                <div className="text-sm mb-4">{t('snakeTitle') || 'Snake'}</div>
-                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
-                <button
-                  onClick={handleGameClose}
-                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-                  data-testid="button-close-game"
-                >
-                  {t('close') || 'Close'}
-                </button>
-              </div>
-            </div>
-          );
+          return <Snake onClose={handleGameClose} />;
         case 'tetris':
           // TODO: Implement Tetris component
           return (

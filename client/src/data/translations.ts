@@ -103,6 +103,25 @@ export const translations: Record<string, Translation> = {
     minesweeperRightClick: 'Right click: Flag/unflag',
     minesweeperLongPress: 'Mobile: Long press to flag',
     
+    // Solitaire specific
+    newGame: 'New Game',
+    congratulations: 'Congratulations! You won!',
+    gameInstructions: 'Instructions:',
+    solitaireInstructions1: 'Click stock to draw cards',
+    solitaireInstructions2: 'Drag cards to build sequences',
+    solitaireInstructions3: 'Build foundations from Ace to King',
+    
+    // Snake specific
+    gameOver: 'Game Over!',
+    finalScore: 'Final Score',
+    paused: 'Paused',
+    resume: 'Resume',
+    pause: 'Pause',
+    snakeInstructions1: 'Use arrow keys or WASD to move',
+    snakeInstructions2: 'Eat the red food to grow',
+    snakeInstructions3: 'Avoid walls and your own tail',
+    snakeInstructions4: 'Press Space to pause/resume',
+    
     // Downloads
     availableDownloads: 'Available Downloads',
     downloadInstructions: 'Download Instructions:',
@@ -367,6 +386,25 @@ export const translations: Record<string, Translation> = {
     minesweeperLeftClick: 'نقرة يسار: كشف الخلية',
     minesweeperRightClick: 'نقرة يمين: وضع/إزالة العلم',
     minesweeperLongPress: 'الجوال: اضغط مطولاً للعلم',
+    
+    // Solitaire specific
+    newGame: 'لعبة جديدة',
+    congratulations: 'تهانينا! لقد فزت!',
+    gameInstructions: 'التعليمات:',
+    solitaireInstructions1: 'انقر على المخزون لسحب الأوراق',
+    solitaireInstructions2: 'اسحب الأوراق لبناء التسلسلات',
+    solitaireInstructions3: 'ابني الأسس من الآس إلى الملك',
+    
+    // Snake specific
+    gameOver: 'انتهت اللعبة!',
+    finalScore: 'النتيجة النهائية',
+    paused: 'متوقف',
+    resume: 'استكمال',
+    pause: 'إيقاف',
+    snakeInstructions1: 'استخدم أسهم الاتجاه أو WASD للحركة',
+    snakeInstructions2: 'كل الطعام الأحمر لتنمو',
+    snakeInstructions3: 'تجنب الجدران وذيلك',
+    snakeInstructions4: 'اضغط مسافة للإيقاف/الاستكمال',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',
