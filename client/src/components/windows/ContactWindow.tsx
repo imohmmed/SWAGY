@@ -51,7 +51,7 @@ export function ContactWindow() {
         setAttachedFiles([]);
       }
     } catch (error) {
-      console.error('خطأ في إرسال الإيميل:', error);
+      // Error sending email
       alert('عذراً، حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSubmitting(false);

@@ -219,7 +219,7 @@ export function MusicWindow() {
         setIsPlaying(true);
         globalAudioState.isPlaying = true;
       }).catch(error => {
-        console.log('Playback failed:', error);
+        // Playback failed
       });
     }
   };
@@ -271,7 +271,7 @@ export function MusicWindow() {
           setIsPlaying(true);
           globalAudioState.isPlaying = true;
         }).catch(error => {
-          console.log('Playback failed:', error);
+          // Playback failed
         });
       }, 100);
     }

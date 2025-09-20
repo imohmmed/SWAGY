@@ -165,9 +165,9 @@ function App() {
       setStartupAudio(audio);
       
       audio.play().then(() => {
-        console.log('Continuous startup sound playing');
+        // Continuous startup sound playing
       }).catch((error) => {
-        console.log('Audio failed:', error);
+        // Audio failed
       });
 
       // Stop after 9 seconds total
