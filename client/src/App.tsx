@@ -8,7 +8,7 @@ import { useWindows } from './hooks/useWindows';
 import { useLanguage } from './hooks/useLanguage';
 import { WindowType } from './types';
 import { stopGlobalAudio } from './components/windows/MusicWindow';
-import swalyLogo from '@assets/IMG_6470.png';
+import mohmmedLogo from '@assets/fontbolt_1758342863036.png';
 
 function App() {
   const {
@@ -136,7 +136,7 @@ function App() {
         <div class="h-screen bg-black flex items-center justify-center text-white">
           <div class="text-center">
             <div class="mb-4">
-              <img src="${swalyLogo}" alt="MoHmmeD" class="w-32 h-auto mx-auto" />
+              <img src="${mohmmedLogo}" alt="MoHmmeD" class="w-32 h-auto mx-auto" />
             </div>
             <div class="text-2xl font-bold mb-4">Windows is shutting down...</div>
             <div class="text-sm">Thank you for visiting MoHmmeD's portfolio!</div>
