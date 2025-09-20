@@ -109,7 +109,13 @@ export function GamesWindow() {
             draggable={false}
           />
         </button>
-        <div className="text-xs text-[rgb(var(--win-text))]">
+        <div className="flex items-center gap-1 text-xs text-[rgb(var(--win-text))]">
+          <img 
+            src="https://win98icons.alexmeub.com/icons/png/game_joy-0.png"
+            alt="games"
+            className="w-4 h-4"
+            draggable={false}
+          />
           {games.length} {t('gamesAvailable') || 'games available'}
         </div>
       </div>
