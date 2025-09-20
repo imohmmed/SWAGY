@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import mohmmedWorldLogo from '@assets/IMG_2031_1758343359583.png';
 
 // Global audio state to persist across window minimize/maximize
 let globalAudioState = {
@@ -298,8 +299,22 @@ export function MusicWindow() {
         style={{ background: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }}
       >
         <div className="text-center mb-4">
-          <div className="text-lg font-bold">🎵 {t('musicPlayer')}</div>
-          <div className="text-xs">MoHmmeD_playlist.m3u</div>
+          {isPlaying ? (
+            <div className="flex flex-col items-center">
+              <img 
+                src={mohmmedWorldLogo} 
+                alt="MoHmmeD WORLD" 
+                className="w-32 h-auto mb-2 rounded"
+                draggable={false}
+              />
+              <div className="text-xs">MoHmmeD WORLD</div>
+            </div>
+          ) : (
+            <>
+              <div className="text-lg font-bold">🎵 {t('musicPlayer')}</div>
+              <div className="text-xs">MoHmmeD_playlist.m3u</div>
+            </>
+          )}
         </div>
         
         <div className="bg-gray-800 p-2 rounded mb-4">
