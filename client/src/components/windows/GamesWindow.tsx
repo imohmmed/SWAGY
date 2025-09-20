@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { Minesweeper } from '../games/Minesweeper';
 
-// Games components (will be implemented next)
+// Games components
 interface Game {
   id: string;
   title: string;
@@ -9,36 +10,36 @@ interface Game {
   description: string;
 }
 
-const games: Game[] = [
+const getGames = (t: (key: string) => string): Game[] => [
   {
     id: 'minesweeper',
-    title: 'Minesweeper',
+    title: t('minesweeperTitle'),
     icon: 'https://win98icons.alexmeub.com/icons/png/game_mine_1-0.png',
-    description: 'Find all the hidden mines without clicking on them. Numbers indicate nearby mines.'
+    description: t('minesweeperDescription')
   },
   {
     id: 'solitaire',
-    title: 'Solitaire',
+    title: t('solitaireTitle'),
     icon: 'https://win98icons.alexmeub.com/icons/png/game_freecell-2.png',
-    description: 'Classic card game. Arrange all cards by suit from A to K.'
+    description: t('solitaireDescription')
   },
   {
     id: 'snake',
-    title: 'Snake',
+    title: t('snakeTitle'),
     icon: 'https://i.top4top.io/p_3550a3j8j0.png',
-    description: 'Control the snake to eat food and grow longer. Don\'t hit the walls or yourself!'
+    description: t('snakeDescription')
   },
   {
     id: 'tetris',
-    title: 'Tetris',
+    title: t('tetrisTitle'),
     icon: 'https://j.top4top.io/p_3550fwgqz0.png',
-    description: 'Arrange falling blocks to complete lines and score points.'
+    description: t('tetrisDescription')
   },
   {
     id: 'pong',
-    title: 'Pong',
+    title: t('pongTitle'),
     icon: 'https://l.top4top.io/p_355076e0u0.png',
-    description: 'Classic arcade game. Hit the ball with your paddle and score points.'
+    description: t('pongDescription')
   }
 ];
 
@@ -46,20 +47,111 @@ export function GamesWindow() {
   const { t } = useLanguage();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [currentView, setCurrentView] = useState<'grid' | 'list'>('grid');
+  const [playingGame, setPlayingGame] = useState<string | null>(null);
+  
+  const games = getGames(t);
 
   const handleGameSelect = (game: Game) => {
     setSelectedGame(game);
   };
 
   const handleGameLaunch = (gameId: string) => {
-    // This will launch the specific game component
-    console.log(`Launching game: ${gameId}`);
-    // TODO: Open game in new window or navigate to game component
+    setPlayingGame(gameId);
+  };
+
+  const handleGameClose = () => {
+    setPlayingGame(null);
   };
 
   const toggleView = () => {
     setCurrentView(prev => prev === 'grid' ? 'list' : 'grid');
   };
+
+  // Render game if one is being played
+  if (playingGame) {
+    const renderGame = () => {
+      switch (playingGame) {
+        case 'minesweeper':
+          return <Minesweeper onClose={handleGameClose} />;
+        case 'solitaire':
+          // TODO: Implement Solitaire component
+          return (
+            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
+              <div className="text-center">
+                <div className="text-lg mb-4">🃏</div>
+                <div className="text-sm mb-4">{t('solitaireTitle') || 'Solitaire'}</div>
+                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
+                <button
+                  onClick={handleGameClose}
+                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+                  data-testid="button-close-game"
+                >
+                  {t('close') || 'Close'}
+                </button>
+              </div>
+            </div>
+          );
+        case 'snake':
+          // TODO: Implement Snake component
+          return (
+            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
+              <div className="text-center">
+                <div className="text-lg mb-4">🐍</div>
+                <div className="text-sm mb-4">{t('snakeTitle') || 'Snake'}</div>
+                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
+                <button
+                  onClick={handleGameClose}
+                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+                  data-testid="button-close-game"
+                >
+                  {t('close') || 'Close'}
+                </button>
+              </div>
+            </div>
+          );
+        case 'tetris':
+          // TODO: Implement Tetris component
+          return (
+            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
+              <div className="text-center">
+                <div className="text-lg mb-4">🟦</div>
+                <div className="text-sm mb-4">{t('tetrisTitle') || 'Tetris'}</div>
+                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
+                <button
+                  onClick={handleGameClose}
+                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+                  data-testid="button-close-game"
+                >
+                  {t('close') || 'Close'}
+                </button>
+              </div>
+            </div>
+          );
+        case 'pong':
+          // TODO: Implement Pong component
+          return (
+            <div className="h-full flex items-center justify-center bg-[rgb(var(--win-light-gray))]">
+              <div className="text-center">
+                <div className="text-lg mb-4">🏓</div>
+                <div className="text-sm mb-4">{t('pongTitle') || 'Pong'}</div>
+                <div className="text-xs mb-4">{t('comingSoon') || 'Coming Soon...'}</div>
+                <button
+                  onClick={handleGameClose}
+                  className="px-3 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+                  data-testid="button-close-game"
+                >
+                  {t('close') || 'Close'}
+                </button>
+              </div>
+            </div>
+          );
+        default:
+          return null;
+      }
+    };
+
+    return renderGame();
+  }
 
   return (
     <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))]">
@@ -105,7 +197,7 @@ export function GamesWindow() {
                   draggable={false}
                 />
                 <span className="text-xs text-center text-[rgb(var(--win-text))] font-bold">
-                  {t(game.id + 'Title') || game.title}
+                  {game.title}
                 </span>
               </div>
             ))}
@@ -132,10 +224,10 @@ export function GamesWindow() {
                 />
                 <div className="flex-1">
                   <div className="text-sm font-bold text-[rgb(var(--win-text))]">
-                    {t(game.id + 'Title') || game.title}
+                    {game.title}
                   </div>
                   <div className="text-xs text-[rgb(var(--win-text))] opacity-75">
-                    {t(game.id + 'Description') || game.description}
+                    {game.description}
                   </div>
                 </div>
               </div>
@@ -148,7 +240,7 @@ export function GamesWindow() {
       <div className="flex items-center justify-between p-1 border-t border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] text-xs text-[rgb(var(--win-text))]">
         <div>
           {selectedGame ? (
-            `${t('selectedGame') || 'Selected'}: ${t(selectedGame.id + 'Title') || selectedGame.title}`
+            `${t('selectedGame') || 'Selected'}: ${selectedGame.title}`
           ) : (
             t('selectGameToPlay') || 'Select a game to play'
           )}

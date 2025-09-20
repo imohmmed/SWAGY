@@ -93,6 +93,15 @@ export const translations: Record<string, Translation> = {
     tetrisDescription: 'Arrange falling blocks to complete lines and score points.',
     pongTitle: 'Pong',
     pongDescription: 'Classic arcade game. Hit the ball with your paddle and score points.',
+    comingSoon: 'Coming Soon...',
+    
+    // Minesweeper specific
+    minesweeperWon: 'Congratulations! You won!',
+    minesweeperLost: 'Game Over! Try again.',
+    minesweeperInstructions: 'Instructions:',
+    minesweeperLeftClick: 'Left click: Reveal cell',
+    minesweeperRightClick: 'Right click: Flag/unflag',
+    minesweeperLongPress: 'Mobile: Long press to flag',
     
     // Downloads
     availableDownloads: 'Available Downloads',
@@ -349,6 +358,15 @@ export const translations: Record<string, Translation> = {
     tetrisDescription: 'رتب القطع المتساقطة لإكمال الصفوف واكسب النقاط.',
     pongTitle: 'بونغ',
     pongDescription: 'لعبة أركيد كلاسيكية. اضرب الكرة بالمضرب واكسب النقاط.',
+    comingSoon: 'قريباً...',
+    
+    // Minesweeper specific
+    minesweeperWon: 'تهانينا! لقد فزت!',
+    minesweeperLost: 'انتهت اللعبة! حاول مرة أخرى.',
+    minesweeperInstructions: 'التعليمات:',
+    minesweeperLeftClick: 'نقرة يسار: كشف الخلية',
+    minesweeperRightClick: 'نقرة يمين: وضع/إزالة العلم',
+    minesweeperLongPress: 'الجوال: اضغط مطولاً للعلم',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',
