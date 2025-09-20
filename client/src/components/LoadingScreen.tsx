@@ -76,7 +76,7 @@ export function LoadingScreen({ onLoadComplete, onSoundStart }: LoadingScreenPro
           {!isStarted && (
             <>
               <div className="text-white text-xl font-bold mb-8">
-                Welcome to the drip OS — MoHmmeD Edition
+                Welcome to MoHmmeD's World
               </div>
               <button
                 onClick={handleStartClick}
