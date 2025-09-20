@@ -30,6 +30,8 @@ interface Block {
   color: string;
   visible: boolean;
   points: number;
+  hits: number;
+  maxHits: number;
 }
 
 // Game constants for Breakout experience
@@ -48,16 +50,32 @@ const BLOCK_SPACING = 1;
 
 // Difficulty settings - moved outside component to prevent recreation
 const difficultySettings = {
-  easy: { speed: 2, lives: 5, ballSize: 10 },
-  normal: { speed: 3, lives: 3, ballSize: 8 },
-  hard: { speed: 4, lives: 2, ballSize: 6 }
+  easy: { speed: 2, lives: 5, ballSize: 10, blockHits: 1 },
+  normal: { speed: 4, lives: 3, ballSize: 8, blockHits: 1 },
+  hard: { speed: 5, lives: 2, ballSize: 6, blockHits: 2 }
+};
+
+// Function to get block color based on hits
+const getBlockColor = (block: Block): string => {
+  const hitRatio = block.hits / block.maxHits;
+  if (hitRatio === 0) {
+    return block.color; // Original color
+  } else if (hitRatio < 1) {
+    // Darken the color for damaged blocks
+    const r = parseInt(block.color.slice(1, 3), 16);
+    const g = parseInt(block.color.slice(3, 5), 16);
+    const b = parseInt(block.color.slice(5, 7), 16);
+    const factor = 0.6; // Darken by 40%
+    return `#${Math.floor(r * factor).toString(16).padStart(2, '0')}${Math.floor(g * factor).toString(16).padStart(2, '0')}${Math.floor(b * factor).toString(16).padStart(2, '0')}`;
+  }
+  return block.color;
 };
 
 export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
   
   // Game state
-  const [gameStatus, setGameStatus] = useState<'playing' | 'paused' | 'gameOver' | 'won'>('playing');
+  const [gameStatus, setGameStatus] = useState<'menu' | 'playing' | 'paused' | 'gameOver' | 'won'>('menu');
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
@@ -65,7 +83,7 @@ export function Pong({ onClose }: PongProps) {
   
   
   // Initialize blocks with proper spacing and centered layout
-  const initializeBlocks = (): Block[] => {
+  const initializeBlocks = (selectedDifficulty: 'easy' | 'normal' | 'hard' = difficulty): Block[] => {
     const blocks: Block[] = [];
     // Calculate considering border width (1px each side = 2px total per block)
     const effectiveBlockWidth = BLOCK_WIDTH; // No border padding needed
@@ -78,6 +96,7 @@ export function Pong({ onClose }: PongProps) {
     
     for (let row = 0; row < BLOCK_ROWS; row++) {
       for (let col = 0; col < actualBlocksPerRow; col++) {
+        const maxHits = difficultySettings[selectedDifficulty].blockHits;
         blocks.push({
           x: startX + col * (effectiveBlockWidth + BLOCK_SPACING),
           y: startY + row * (BLOCK_HEIGHT + BLOCK_SPACING),
@@ -85,7 +104,9 @@ export function Pong({ onClose }: PongProps) {
           height: BLOCK_HEIGHT,
           color: BLOCK_COLORS[row % BLOCK_COLORS.length],
           visible: true,
-          points: (BLOCK_ROWS - row) * 10 // Higher rows = more points
+          points: (BLOCK_ROWS - row) * 10, // Higher rows = more points
+          hits: 0,
+          maxHits: maxHits
         });
       }
     }
@@ -111,8 +132,8 @@ export function Pong({ onClose }: PongProps) {
   const dragOffsetRef = useRef<number>(0);
 
   // Helper functions
-  const resetBall = (): Ball => {
-    const settings = difficultySettings[difficulty];
+  const resetBall = (selectedDifficulty: 'easy' | 'normal' | 'hard' = difficulty): Ball => {
+    const settings = difficultySettings[selectedDifficulty];
     return {
       position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 80 },
       velocity: { 
@@ -184,8 +205,14 @@ export function Pong({ onClose }: PongProps) {
       
       for (let i = 0; i < newBlocks.length; i++) {
         if (checkBallBlockCollision(newBall, newBlocks[i])) {
-          newBlocks[i] = { ...newBlocks[i], visible: false };
-          setScore(prev => prev + newBlocks[i].points);
+          newBlocks[i] = { ...newBlocks[i], hits: newBlocks[i].hits + 1 };
+          
+          // Check if block should be destroyed
+          if (newBlocks[i].hits >= newBlocks[i].maxHits) {
+            newBlocks[i] = { ...newBlocks[i], visible: false };
+            setScore(prev => prev + newBlocks[i].points);
+          }
+          
           newBall.velocity.y = -newBall.velocity.y;
           hitBlock = true;
           
@@ -271,19 +298,29 @@ export function Pong({ onClose }: PongProps) {
     setGameStatus(prev => prev === 'playing' ? 'paused' : 'playing');
   };
 
-  const resetGame = (): void => {
-    const settings = difficultySettings[difficulty];
-    setGameStatus('playing');
+  const startGame = (selectedDifficulty: 'easy' | 'normal' | 'hard'): void => {
+    const settings = difficultySettings[selectedDifficulty];
+    
+    // Set all states using the selected difficulty directly
+    setDifficulty(selectedDifficulty);
     setScore(0);
     setLives(settings.lives);
     setLevel(1);
-    setBlocks(initializeBlocks());
+    setBlocks(initializeBlocks(selectedDifficulty));
     setPaddle({
       x: GAME_WIDTH / 2 - PADDLE_WIDTH / 2,
       height: PADDLE_HEIGHT,
       width: PADDLE_WIDTH,
     });
-    setBall(resetBall());
+    setBall(resetBall(selectedDifficulty));
+    setGameStatus('playing'); // Set this last
+  };
+  
+  const resetGame = (): void => {
+    setGameStatus('menu');
+    setScore(0);
+    setLives(3);
+    setLevel(1);
   };
 
   // Update game when difficulty changes
@@ -352,7 +389,7 @@ export function Pong({ onClose }: PongProps) {
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [gameStatus, paddle, blocks]);
+  }, [gameStatus, paddle, blocks, difficulty]);
 
   // Event listeners
   useEffect(() => {
@@ -364,6 +401,59 @@ export function Pong({ onClose }: PongProps) {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [handleKeyDown, handleKeyUp]);
+
+  // Difficulty selection menu
+  if (gameStatus === 'menu') {
+    return (
+      <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))] p-4">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-[rgb(var(--win-text))]">{t('pongTitle')}</h2>
+          <button
+            onClick={onClose}
+            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            data-testid="button-close-pong"
+          >
+            {t('close') || 'Close'}
+          </button>
+        </div>
+
+        {/* Difficulty Selection */}
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <h3 className="text-xl font-bold text-[rgb(var(--win-text))] mb-8">اختر المستوى</h3>
+          
+          <div className="flex flex-col gap-4 w-64">
+            <button
+              onClick={() => startGame('easy')}
+              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
+              data-testid="button-start-easy"
+            >
+              <div className="font-bold">سهل</div>
+              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة بطيئة • مربع واحد لكسر الطوب</div>
+            </button>
+            
+            <button
+              onClick={() => startGame('normal')}
+              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
+              data-testid="button-start-normal"
+            >
+              <div className="font-bold">عادي</div>
+              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة سريعة • مربع واحد لكسر الطوب</div>
+            </button>
+            
+            <button
+              onClick={() => startGame('hard')}
+              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
+              data-testid="button-start-hard"
+            >
+              <div className="font-bold">صعب</div>
+              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة سريعة جداً • ضربتان لكسر الطوب</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))] p-4">
@@ -426,8 +516,10 @@ export function Pong({ onClose }: PongProps) {
           <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="lives-count">{'❤️'.repeat(lives)}</div>
         </div>
         <div className="text-center p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
-          <div className="text-xs font-bold text-[rgb(var(--win-text))]">Level</div>
-          <div className="text-2xl font-bold text-[rgb(var(--win-text))]" data-testid="level-count">{level}</div>
+          <div className="text-xs font-bold text-[rgb(var(--win-text))]">المستوى</div>
+          <div className="text-lg font-bold text-[rgb(var(--win-text))]" data-testid="difficulty-display">
+            {difficulty === 'easy' ? 'سهل' : difficulty === 'normal' ? 'عادي' : 'صعب'}
+          </div>
         </div>
       </div>
 
@@ -456,7 +548,7 @@ export function Pong({ onClose }: PongProps) {
                   top: block.y,
                   width: block.width,
                   height: block.height,
-                  backgroundColor: block.color,
+                  backgroundColor: getBlockColor(block),
                   border: '1px solid rgba(255,255,255,0.3)',
                   boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.5), inset -1px -1px 2px rgba(0,0,0,0.3)'
                 }}
@@ -494,45 +586,6 @@ export function Pong({ onClose }: PongProps) {
       </div>
 
 
-      {/* Difficulty Selector */}
-      <div className="mt-4 flex justify-center items-center gap-4">
-        <span className="text-sm font-bold text-[rgb(var(--win-text))]">المستوى:</span>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setDifficulty('easy')}
-            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
-              difficulty === 'easy' 
-                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
-                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
-            }`}
-            data-testid="button-easy-difficulty"
-          >
-            سهل
-          </button>
-          <button
-            onClick={() => setDifficulty('normal')}
-            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
-              difficulty === 'normal' 
-                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
-                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
-            }`}
-            data-testid="button-normal-difficulty"
-          >
-            عادي
-          </button>
-          <button
-            onClick={() => setDifficulty('hard')}
-            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
-              difficulty === 'hard' 
-                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
-                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
-            }`}
-            data-testid="button-hard-difficulty"
-          >
-            صعب
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
