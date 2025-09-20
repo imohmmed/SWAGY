@@ -34,17 +34,24 @@ interface Block {
 
 // Game constants for Breakout experience
 const GAME_WIDTH = 400;
-const GAME_HEIGHT = 300;
+const GAME_HEIGHT = 380;
 const PADDLE_HEIGHT = 15;
 const PADDLE_WIDTH = 80;
 const BALL_SIZE = 8;
 const INITIAL_BALL_SPEED = 3;
-const BLOCK_WIDTH = 20;
-const BLOCK_HEIGHT = 20;
-const BLOCKS_PER_ROW = 20;
-const BLOCK_ROWS = 6;
-const BLOCK_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3'];
-const BLOCK_SPACING = 0;
+const BLOCK_WIDTH = 15;
+const BLOCK_HEIGHT = 15;
+const BLOCKS_PER_ROW = 25;
+const BLOCK_ROWS = 8;
+const BLOCK_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3', '#A8E6CF', '#FFB6C1'];
+const BLOCK_SPACING = 1;
+
+// Difficulty settings - moved outside component to prevent recreation
+const difficultySettings = {
+  easy: { speed: 2, lives: 5, ballSize: 10 },
+  normal: { speed: 3, lives: 3, ballSize: 8 },
+  hard: { speed: 4, lives: 2, ballSize: 6 }
+};
 
 export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
@@ -54,18 +61,26 @@ export function Pong({ onClose }: PongProps) {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
+  const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
   
-  // Initialize blocks
+  
+  // Initialize blocks with proper spacing and centered layout
   const initializeBlocks = (): Block[] => {
     const blocks: Block[] = [];
-    const startY = 0; // Start from top with no spacing
-    const startX = 0; // Start from left edge
+    // Calculate considering border width (1px each side = 2px total per block)
+    const effectiveBlockWidth = BLOCK_WIDTH; // No border padding needed
+    const totalBlocksWidth = BLOCKS_PER_ROW * effectiveBlockWidth + (BLOCKS_PER_ROW - 1) * BLOCK_SPACING;
+    const availableWidth = GAME_WIDTH - 20; // Leave 10px margin on each side
+    const actualBlocksPerRow = Math.floor(availableWidth / (effectiveBlockWidth + BLOCK_SPACING));
+    const actualTotalWidth = actualBlocksPerRow * effectiveBlockWidth + (actualBlocksPerRow - 1) * BLOCK_SPACING;
+    const startX = (GAME_WIDTH - actualTotalWidth) / 2; // Center horizontally
+    const startY = 20; // Small margin from top
     
     for (let row = 0; row < BLOCK_ROWS; row++) {
-      for (let col = 0; col < BLOCKS_PER_ROW; col++) {
+      for (let col = 0; col < actualBlocksPerRow; col++) {
         blocks.push({
-          x: startX + col * BLOCK_WIDTH,
-          y: startY + row * BLOCK_HEIGHT,
+          x: startX + col * (effectiveBlockWidth + BLOCK_SPACING),
+          y: startY + row * (BLOCK_HEIGHT + BLOCK_SPACING),
           width: BLOCK_WIDTH,
           height: BLOCK_HEIGHT,
           color: BLOCK_COLORS[row % BLOCK_COLORS.length],
@@ -85,11 +100,11 @@ export function Pong({ onClose }: PongProps) {
     width: PADDLE_WIDTH,
   });
   
-  const [ball, setBall] = useState<Ball>({
-    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 50 },
-    velocity: { x: INITIAL_BALL_SPEED, y: -INITIAL_BALL_SPEED },
-    size: BALL_SIZE,
-  });
+  const [ball, setBall] = useState<Ball>(() => ({
+    position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 80 },
+    velocity: { x: difficultySettings.normal.speed, y: -difficultySettings.normal.speed },
+    size: difficultySettings.normal.ballSize,
+  }));
 
   const gameLoopRef = useRef<number>();
   const isDraggingRef = useRef<boolean>(false);
@@ -97,13 +112,14 @@ export function Pong({ onClose }: PongProps) {
 
   // Helper functions
   const resetBall = (): Ball => {
+    const settings = difficultySettings[difficulty];
     return {
-      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 50 },
+      position: { x: GAME_WIDTH / 2, y: GAME_HEIGHT - 80 },
       velocity: { 
-        x: (Math.random() > 0.5 ? 1 : -1) * INITIAL_BALL_SPEED,
-        y: -INITIAL_BALL_SPEED 
+        x: (Math.random() > 0.5 ? 1 : -1) * settings.speed,
+        y: -settings.speed 
       },
-      size: BALL_SIZE,
+      size: settings.ballSize,
     };
   };
 
@@ -155,7 +171,7 @@ export function Pong({ onClose }: PongProps) {
       // Add spin based on where ball hits paddle
       const hitPosition = (newBall.position.x - paddle.x) / paddle.width;
       const spinFactor = (hitPosition - 0.5) * 2; // -1 to 1
-      newBall.velocity.x = spinFactor * INITIAL_BALL_SPEED;
+      newBall.velocity.x = spinFactor * difficultySettings[difficulty].speed;
       
       const paddleTop = GAME_HEIGHT - paddle.height - 10;
       newBall.position.y = paddleTop - newBall.size;
@@ -256,9 +272,10 @@ export function Pong({ onClose }: PongProps) {
   };
 
   const resetGame = (): void => {
+    const settings = difficultySettings[difficulty];
     setGameStatus('playing');
     setScore(0);
-    setLives(3);
+    setLives(settings.lives);
     setLevel(1);
     setBlocks(initializeBlocks());
     setPaddle({
@@ -268,6 +285,22 @@ export function Pong({ onClose }: PongProps) {
     });
     setBall(resetBall());
   };
+
+  // Update game when difficulty changes
+  useEffect(() => {
+    if (gameStatus !== 'playing') {
+      const settings = difficultySettings[difficulty];
+      setLives(settings.lives);
+      setBall(prevBall => ({
+        ...prevBall,
+        size: settings.ballSize,
+        velocity: {
+          x: prevBall.velocity.x > 0 ? settings.speed : -settings.speed,
+          y: prevBall.velocity.y > 0 ? settings.speed : -settings.speed
+        }
+      }));
+    }
+  }, [difficulty, gameStatus]);
 
   // Keyboard controls
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -417,15 +450,15 @@ export function Pong({ onClose }: PongProps) {
             block.visible && (
               <div
                 key={index}
-                className="absolute border border-gray-800 rounded-sm"
+                className="absolute rounded-sm"
                 style={{
                   left: block.x,
                   top: block.y,
                   width: block.width,
                   height: block.height,
                   backgroundColor: block.color,
-                  boxShadow: '0 0 4px rgba(0,0,0,0.7)',
-                  border: '1px solid rgba(255,255,255,0.2)'
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.5), inset -1px -1px 2px rgba(0,0,0,0.3)'
                 }}
                 data-testid={`block-${index}`}
               />
@@ -461,34 +494,44 @@ export function Pong({ onClose }: PongProps) {
       </div>
 
 
-      {/* Mobile Controls - Arrow keys for mobile */}
-      <div className="mt-4 flex justify-center gap-4 md:hidden">
-        <button
-          onTouchStart={() => setPaddle(prev => ({ ...prev, x: Math.max(0, prev.x - 30) }))}
-          onMouseDown={() => setPaddle(prev => ({ ...prev, x: Math.max(0, prev.x - 30) }))}
-          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
-          data-testid="button-paddle-left-breakout"
-          disabled={gameStatus !== 'playing'}
-        >
-          ←
-        </button>
-        <button
-          onTouchStart={() => setPaddle(prev => ({ ...prev, x: Math.min(GAME_WIDTH - prev.width, prev.x + 30) }))}
-          onMouseDown={() => setPaddle(prev => ({ ...prev, x: Math.min(GAME_WIDTH - prev.width, prev.x + 30) }))}
-          className="px-6 py-4 text-lg border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))] min-w-[80px] select-none"
-          data-testid="button-paddle-right-breakout"
-          disabled={gameStatus !== 'playing'}
-        >
-          →
-        </button>
-        <button
-          onClick={togglePause}
-          className="px-4 py-4 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:border-[rgb(var(--win-border-light))]"
-          data-testid="button-pause-mobile-breakout"
-          disabled={gameStatus === 'gameOver' || gameStatus === 'won'}
-        >
-          {gameStatus === 'paused' ? 'Resume' : 'Pause'}
-        </button>
+      {/* Difficulty Selector */}
+      <div className="mt-4 flex justify-center items-center gap-4">
+        <span className="text-sm font-bold text-[rgb(var(--win-text))]">المستوى:</span>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setDifficulty('easy')}
+            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
+              difficulty === 'easy' 
+                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
+                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
+            }`}
+            data-testid="button-easy-difficulty"
+          >
+            سهل
+          </button>
+          <button
+            onClick={() => setDifficulty('normal')}
+            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
+              difficulty === 'normal' 
+                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
+                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
+            }`}
+            data-testid="button-normal-difficulty"
+          >
+            عادي
+          </button>
+          <button
+            onClick={() => setDifficulty('hard')}
+            className={`px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] ${
+              difficulty === 'hard' 
+                ? 'bg-[rgb(var(--win-border-light))] text-[rgb(var(--win-text))]' 
+                : 'bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]'
+            }`}
+            data-testid="button-hard-difficulty"
+          >
+            صعب
+          </button>
+        </div>
       </div>
     </div>
   );
