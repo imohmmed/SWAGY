@@ -147,6 +147,15 @@ const getProjects = (t: (key: string) => string) => [
   },
   {
     id: '11',
+    title: 'CARAVAN',
+    description: 'Innovation? Check. Quality? Double check. Caravan-iq delivers smart IT solutions tailored for businesses in Iraq and beyond — from websites to digital platforms that scale with you.',
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Web Development', 'IT Solutions', 'Digital Transformation'],
+    image: caravanLogo,
+    link: 'https://caravan-iq.com'
+  },
+  {
+    id: '12',
     title: 'Printday7',
     description: t('printday7FullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -155,7 +164,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://printday7.com/'
   },
   {
-    id: '12',
+    id: '13',
     title: 'Pixel Suite',
     description: t('pixelSuiteFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -164,7 +173,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://pixelsuite.vip/'
   },
   {
-    id: '13',
+    id: '14',
     title: 'Crystal for Gift',
     description: t('crystal4giftFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -173,7 +182,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://crystal4gifts.com/'
   },
   {
-    id: '14',
+    id: '15',
     title: 'Altaraf.net',
     description: t('altarafNetFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -182,7 +191,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://altaraf.net'
   },
   {
-    id: '15',
+    id: '16',
     title: 'Altaraf Links',
     description: t('altarafLinksFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -191,22 +200,13 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://altaraf.link'
   },
   {
-    id: '16',
+    id: '17',
     title: 'Filmora TV',
     description: t('filmoraTvFullDesc'),
     category: 'other-websites' as ProjectCategory,
     technologies: ['Streaming', 'Video Platform', 'Entertainment'],
     image: filmoraTvImage,
     link: 'https://filmora.tv'
-  },
-  {
-    id: '17',
-    title: 'CARAVAN',
-    description: 'Innovation? Check. Quality? Double check. Caravan-iq delivers smart IT solutions tailored for businesses in Iraq and beyond — from websites to digital platforms that scale with you.',
-    category: 'other-websites' as ProjectCategory,
-    technologies: ['Web Development', 'IT Solutions', 'Digital Transformation'],
-    image: caravanLogo,
-    link: 'https://caravan-iq.com'
   },
 
   // Telegram Bots section
