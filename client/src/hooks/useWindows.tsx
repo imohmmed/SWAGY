@@ -10,7 +10,8 @@ const defaultWindowPositions = {
   contact: { x: 300, y: 300 },
   terminal: { x: 350, y: 350 },
   recycle: { x: 400, y: 400 },
-  mycomputer: { x: 25, y: 25 }
+  mycomputer: { x: 25, y: 25 },
+  games: { x: 150, y: 75 }
 };
 
 export function useWindows() {

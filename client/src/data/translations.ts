@@ -21,6 +21,7 @@ export const translations: Record<string, Translation> = {
     contactIcon: 'Contact Me',
     terminalIcon: 'Terminal',
     recycleIcon: 'Recycle Bin',
+    gamesIcon: 'Games',
     
     // Window Titles
     mycomputerTitle: 'My Computer',
@@ -32,6 +33,7 @@ export const translations: Record<string, Translation> = {
     contactTitle: 'Send Email',
     terminalTitle: 'MS-DOS Prompt',
     recycleTitle: 'Recycle Bin',
+    gamesTitle: 'Games - Windows Explorer',
     
     // Common
     name: 'Name',
@@ -73,6 +75,24 @@ export const translations: Record<string, Translation> = {
     jobOpportunity: 'Job Opportunity',
     technicalSupport: 'Technical Support',
     other: 'Other',
+    
+    // Games
+    gamesAvailable: 'games available',
+    selectedGame: 'Selected',
+    selectGameToPlay: 'Select a game to play',
+    ready: 'Ready',
+    
+    // Game titles and descriptions
+    minesweeperTitle: 'Minesweeper',
+    minesweeperDescription: 'Find all the hidden mines without clicking on them. Numbers indicate nearby mines.',
+    solitaireTitle: 'Solitaire',
+    solitaireDescription: 'Classic card game. Arrange all cards by suit from A to K.',
+    snakeTitle: 'Snake',
+    snakeDescription: 'Control the snake to eat food and grow longer. Don\'t hit the walls or yourself!',
+    tetrisTitle: 'Tetris',
+    tetrisDescription: 'Arrange falling blocks to complete lines and score points.',
+    pongTitle: 'Pong',
+    pongDescription: 'Classic arcade game. Hit the ball with your paddle and score points.',
     
     // Downloads
     availableDownloads: 'Available Downloads',
@@ -257,6 +277,7 @@ export const translations: Record<string, Translation> = {
     contactIcon: 'تواصل معي',
     terminalIcon: 'الطرفية',
     recycleIcon: 'سلة المهملات',
+    gamesIcon: 'الألعاب',
     
     // Window Titles
     mycomputerTitle: 'جهاز الكمبيوتر',
@@ -268,6 +289,7 @@ export const translations: Record<string, Translation> = {
     contactTitle: 'إرسال إيميل',
     terminalTitle: 'موجه الأوامر',
     recycleTitle: 'سلة المهملات',
+    gamesTitle: 'الألعاب - مستكشف ويندوز',
     
     // Common
     name: 'الاسم',
@@ -309,6 +331,24 @@ export const translations: Record<string, Translation> = {
     jobOpportunity: 'فرصة عمل',
     technicalSupport: 'دعم تقني',
     other: 'أخرى',
+    
+    // Games
+    gamesAvailable: 'ألعاب متاحة',
+    selectedGame: 'المحدد',
+    selectGameToPlay: 'اختر لعبة للبدء',
+    ready: 'جاهز',
+    
+    // Game titles and descriptions  
+    minesweeperTitle: 'كاشف الألغام',
+    minesweeperDescription: 'ابحث عن جميع الألغام المخفية بدون النقر عليها. الأرقام تشير إلى الألغام المجاورة.',
+    solitaireTitle: 'سوليتير',
+    solitaireDescription: 'لعبة ورق كلاسيكية. رتب جميع الأوراق حسب النوع من A إلى K.',
+    snakeTitle: 'الثعبان',
+    snakeDescription: 'تحكم بالثعبان لأكل الطعام والنمو. لا تصطدم بالجدران أو بنفسك!',
+    tetrisTitle: 'تتريس',
+    tetrisDescription: 'رتب القطع المتساقطة لإكمال الصفوف واكسب النقاط.',
+    pongTitle: 'بونغ',
+    pongDescription: 'لعبة أركيد كلاسيكية. اضرب الكرة بالمضرب واكسب النقاط.',
     
     // Downloads
     availableDownloads: 'التحميلات المتاحة',
