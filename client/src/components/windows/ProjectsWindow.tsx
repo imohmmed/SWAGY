@@ -20,6 +20,7 @@ import addToCloseFriendsBotImage from '@assets/add-to-close-friends-bot-logo.jpe
 import hrSystemBotImage from '@assets/hr-system-bot-logo.jpeg';
 import downloaderBotImage from '@assets/downloader-bot-logo.jpeg';
 import instagramIcon from '@assets/IMG_7835_1751388021998.png';
+import caravanLogo from '@assets/361705CB-5233-4596-9A94-1D56EECA60D3_1758341736462.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -123,10 +124,20 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0',
     instagramLink: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },
+  {
+    id: '9',
+    title: 'CARAVAN',
+    description: t('caravanDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: caravanLogo,
+    link: 'https://caravan-iq.com',
+    instagramLink: ''
+  },
   
   // Other Websites section - Full projects with descriptions
   {
-    id: '9',
+    id: '10',
     title: 'Mora Modaa',
     description: t('moraModaaFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -135,7 +146,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://mora1.com/'
   },
   {
-    id: '10',
+    id: '11',
     title: 'Printday7',
     description: t('printday7FullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -144,7 +155,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://printday7.com/'
   },
   {
-    id: '11',
+    id: '12',
     title: 'Pixel Suite',
     description: t('pixelSuiteFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -153,7 +164,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://pixelsuite.vip/'
   },
   {
-    id: '12',
+    id: '13',
     title: 'Crystal for Gift',
     description: t('crystal4giftFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -162,7 +173,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://crystal4gifts.com/'
   },
   {
-    id: '13',
+    id: '14',
     title: 'Altaraf.net',
     description: t('altarafNetFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -171,7 +182,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://altaraf.net'
   },
   {
-    id: '14',
+    id: '15',
     title: 'Altaraf Links',
     description: t('altarafLinksFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -180,7 +191,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://altaraf.link'
   },
   {
-    id: '15',
+    id: '16',
     title: 'Filmora TV',
     description: t('filmoraTvFullDesc'),
     category: 'other-websites' as ProjectCategory,
@@ -188,10 +199,19 @@ const getProjects = (t: (key: string) => string) => [
     image: filmoraTvImage,
     link: 'https://filmora.tv'
   },
+  {
+    id: '17',
+    title: 'CARAVAN',
+    description: 'Innovation? Check. Quality? Double check. Caravan-iq delivers smart IT solutions tailored for businesses in Iraq and beyond — from websites to digital platforms that scale with you.',
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Web Development', 'IT Solutions', 'Digital Transformation'],
+    image: caravanLogo,
+    link: 'https://caravan-iq.com'
+  },
 
   // Telegram Bots section
   {
-    id: '16',
+    id: '18',
     title: 'Quran Bot',
     description: t('quranBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -201,7 +221,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/QEGbot'
   },
   {
-    id: '17',
+    id: '19',
     title: 'Bots Maker Bot',
     description: t('botsMakerBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -211,7 +231,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/slsbot'
   },
   {
-    id: '18',
+    id: '20',
     title: 'Service Bot',
     description: t('serviceBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -220,7 +240,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/wowbot'
   },
   {
-    id: '19',
+    id: '21',
     title: 'Customer Service Bot',
     description: t('customerServiceBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -230,7 +250,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/Mora0Bot'
   },
   {
-    id: '20',
+    id: '22',
     title: 'Add to Close Friends Bot',
     description: t('addToCloseFriendsBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -240,7 +260,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/mohmmed'
   },
   {
-    id: '21',
+    id: '23',
     title: 'HR System Bot',
     description: t('hrSystemBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
@@ -250,7 +270,7 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://t.me/mohmmed'
   },
   {
-    id: '22',
+    id: '24',
     title: 'Downloader Bot',
     description: t('downloaderBotDesc'),
     category: 'telegram-bots' as ProjectCategory,
