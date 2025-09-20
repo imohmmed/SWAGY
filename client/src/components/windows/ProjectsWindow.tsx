@@ -66,16 +66,6 @@ const getProjects = (t: (key: string) => string) => [
   },
   {
     id: '3',
-    title: 'Pixel Suite',
-    description: t('pixelSuiteDesc'),
-    category: 'worked-with' as ProjectCategory,
-    technologies: [],
-    image: pixelSuiteImage,
-    link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw==',
-    instagramLink: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
-  },
-  {
-    id: '4',
     title: 'printday7',
     description: t('printday7Desc'),
     category: 'worked-with' as ProjectCategory,
@@ -83,6 +73,16 @@ const getProjects = (t: (key: string) => string) => [
     image: candyshopaliImage,
     link: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw==',
     instagramLink: 'https://www.instagram.com/printday7?igsh=MWgzamFyZ2x1MnptMw=='
+  },
+  {
+    id: '4',
+    title: 'candyshopali',
+    description: t('candyshopaliDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: alaliPlusImage,
+    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw==',
+    instagramLink: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
   },
   {
     id: '5',
@@ -106,16 +106,6 @@ const getProjects = (t: (key: string) => string) => [
   },
   {
     id: '7',
-    title: 'candyshopali',
-    description: t('candyshopaliDesc'),
-    category: 'worked-with' as ProjectCategory,
-    technologies: [],
-    image: alaliPlusImage,
-    link: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw==',
-    instagramLink: 'https://www.instagram.com/candyshopali?igsh=MTExY3RzMDdvMG51aw=='
-  },
-  {
-    id: '8',
     title: 'Al Taraf',
     description: t('altarafDesc'),
     category: 'worked-with' as ProjectCategory,
@@ -125,7 +115,7 @@ const getProjects = (t: (key: string) => string) => [
     instagramLink: 'https://www.instagram.com/altaraf_company?igsh=dG85aGw0cGxmZmJ0'
   },
   {
-    id: '9',
+    id: '8',
     title: 'CARAVAN',
     description: t('caravanDesc'),
     category: 'worked-with' as ProjectCategory,
@@ -133,6 +123,16 @@ const getProjects = (t: (key: string) => string) => [
     image: caravanLogo,
     link: 'https://www.instagram.com/caravan.iq',
     instagramLink: 'https://www.instagram.com/caravan.iq'
+  },
+  {
+    id: '9',
+    title: 'Pixel Suite',
+    description: t('pixelSuiteDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: pixelSuiteImage,
+    link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw==',
+    instagramLink: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
   },
   
   // Other Websites section - Full projects with descriptions
