@@ -75,11 +75,12 @@ export function Pong({ onClose }: PongProps) {
   const { t } = useLanguage();
   
   // Game state
-  const [gameStatus, setGameStatus] = useState<'menu' | 'playing' | 'paused' | 'gameOver' | 'won'>('menu');
+  const [gameStatus, setGameStatus] = useState<'playing' | 'paused' | 'gameOver' | 'won'>('playing');
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
   const [difficulty, setDifficulty] = useState<'easy' | 'normal' | 'hard'>('normal');
+  const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
   
   
   // Initialize blocks with proper spacing and centered layout
@@ -317,27 +318,20 @@ export function Pong({ onClose }: PongProps) {
   };
   
   const resetGame = (): void => {
-    setGameStatus('menu');
-    setScore(0);
-    setLives(3);
-    setLevel(1);
+    startGame(difficulty); // Restart with current difficulty
   };
 
-  // Update game when difficulty changes
-  useEffect(() => {
-    if (gameStatus !== 'playing') {
-      const settings = difficultySettings[difficulty];
-      setLives(settings.lives);
-      setBall(prevBall => ({
-        ...prevBall,
-        size: settings.ballSize,
-        velocity: {
-          x: prevBall.velocity.x > 0 ? settings.speed : -settings.speed,
-          y: prevBall.velocity.y > 0 ? settings.speed : -settings.speed
-        }
-      }));
+  // Handle difficulty changes during gameplay
+  const changeDifficulty = (newDifficulty: 'easy' | 'normal' | 'hard'): void => {
+    const wasPaused = gameStatus === 'paused';
+    setDifficulty(newDifficulty);
+    // Reset the game with new difficulty
+    startGame(newDifficulty);
+    // Keep game paused if it was paused before
+    if (wasPaused) {
+      setGameStatus('paused');
     }
-  }, [difficulty, gameStatus]);
+  };
 
   // Keyboard controls
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -396,64 +390,26 @@ export function Pong({ onClose }: PongProps) {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     
+    // Close dropdown when clicking outside
+    const handleClickOutside = (e: Event) => {
+      if (showOptionsDropdown && !(e.target as Element)?.closest('.options-dropdown-container')) {
+        setShowOptionsDropdown(false);
+      }
+    };
+    window.addEventListener('click', handleClickOutside);
+    
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('click', handleClickOutside);
     };
-  }, [handleKeyDown, handleKeyUp]);
+  }, [handleKeyDown, handleKeyUp, showOptionsDropdown]);
 
-  // Difficulty selection menu
-  if (gameStatus === 'menu') {
-    return (
-      <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))] p-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-[rgb(var(--win-text))]">{t('pongTitle')}</h2>
-          <button
-            onClick={onClose}
-            className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-            data-testid="button-close-pong"
-          >
-            {t('close') || 'Close'}
-          </button>
-        </div>
-
-        {/* Difficulty Selection */}
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <h3 className="text-xl font-bold text-[rgb(var(--win-text))] mb-8">اختر المستوى</h3>
-          
-          <div className="flex flex-col gap-4 w-64">
-            <button
-              onClick={() => startGame('easy')}
-              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
-              data-testid="button-start-easy"
-            >
-              <div className="font-bold">سهل</div>
-              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة بطيئة • مربع واحد لكسر الطوب</div>
-            </button>
-            
-            <button
-              onClick={() => startGame('normal')}
-              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
-              data-testid="button-start-normal"
-            >
-              <div className="font-bold">عادي</div>
-              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة سريعة • مربع واحد لكسر الطوب</div>
-            </button>
-            
-            <button
-              onClick={() => startGame('hard')}
-              className="px-6 py-4 text-lg border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] hover:border-[rgb(var(--win-border-light))] transition-colors"
-              data-testid="button-start-hard"
-            >
-              <div className="font-bold">صعب</div>
-              <div className="text-sm text-[rgb(var(--win-text))] opacity-75">كرة سريعة جداً • ضربتان لكسر الطوب</div>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Initialize game when component mounts
+  useEffect(() => {
+    // Start with easy difficulty by default
+    startGame('easy');
+  }, []);
 
   return (
     <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))] p-4">
@@ -469,6 +425,61 @@ export function Pong({ onClose }: PongProps) {
           >
             {gameStatus === 'paused' ? (t('resume') || 'Resume') : (t('pause') || 'Pause')}
           </button>
+          
+          {/* Options Dropdown */}
+          <div className="relative options-dropdown-container">
+            <button
+              onClick={() => setShowOptionsDropdown(!showOptionsDropdown)}
+              className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+              data-testid="button-options-dropdown"
+            >
+              {t('options')} ▼
+            </button>
+            
+            {showOptionsDropdown && (
+              <div className="absolute top-full left-0 mt-1 bg-[rgb(var(--win-button-face))] border border-[rgb(var(--win-border-dark))] shadow-lg z-10 min-w-[120px]">
+                <div className="px-2 py-1 text-xs font-bold text-[rgb(var(--win-text))] bg-[rgb(var(--win-button-light))] border-b border-[rgb(var(--win-border-dark))]">
+                  {t('difficulty')}
+                </div>
+                <button
+                  onClick={() => {
+                    changeDifficulty('easy');
+                    setShowOptionsDropdown(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
+                    difficulty === 'easy' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
+                  }`}
+                  data-testid="option-easy"
+                >
+                  Easy / سهل
+                </button>
+                <button
+                  onClick={() => {
+                    changeDifficulty('normal');
+                    setShowOptionsDropdown(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
+                    difficulty === 'normal' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
+                  }`}
+                  data-testid="option-normal"
+                >
+                  Normal / عادي
+                </button>
+                <button
+                  onClick={() => {
+                    changeDifficulty('hard');
+                    setShowOptionsDropdown(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-sm hover:bg-[rgb(var(--win-button-light))] ${
+                    difficulty === 'hard' ? 'bg-[rgb(var(--win-border-light))] font-bold' : ''
+                  }`}
+                  data-testid="option-hard"
+                >
+                  Hard / صعب
+                </button>
+              </div>
+            )}
+          </div>
           <button
             onClick={resetGame}
             className="px-3 py-1 text-sm border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
