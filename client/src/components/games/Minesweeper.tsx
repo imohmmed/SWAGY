@@ -14,23 +14,38 @@ interface MinesweeperProps {
   onClose?: () => void;
 }
 
-const GRID_SIZE = 16;
-const MINE_COUNT = 40;
+// Difficulty levels
+const DIFFICULTIES = {
+  beginner: { size: 9, mines: 10 },
+  intermediate: { size: 16, mines: 40 },
+  expert: { size: 20, mines: 99 }
+};
+
+type Difficulty = keyof typeof DIFFICULTIES;
 
 export function Minesweeper({ onClose }: MinesweeperProps) {
   const { t } = useLanguage();
+  const [difficulty, setDifficulty] = useState<Difficulty>('beginner');
   const [grid, setGrid] = useState<Cell[][]>([]);
   const [gameStatus, setGameStatus] = useState<GameStatus>('playing');
-  const [flagCount, setFlagCount] = useState(MINE_COUNT);
+  const [flagCount, setFlagCount] = useState(DIFFICULTIES.beginner.mines);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
   const [firstClick, setFirstClick] = useState(true);
+  const [mobileMode, setMobileMode] = useState<'reveal' | 'flag'>('reveal');
   const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const suppressNextClickRef = useRef(false);
+  const suppressNextContextMenuRef = useRef(false);
+  
+  const currentDifficulty = DIFFICULTIES[difficulty];
 
   // Place mines avoiding a specific cell (for first-click safety)
   const placeMines = useCallback((avoidRow?: number, avoidCol?: number) => {
-    const newGrid: Cell[][] = Array(GRID_SIZE).fill(null).map(() =>
-      Array(GRID_SIZE).fill(null).map(() => ({
+    const gridSize = currentDifficulty.size;
+    const mineCount = currentDifficulty.mines;
+    
+    const newGrid: Cell[][] = Array(gridSize).fill(null).map(() =>
+      Array(gridSize).fill(null).map(() => ({
         isMine: false,
         neighborMines: 0,
         state: 'hidden' as CellState
@@ -39,9 +54,9 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
     // Place mines randomly, avoiding the first clicked cell
     let minesPlaced = 0;
-    while (minesPlaced < MINE_COUNT) {
-      const row = Math.floor(Math.random() * GRID_SIZE);
-      const col = Math.floor(Math.random() * GRID_SIZE);
+    while (minesPlaced < mineCount) {
+      const row = Math.floor(Math.random() * gridSize);
+      const col = Math.floor(Math.random() * gridSize);
       
       if (!newGrid[row][col].isMine && 
           !(avoidRow !== undefined && avoidCol !== undefined && row === avoidRow && col === avoidCol)) {
@@ -51,8 +66,8 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     }
 
     // Calculate neighbor mine counts
-    for (let row = 0; row < GRID_SIZE; row++) {
-      for (let col = 0; col < GRID_SIZE; col++) {
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
         if (!newGrid[row][col].isMine) {
           let count = 0;
           for (let dr = -1; dr <= 1; dr++) {
@@ -60,8 +75,8 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
               const newRow = row + dr;
               const newCol = col + dc;
               if (
-                newRow >= 0 && newRow < GRID_SIZE &&
-                newCol >= 0 && newCol < GRID_SIZE &&
+                newRow >= 0 && newRow < gridSize &&
+                newCol >= 0 && newCol < gridSize &&
                 newGrid[newRow][newCol].isMine
               ) {
                 count++;
@@ -74,18 +89,23 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     }
 
     return newGrid;
-  }, []);
+  }, [currentDifficulty]);
 
   // Initialize game
   const initializeGame = useCallback(() => {
     const newGrid = placeMines();
     setGrid(newGrid);
     setGameStatus('playing');
-    setFlagCount(MINE_COUNT);
+    setFlagCount(currentDifficulty.mines);
     setTimeElapsed(0);
     setGameStarted(false);
     setFirstClick(true);
-  }, [placeMines]);
+  }, [placeMines, currentDifficulty]);
+  
+  // Reinitialize when difficulty changes
+  useEffect(() => {
+    initializeGame();
+  }, [difficulty, initializeGame]);
 
   // Timer effect
   useEffect(() => {
@@ -98,10 +118,7 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     return () => clearInterval(interval);
   }, [gameStarted, gameStatus]);
 
-  // Initialize on mount
-  useEffect(() => {
-    initializeGame();
-  }, [initializeGame]);
+  // Note: initializeGame is already called by the difficulty useEffect above
 
   // Reveal cell and adjacent empty cells
   const revealCell = useCallback((row: number, col: number) => {
@@ -114,13 +131,51 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
     // If this is the first click, place mines avoiding this cell
     if (firstClick) {
       const newGrid = placeMines(row, col);
-      setGrid(newGrid);
       setFirstClick(false);
       
-      // Now reveal the cell safely
-      setTimeout(() => {
-        revealCell(row, col);
-      }, 0);
+      // Reveal the safe cell immediately on the new grid
+      const workingGrid = newGrid.map(row => row.map(cell => ({ ...cell })));
+      const targetCell = workingGrid[row][col];
+      
+      if (targetCell.state === 'hidden') {
+        targetCell.state = 'revealed';
+        
+        // If it's empty, flood-fill reveal
+        if (targetCell.neighborMines === 0) {
+          const queue: [number, number][] = [[row, col]];
+          const visited = new Set<string>();
+
+          while (queue.length > 0) {
+            const [currentRow, currentCol] = queue.shift()!;
+            const key = `${currentRow}-${currentCol}`;
+
+            if (visited.has(key)) continue;
+            visited.add(key);
+
+            for (let dr = -1; dr <= 1; dr++) {
+              for (let dc = -1; dc <= 1; dc++) {
+                const newRow = currentRow + dr;
+                const newCol = currentCol + dc;
+
+                if (
+                  newRow >= 0 && newRow < workingGrid.length &&
+                  newCol >= 0 && newCol < workingGrid[0].length &&
+                  workingGrid[newRow][newCol].state === 'hidden' &&
+                  !workingGrid[newRow][newCol].isMine
+                ) {
+                  workingGrid[newRow][newCol].state = 'revealed';
+                  
+                  if (workingGrid[newRow][newCol].neighborMines === 0) {
+                    queue.push([newRow, newCol]);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      setGrid(workingGrid);
       return;
     }
 
@@ -135,9 +190,9 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       // If it's a mine, game over
       if (cell.isMine) {
         setGameStatus('lost');
-        // Reveal all mines
-        for (let r = 0; r < GRID_SIZE; r++) {
-          for (let c = 0; c < GRID_SIZE; c++) {
+        // Reveal all mines using actual grid bounds
+        for (let r = 0; r < newGrid.length; r++) {
+          for (let c = 0; c < newGrid[0].length; c++) {
             if (newGrid[r][c].isMine) {
               newGrid[r][c].state = 'revealed';
             }
@@ -164,8 +219,8 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
               const newCol = currentCol + dc;
 
               if (
-                newRow >= 0 && newRow < GRID_SIZE &&
-                newCol >= 0 && newCol < GRID_SIZE &&
+                newRow >= 0 && newRow < newGrid.length &&
+                newCol >= 0 && newCol < newGrid[0].length &&
                 newGrid[newRow][newCol].state === 'hidden' &&
                 !newGrid[newRow][newCol].isMine
               ) {
@@ -182,11 +237,16 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
       return newGrid;
     });
-  }, [gameStatus, gameStarted]);
+  }, [gameStatus, gameStarted, firstClick, placeMines]);
 
   // Toggle flag on cell
   const toggleFlag = useCallback((row: number, col: number) => {
     if (gameStatus !== 'playing') return;
+    
+    // Prevent flagging before first reveal to avoid flag state inconsistency
+    if (firstClick) {
+      return; // Silently ignore flagging before first reveal
+    }
 
     setGrid(prevGrid => {
       const newGrid = prevGrid.map(row => row.map(cell => ({ ...cell })));
@@ -194,15 +254,15 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
       if (cell.state === 'hidden') {
         cell.state = 'flagged';
-        setFlagCount(prev => prev - 1);
+        setFlagCount(prev => Math.max(0, prev - 1)); // Prevent negative count
       } else if (cell.state === 'flagged') {
         cell.state = 'hidden';
-        setFlagCount(prev => prev + 1);
+        setFlagCount(prev => Math.min(currentDifficulty.mines, prev + 1)); // Cap at mine count
       }
 
       return newGrid;
     });
-  }, [gameStatus]);
+  }, [gameStatus, firstClick]);
 
   // Check win condition
   useEffect(() => {
@@ -210,8 +270,9 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       let hiddenNonMines = 0;
       let correctFlags = 0;
 
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
+      // Use actual grid bounds, not difficulty size
+      for (let row = 0; row < grid.length; row++) {
+        for (let col = 0; col < grid[0].length; col++) {
           const cell = grid[row][col];
           if (!cell.isMine && cell.state === 'hidden') {
             hiddenNonMines++;
@@ -230,12 +291,40 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
   // Handle cell click
   const handleCellClick = (row: number, col: number) => {
-    revealCell(row, col);
+    // Prevent click if long-press just fired
+    if (suppressNextClickRef.current) {
+      suppressNextClickRef.current = false;
+      return;
+    }
+    
+    if (mobileMode === 'reveal') {
+      revealCell(row, col);
+    } else {
+      toggleFlag(row, col);
+    }
+  };
+  
+  // Change difficulty
+  const changeDifficulty = (newDifficulty: Difficulty) => {
+    setDifficulty(newDifficulty);
+    // initializeGame will be called automatically via useEffect
+  };
+  
+  // Toggle mobile mode
+  const toggleMobileMode = () => {
+    setMobileMode(prev => prev === 'reveal' ? 'flag' : 'reveal');
   };
 
   // Handle cell right click / long press
   const handleCellRightClick = (e: React.MouseEvent, row: number, col: number) => {
     e.preventDefault();
+    
+    // Prevent double-flag if long-press just fired
+    if (suppressNextContextMenuRef.current) {
+      suppressNextContextMenuRef.current = false;
+      return;
+    }
+    
     toggleFlag(row, col);
   };
 
@@ -248,6 +337,8 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
   const handleTouchStart = (row: number, col: number) => {
     longPressTimerRef.current = setTimeout(() => {
       handleCellLongPress(row, col);
+      suppressNextClickRef.current = true; // Suppress the click that follows long-press
+      suppressNextContextMenuRef.current = true; // Suppress contextmenu that follows long-press
     }, 500);
   };
 
@@ -270,7 +361,9 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
   // Get cell CSS classes
   const getCellClasses = (cell: Cell) => {
-    const baseClasses = 'w-6 h-6 border border-[rgb(var(--win-border-dark))] flex items-center justify-center text-xs font-bold cursor-pointer select-none';
+    const cellSize = difficulty === 'beginner' ? 'w-8 h-8 text-sm' : 
+                    difficulty === 'intermediate' ? 'w-6 h-6 text-xs' : 'w-5 h-5 text-xs';
+    const baseClasses = `${cellSize} border border-[rgb(var(--win-border-dark))] flex items-center justify-center font-bold cursor-pointer select-none`;
     
     if (cell.state === 'hidden' || cell.state === 'flagged') {
       return `${baseClasses} bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))] active:bg-[rgb(var(--win-button-shadow))]`;
@@ -297,7 +390,34 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
 
   return (
     <div className="h-full flex flex-col bg-[rgb(var(--win-light-gray))] p-2">
-      {/* Header with game stats */}
+      {/* Header with difficulty selection */}
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-2 p-2 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold">{t('difficulty') || 'Difficulty'}:</span>
+          <select
+            value={difficulty}
+            onChange={(e) => changeDifficulty(e.target.value as Difficulty)}
+            className="px-1 py-0.5 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]"
+            data-testid="select-difficulty"
+          >
+            <option value="beginner">{t('beginner') || 'Beginner'} (9×9)</option>
+            <option value="intermediate">{t('intermediate') || 'Intermediate'} (16×16)</option>
+            <option value="expert">{t('expert') || 'Expert'} (20×20)</option>
+          </select>
+        </div>
+        
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
+            data-testid="button-close-minesweeper"
+          >
+            {t('close') || 'Close'}
+          </button>
+        )}
+      </div>
+      
+      {/* Game stats and mobile controls */}
       <div className="flex items-center justify-between mb-3 p-2 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))]">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1">
@@ -319,15 +439,21 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
           </div>
         </div>
         
-        {onClose && (
+        {/* Mobile toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <span className="text-xs">{t('mode') || 'Mode'}:</span>
           <button
-            onClick={onClose}
-            className="px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] hover:bg-[rgb(var(--win-button-light))]"
-            data-testid="button-close-minesweeper"
+            onClick={toggleMobileMode}
+            className={`px-2 py-1 text-xs border border-[rgb(var(--win-border-dark))] ${
+              mobileMode === 'reveal' 
+                ? 'bg-blue-200 text-blue-800'
+                : 'bg-red-200 text-red-800'
+            } hover:opacity-80`}
+            data-testid="button-toggle-mobile-mode"
           >
-            {t('close') || 'Close'}
+            {mobileMode === 'reveal' ? '👆 Reveal' : '🚩 Flag'}
           </button>
-        )}
+        </div>
       </div>
 
       {/* Game status */}
@@ -343,8 +469,14 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       )}
 
       {/* Game grid */}
-      <div className="flex-1 flex items-center justify-center">
-        <div className="grid grid-cols-16 gap-0 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-shadow))] p-1">
+      <div className="flex-1 flex items-center justify-center overflow-auto">
+        <div 
+          className={`grid gap-0 border-2 border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-shadow))] p-1 max-w-full`}
+          style={{ 
+            gridTemplateColumns: `repeat(${currentDifficulty.size}, max-content)`,
+            gridAutoRows: 'max-content'
+          }}
+        >
           {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
@@ -367,9 +499,15 @@ export function Minesweeper({ onClose }: MinesweeperProps) {
       {/* Instructions */}
       <div className="mt-3 p-2 border border-[rgb(var(--win-border-dark))] bg-[rgb(var(--win-button-face))] text-xs">
         <div className="font-bold mb-1">{t('minesweeperInstructions') || 'Instructions:'}</div>
-        <div>• {t('minesweeperLeftClick') || 'Left click: Reveal cell'}</div>
-        <div>• {t('minesweeperRightClick') || 'Right click: Flag/unflag'}</div>
-        <div>• {t('minesweeperLongPress') || 'Mobile: Long press to flag'}</div>
+        <div className="hidden md:block">
+          <div>• {t('minesweeperLeftClick') || 'Left click: Reveal cell'}</div>
+          <div>• {t('minesweeperRightClick') || 'Right click: Flag/unflag'}</div>
+        </div>
+        <div className="md:hidden">
+          <div>• {t('mobileToggleMode') || 'Toggle mode: Reveal/Flag'}</div>
+          <div>• {t('minesweeperLongPress') || 'Long press: Alternative flag'}</div>
+          <div>• {t('currentMode') || 'Current mode'}: <strong>{mobileMode === 'reveal' ? 'Reveal' : 'Flag'}</strong></div>
+        </div>
       </div>
     </div>
   );

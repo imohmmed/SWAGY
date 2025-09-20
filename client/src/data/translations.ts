@@ -102,6 +102,13 @@ export const translations: Record<string, Translation> = {
     minesweeperLeftClick: 'Left click: Reveal cell',
     minesweeperRightClick: 'Right click: Flag/unflag',
     minesweeperLongPress: 'Mobile: Long press to flag',
+    difficulty: 'Difficulty',
+    beginner: 'Beginner',
+    intermediate: 'Intermediate',
+    expert: 'Expert',
+    mode: 'Mode',
+    mobileToggleMode: 'Toggle mode: Reveal/Flag',
+    currentMode: 'Current mode',
     
     // Solitaire specific
     newGame: 'New Game',
@@ -410,6 +417,13 @@ export const translations: Record<string, Translation> = {
     minesweeperLeftClick: 'نقرة يسار: كشف الخلية',
     minesweeperRightClick: 'نقرة يمين: وضع/إزالة العلم',
     minesweeperLongPress: 'الجوال: اضغط مطولاً للعلم',
+    difficulty: 'الصعوبة',
+    beginner: 'مبتدئ',
+    intermediate: 'متوسط',
+    expert: 'خبير',
+    mode: 'الوضع',
+    mobileToggleMode: 'تبديل الوضع: كشف/علم',
+    currentMode: 'الوضع الحالي',
     
     // Solitaire specific
     newGame: 'لعبة جديدة',
