@@ -42,7 +42,7 @@ export function MeWindow() {
               <img src={telegramIcon} alt="Telegram" className="w-6 h-6" draggable={false} />
             </a>
             <a 
-              href="https://wa.me/+9647724166086" 
+              href="https://wa.me/+9647766699669" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:opacity-80 transition-opacity"

@@ -263,12 +263,12 @@ export function ContactWindow() {
           <div className="flex items-center gap-2">
             <img src={whatsappIcon} alt="WhatsApp" className="w-4 h-4" draggable={false} />
             <a 
-              href="https://wa.me/+9647724166086" 
+              href="https://wa.me/+9647766699669" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
             >
-              WhatsApp: +9647724166086
+              WhatsApp: +9647766699669
             </a>
           </div>
         </div>
