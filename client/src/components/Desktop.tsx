@@ -44,7 +44,7 @@ interface ContextMenu {
 interface CustomIcon {
   id: string;
   name: string;
-  type: 'folder' | 'shortcut' | 'textfile';
+  type: 'folder' | 'textfile';
   icon: string;
   position: { x: number; y: number };
 }
@@ -259,7 +259,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     return { x: 200, y: 20 + customIcons.length * 90 };
   };
 
-  const createNewItem = (type: 'folder' | 'shortcut' | 'textfile') => {
+  const createNewItem = (type: 'folder' | 'textfile') => {
     const position = findEmptyPosition();
     const id = `custom_${Date.now()}`;
     
@@ -270,10 +270,6 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       case 'folder':
         icon = 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png';
         name = t('newFolder');
-        break;
-      case 'shortcut':
-        icon = 'https://win98icons.alexmeub.com/icons/png/shortcut-0.png';
-        name = t('newShortcut');
         break;
       case 'textfile':
         icon = 'https://win98icons.alexmeub.com/icons/png/notepad-2.png';
@@ -297,6 +293,45 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const arrangeIcons = (method: 'name' | 'type' | 'auto') => {
     setContextMenu(null);
     setSubMenu(null);
+    
+    if (customIcons.length === 0) {
+      setRefreshKey(prev => prev + 1);
+      return;
+    }
+
+    let sortedIcons = [...customIcons];
+    
+    switch (method) {
+      case 'name':
+        sortedIcons.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'type':
+        sortedIcons.sort((a, b) => a.type.localeCompare(b.type));
+        break;
+      case 'auto':
+        break;
+    }
+
+    let xPos = 200;
+    let yPos = 20;
+    const xStep = 90;
+    const yStep = 90;
+    const maxY = 600;
+
+    const rearrangedIcons = sortedIcons.map((icon) => {
+      const newIcon = { ...icon, position: { x: xPos, y: yPos } };
+      
+      yPos += yStep;
+      if (yPos > maxY) {
+        yPos = 20;
+        xPos += xStep;
+      }
+      
+      return newIcon;
+    });
+
+    setCustomIcons(rearrangedIcons);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(rearrangedIcons));
     setRefreshKey(prev => prev + 1);
   };
 
@@ -506,12 +541,6 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
                       label={t('folder')}
                       onClick={() => createNewItem('folder')}
                     />
-                    <ContextMenuItem
-                      icon="https://win98icons.alexmeub.com/icons/png/shortcut-0.png"
-                      label={t('shortcut')}
-                      onClick={() => createNewItem('shortcut')}
-                    />
-                    <MenuDivider />
                     <ContextMenuItem
                       icon="https://win98icons.alexmeub.com/icons/png/notepad-2.png"
                       label={t('textDocument')}
