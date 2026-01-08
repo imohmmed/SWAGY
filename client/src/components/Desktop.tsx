@@ -49,6 +49,14 @@ interface CustomIcon {
   position: { x: number; y: number };
 }
 
+interface DragState {
+  iconId: string;
+  startX: number;
+  startY: number;
+  offsetX: number;
+  offsetY: number;
+}
+
 const STORAGE_KEY = 'desktop_custom_icons';
 
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
@@ -60,6 +68,8 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const [subMenu, setSubMenu] = useState<'arrange' | 'new' | null>(null);
   const [customIcons, setCustomIcons] = useState<CustomIcon[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [dragState, setDragState] = useState<DragState | null>(null);
+  const [dragPosition, setDragPosition] = useState<{ x: number; y: number } | null>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,6 +86,8 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   useEffect(() => {
     if (customIcons.length > 0) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(customIcons));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [customIcons]);
 
@@ -90,6 +102,31 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       return () => document.removeEventListener('click', handleClickOutside);
     }
   }, [contextMenu]);
+
+  const handleIconMouseDown = (iconId: string, e: React.MouseEvent) => {
+    if (e.button !== 0) return;
+    if (!iconId.startsWith('custom_')) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const icon = customIcons.find(i => i.id === iconId);
+    if (!icon) return;
+
+    const rect = desktopRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    setDragState({
+      iconId,
+      startX: icon.position.x,
+      startY: icon.position.y,
+      offsetX: e.clientX - rect.left - icon.position.x,
+      offsetY: e.clientY - rect.top - icon.position.y
+    });
+    setDragPosition({ x: icon.position.x, y: icon.position.y });
+    setSelectedIcons(new Set([iconId]));
+    setContextMenu(null);
+  };
 
   const handleIconClick = (iconId: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -164,10 +201,17 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isSelecting || !selectionBox) return;
-
     const rect = desktopRef.current?.getBoundingClientRect();
     if (!rect) return;
+
+    if (dragState) {
+      const newX = Math.max(0, Math.min(rect.width - 70, e.clientX - rect.left - dragState.offsetX));
+      const newY = Math.max(0, Math.min(rect.height - 80, e.clientY - rect.top - dragState.offsetY));
+      setDragPosition({ x: newX, y: newY });
+      return;
+    }
+
+    if (!isSelecting || !selectionBox) return;
 
     const currentX = e.clientX - rect.left;
     const currentY = e.clientY - rect.top;
@@ -214,12 +258,22 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     });
 
     setSelectedIcons(newSelected);
-  }, [isSelecting, selectionBox, customIcons]);
+  }, [isSelecting, selectionBox, customIcons, dragState]);
 
   const handleMouseUp = useCallback(() => {
+    if (dragState && dragPosition) {
+      setCustomIcons(prev => prev.map(icon => 
+        icon.id === dragState.iconId 
+          ? { ...icon, position: { x: dragPosition.x, y: dragPosition.y } }
+          : icon
+      ));
+    }
+    
+    setDragState(null);
+    setDragPosition(null);
     setIsSelecting(false);
     setSelectionBox(null);
-  }, []);
+  }, [dragState, dragPosition]);
 
   const getSelectionBoxStyle = () => {
     if (!selectionBox) return {};
@@ -343,8 +397,13 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   };
 
   const deleteCustomIcon = (iconId: string) => {
-    setCustomIcons(prev => prev.filter(i => i.id !== iconId));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customIcons.filter(i => i.id !== iconId)));
+    const updated = customIcons.filter(i => i.id !== iconId);
+    setCustomIcons(updated);
+    if (updated.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
     setContextMenu(null);
   };
 
@@ -409,12 +468,19 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     </div>
   );
 
+  const getIconPosition = (icon: CustomIcon) => {
+    if (dragState?.iconId === icon.id && dragPosition) {
+      return dragPosition;
+    }
+    return icon.position;
+  };
+
   return (
     <div 
       key={refreshKey}
       ref={desktopRef}
       className="h-full w-full relative overflow-hidden select-none" 
-      style={{ background: '#008080' }}
+      style={{ background: '#008080', cursor: dragState ? 'grabbing' : 'default' }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -589,29 +655,37 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
         ))}
 
         {/* Custom Icons */}
-        {customIcons.map((icon) => (
-          <div
-            key={icon.id}
-            className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''}`}
-            style={{
-              position: 'absolute',
-              left: `${icon.position.x}px`,
-              top: `${icon.position.y}px`
-            }}
-            onClick={(e) => handleIconClick(icon.id, e)}
-            onContextMenu={(e) => handleContextMenu(e, icon.id)}
-          >
-            <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
-              <img 
-                src={icon.icon} 
-                alt={icon.name} 
-                className="w-full h-full object-contain"
-                draggable={false}
-              />
+        {customIcons.map((icon) => {
+          const pos = getIconPosition(icon);
+          const isDragging = dragState?.iconId === icon.id;
+          
+          return (
+            <div
+              key={icon.id}
+              className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''} ${isDragging ? 'opacity-80' : ''}`}
+              style={{
+                position: 'absolute',
+                left: `${pos.x}px`,
+                top: `${pos.y}px`,
+                cursor: isDragging ? 'grabbing' : 'grab',
+                zIndex: isDragging ? 100 : 1,
+              }}
+              onMouseDown={(e) => handleIconMouseDown(icon.id, e)}
+              onClick={(e) => !isDragging && handleIconClick(icon.id, e)}
+              onContextMenu={(e) => handleContextMenu(e, icon.id)}
+            >
+              <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+                <img 
+                  src={icon.icon} 
+                  alt={icon.name} 
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+              <span className="text-xs text-center leading-tight">{icon.name}</span>
             </div>
-            <span className="text-xs text-center leading-tight">{icon.name}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
       
       {/* Recycle Bin - Top Right */}
