@@ -23,6 +23,7 @@ import instagramIcon from '@assets/IMG_7835_1751388021998.png';
 import caravanLogo from '@assets/361705CB-5233-4596-9A94-1D56EECA60D3_1758341736462.jpeg';
 import swanDecorationsImage from '@assets/EE78D3F9-BCEA-4AA2-B2B8-DFB6255DA812_1767893193012.jpeg';
 import alaliSportImage from '@assets/80482EDD-4699-46A1-B039-829F93B84DEB_1767893504417.jpeg';
+import snkoreStoreImage from '@assets/IMG_2407_1767898587497.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -156,6 +157,16 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://www.instagram.com/alalisports?igsh=Y2J2ZmdjcjFjb3l6',
     instagramLink: 'https://www.instagram.com/alalisports?igsh=Y2J2ZmdjcjFjb3l6'
   },
+  {
+    id: '26',
+    title: 'Snkore Store',
+    description: t('snkoreStoreDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: snkoreStoreImage,
+    link: 'https://www.instagram.com/snkore_store?igsh=MXY4dmVteW54YzgzZg==',
+    instagramLink: 'https://www.instagram.com/snkore_store?igsh=MXY4dmVteW54YzgzZg=='
+  },
   
   // Other Websites section - Full projects with descriptions
   {
@@ -238,6 +249,15 @@ const getProjects = (t: (key: string) => string) => [
     technologies: ['Sports', 'E-commerce', 'Football Gear'],
     image: alaliSportImage,
     link: 'https://alalisports.com'
+  },
+  {
+    id: '27',
+    title: 'Snkore Store',
+    description: t('snkoreStoreFullDesc'),
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Sneakers', 'E-commerce', 'Fashion'],
+    image: snkoreStoreImage,
+    link: 'https://snkore.store'
   },
 
   // Telegram Bots section
