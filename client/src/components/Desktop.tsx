@@ -57,6 +57,10 @@ const SYSTEM_POSITIONS_KEY = 'desktop_system_positions';
 const GRID_SIZE = 90;
 const GRID_PADDING = 10;
 
+const isTouchDevice = () => {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+};
+
 const snapToGrid = (x: number, y: number): { x: number; y: number } => {
   const snappedX = Math.round((x - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
   const snappedY = Math.round((y - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
@@ -132,6 +136,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
   const handleIconMouseDown = (iconId: string, e: React.MouseEvent, isSystem: boolean = false) => {
     if (e.button !== 0) return;
+    if (isTouchDevice()) return;
     
     e.preventDefault();
     e.stopPropagation();
@@ -709,16 +714,10 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
       {/* Desktop Icons */}
       <div className="absolute inset-0">
-        {initialDesktopIcons.map((icon) => {
+        {initialDesktopIcons.filter(icon => icon.id !== 'recycle').map((icon) => {
           const pos = getDisplayPosition(icon.id, true, icon.position);
           const isDragging = dragState?.iconId === icon.id;
-          const isRecycle = icon.id === 'recycle';
-          
-          let displayPos = pos;
-          if (isRecycle && !systemPositions[icon.id] && !isDragging) {
-            const rect = desktopRef.current?.getBoundingClientRect();
-            displayPos = { x: (rect?.width || 800) - 80, y: 20 };
-          }
+          const isMobile = isTouchDevice();
           
           return (
             <div
@@ -726,9 +725,9 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
               className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''} ${isDragging ? 'opacity-80' : ''}`}
               style={{
                 position: 'absolute',
-                left: `${displayPos.x}px`,
-                top: `${displayPos.y}px`,
-                cursor: isDragging ? 'grabbing' : 'grab',
+                left: `${pos.x}px`,
+                top: `${pos.y}px`,
+                cursor: isMobile ? 'pointer' : (isDragging ? 'grabbing' : 'grab'),
                 zIndex: isDragging ? 100 : 1,
               }}
               onMouseDown={(e) => handleIconMouseDown(icon.id, e, true)}
@@ -748,11 +747,74 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
             </div>
           );
         })}
+        
+        {/* Recycle Bin - Always top right */}
+        {(() => {
+          const recycleIcon = initialDesktopIcons.find(icon => icon.id === 'recycle')!;
+          const isDragging = dragState?.iconId === 'recycle';
+          const isMobile = isTouchDevice();
+          const hasCustomPos = systemPositions['recycle'];
+          
+          if (hasCustomPos && !isMobile) {
+            const pos = getDisplayPosition('recycle', true, recycleIcon.position);
+            return (
+              <div
+                className={`desktop-icon ${selectedIcons.has('recycle') ? 'selected' : ''} ${isDragging ? 'opacity-80' : ''}`}
+                style={{
+                  position: 'absolute',
+                  left: `${pos.x}px`,
+                  top: `${pos.y}px`,
+                  cursor: isDragging ? 'grabbing' : 'grab',
+                  zIndex: isDragging ? 100 : 1,
+                }}
+                onMouseDown={(e) => handleIconMouseDown('recycle', e, true)}
+                onClick={(e) => !isDragging && handleIconClick('recycle', e)}
+                onDoubleClick={() => handleIconDoubleClick(recycleIcon.type)}
+                onContextMenu={(e) => handleContextMenu(e, 'recycle', recycleIcon.type)}
+              >
+                <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+                  <img 
+                    src={recycleIcon.icon} 
+                    alt={t(recycleIcon.label)} 
+                    className="w-full h-full object-contain"
+                    draggable={false}
+                  />
+                </div>
+                <span className="text-xs text-center leading-tight">{t(recycleIcon.label)}</span>
+              </div>
+            );
+          }
+          
+          return (
+            <div
+              className={`desktop-icon absolute top-[10px] right-[10px] ${selectedIcons.has('recycle') ? 'selected' : ''}`}
+              style={{
+                cursor: isMobile ? 'pointer' : 'grab',
+                zIndex: 1,
+              }}
+              onMouseDown={(e) => !isMobile && handleIconMouseDown('recycle', e, true)}
+              onClick={(e) => handleIconClick('recycle', e)}
+              onDoubleClick={() => handleIconDoubleClick(recycleIcon.type)}
+              onContextMenu={(e) => handleContextMenu(e, 'recycle', recycleIcon.type)}
+            >
+              <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+                <img 
+                  src={recycleIcon.icon} 
+                  alt={t(recycleIcon.label)} 
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+              <span className="text-xs text-center leading-tight">{t(recycleIcon.label)}</span>
+            </div>
+          );
+        })()}
 
         {/* Custom Icons */}
         {customIcons.map((icon) => {
           const pos = getDisplayPosition(icon.id, false, icon.position);
           const isDragging = dragState?.iconId === icon.id;
+          const isMobile = isTouchDevice();
           
           return (
             <div
@@ -762,7 +824,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
                 position: 'absolute',
                 left: `${pos.x}px`,
                 top: `${pos.y}px`,
-                cursor: isDragging ? 'grabbing' : 'grab',
+                cursor: isMobile ? 'pointer' : (isDragging ? 'grabbing' : 'grab'),
                 zIndex: isDragging ? 100 : 1,
               }}
               onMouseDown={(e) => handleIconMouseDown(icon.id, e, false)}
