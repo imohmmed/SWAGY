@@ -6,7 +6,7 @@ interface DesktopProps {
   onIconDoubleClick: (type: WindowType) => void;
 }
 
-const desktopIcons: DesktopIcon[] = [
+const defaultDesktopIcons: DesktopIcon[] = [
   { id: 'mycomputer', type: 'mycomputer', icon: 'https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-0.png', label: 'myComputerIcon', position: { x: 20, y: 20 } },
   { id: 'games', type: 'games', icon: 'https://win98icons.alexmeub.com/icons/png/game_spider-0.png', label: 'gamesIcon', position: { x: 110, y: 20 } },
   { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 20, y: 110 } },
@@ -41,17 +41,48 @@ interface ContextMenu {
   iconType?: WindowType;
 }
 
+interface CustomIcon {
+  id: string;
+  name: string;
+  type: 'folder' | 'shortcut' | 'textfile';
+  icon: string;
+  position: { x: number; y: number };
+}
+
+const STORAGE_KEY = 'desktop_custom_icons';
+
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const { t } = useLanguage();
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
   const [contextMenu, setContextMenu] = useState<ContextMenu | null>(null);
+  const [subMenu, setSubMenu] = useState<'arrange' | 'new' | null>(null);
+  const [customIcons, setCustomIcons] = useState<CustomIcon[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const desktopRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        setCustomIcons(JSON.parse(saved));
+      } catch (e) {
+        // Invalid data
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (customIcons.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(customIcons));
+    }
+  }, [customIcons]);
 
   useEffect(() => {
     const handleClickOutside = () => {
       setContextMenu(null);
+      setSubMenu(null);
     };
     
     if (contextMenu) {
@@ -63,6 +94,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const handleIconClick = (iconId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setContextMenu(null);
+    setSubMenu(null);
     if (e.ctrlKey || e.metaKey) {
       setSelectedIcons(prev => {
         const newSet = new Set(prev);
@@ -94,8 +126,10 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
 
-    if (x + 160 > rect.width) x = rect.width - 160;
-    if (y + 200 > rect.height) y = rect.height - 200;
+    if (x + 180 > rect.width) x = rect.width - 180;
+    if (y + 280 > rect.height) y = rect.height - 280;
+
+    setSubMenu(null);
 
     if (iconId) {
       setSelectedIcons(new Set([iconId]));
@@ -111,6 +145,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     if ((e.target as HTMLElement).closest('.context-menu')) return;
     
     setContextMenu(null);
+    setSubMenu(null);
     
     const rect = desktopRef.current?.getBoundingClientRect();
     if (!rect) return;
@@ -146,7 +181,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
     const newSelected = new Set<string>();
 
-    [...desktopIcons, recycleIcon].forEach(icon => {
+    [...defaultDesktopIcons, recycleIcon].forEach(icon => {
       let iconX = icon.position.x;
       let iconY = icon.position.y;
 
@@ -167,8 +202,19 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       }
     });
 
+    customIcons.forEach(icon => {
+      if (
+        icon.position.x < boxRight &&
+        icon.position.x + 70 > boxLeft &&
+        icon.position.y < boxBottom &&
+        icon.position.y + 80 > boxTop
+      ) {
+        newSelected.add(icon.id);
+      }
+    });
+
     setSelectedIcons(newSelected);
-  }, [isSelecting, selectionBox]);
+  }, [isSelecting, selectionBox, customIcons]);
 
   const handleMouseUp = useCallback(() => {
     setIsSelecting(false);
@@ -191,8 +237,85 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     };
   };
 
+  const findEmptyPosition = (): { x: number; y: number } => {
+    const occupied = new Set<string>();
+    
+    defaultDesktopIcons.forEach(icon => {
+      occupied.add(`${icon.position.x},${icon.position.y}`);
+    });
+    
+    customIcons.forEach(icon => {
+      occupied.add(`${icon.position.x},${icon.position.y}`);
+    });
+
+    for (let y = 20; y < 700; y += 90) {
+      for (let x = 200; x < 600; x += 90) {
+        if (!occupied.has(`${x},${y}`)) {
+          return { x, y };
+        }
+      }
+    }
+    
+    return { x: 200, y: 20 + customIcons.length * 90 };
+  };
+
+  const createNewItem = (type: 'folder' | 'shortcut' | 'textfile') => {
+    const position = findEmptyPosition();
+    const id = `custom_${Date.now()}`;
+    
+    let icon = '';
+    let name = '';
+    
+    switch (type) {
+      case 'folder':
+        icon = 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png';
+        name = t('newFolder');
+        break;
+      case 'shortcut':
+        icon = 'https://win98icons.alexmeub.com/icons/png/shortcut-0.png';
+        name = t('newShortcut');
+        break;
+      case 'textfile':
+        icon = 'https://win98icons.alexmeub.com/icons/png/notepad-2.png';
+        name = t('newTextDocument');
+        break;
+    }
+    
+    const newIcon: CustomIcon = {
+      id,
+      name,
+      type,
+      icon,
+      position
+    };
+    
+    setCustomIcons(prev => [...prev, newIcon]);
+    setContextMenu(null);
+    setSubMenu(null);
+  };
+
+  const arrangeIcons = (method: 'name' | 'type' | 'auto') => {
+    setContextMenu(null);
+    setSubMenu(null);
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const handleRefresh = () => {
+    setContextMenu(null);
+    setSubMenu(null);
+    setSelectedIcons(new Set());
+    setRefreshKey(prev => prev + 1);
+  };
+
+  const deleteCustomIcon = (iconId: string) => {
+    setCustomIcons(prev => prev.filter(i => i.id !== iconId));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(customIcons.filter(i => i.id !== iconId)));
+    setContextMenu(null);
+  };
+
   const handleMenuAction = (action: string) => {
     setContextMenu(null);
+    setSubMenu(null);
     
     switch (action) {
       case 'open':
@@ -201,29 +324,36 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
         }
         break;
       case 'refresh':
-        window.location.reload();
+        handleRefresh();
         break;
-      case 'arrange':
-        break;
-      case 'properties':
+      case 'delete':
+        if (contextMenu?.iconId?.startsWith('custom_')) {
+          deleteCustomIcon(contextMenu.iconId);
+        }
         break;
     }
   };
 
-  const ContextMenuItem = ({ icon, label, onClick, disabled = false }: { 
+  const ContextMenuItem = ({ icon, label, onClick, disabled = false, hasSubmenu = false, onHover }: { 
     icon?: string; 
     label: string; 
     onClick: () => void;
     disabled?: boolean;
+    hasSubmenu?: boolean;
+    onHover?: () => void;
   }) => (
     <div
-      className={`flex items-center gap-2 px-3 py-1 cursor-pointer ${disabled ? 'text-gray-500' : 'hover:bg-[#000080] hover:text-white'}`}
+      className={`flex items-center justify-between px-3 py-1 cursor-pointer ${disabled ? 'text-gray-500' : 'hover:bg-[#000080] hover:text-white'}`}
       onClick={disabled ? undefined : onClick}
+      onMouseEnter={onHover}
       data-testid={`menu-${label.toLowerCase().replace(/\s+/g, '-')}`}
     >
-      {icon && <img src={icon} alt="" className="w-4 h-4" />}
-      {!icon && <span className="w-4" />}
-      <span className="text-sm">{label}</span>
+      <div className="flex items-center gap-2">
+        {icon && <img src={icon} alt="" className="w-4 h-4" />}
+        {!icon && <span className="w-4" />}
+        <span className="text-sm">{label}</span>
+      </div>
+      {hasSubmenu && <span className="text-xs">▶</span>}
     </div>
   );
 
@@ -231,8 +361,22 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     <div className="border-t border-gray-400 my-1" />
   );
 
+  const SubMenuPanel = ({ children, offsetTop }: { children: React.ReactNode; offsetTop: number }) => (
+    <div
+      className="absolute bg-[#c0c0c0] border-2 border-t-white border-l-white border-b-gray-700 border-r-gray-700 py-1 min-w-[140px] shadow-md"
+      style={{
+        left: '100%',
+        top: `${offsetTop}px`,
+        marginLeft: '-2px'
+      }}
+    >
+      {children}
+    </div>
+  );
+
   return (
     <div 
+      key={refreshKey}
       ref={desktopRef}
       className="h-full w-full relative overflow-hidden select-none" 
       style={{ background: '#008080' }}
@@ -258,7 +402,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       {/* Context Menu */}
       {contextMenu && (
         <div
-          className="context-menu absolute bg-[#c0c0c0] border-2 border-t-white border-l-white border-b-gray-700 border-r-gray-700 py-1 min-w-[160px] shadow-md"
+          className="context-menu absolute bg-[#c0c0c0] border-2 border-t-white border-l-white border-b-gray-700 border-r-gray-700 py-1 min-w-[180px] shadow-md"
           style={{
             left: `${contextMenu.x}px`,
             top: `${contextMenu.y}px`,
@@ -287,8 +431,8 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
               <MenuDivider />
               <ContextMenuItem
                 label={t('deleteItem')}
-                onClick={() => {}}
-                disabled
+                onClick={() => handleMenuAction('delete')}
+                disabled={!contextMenu.iconId?.startsWith('custom_')}
               />
               <ContextMenuItem
                 label={t('rename')}
@@ -299,7 +443,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
               <ContextMenuItem
                 icon="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png"
                 label={t('properties')}
-                onClick={() => handleMenuAction('properties')}
+                onClick={() => {}}
                 disabled
               />
             </>
@@ -311,14 +455,30 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
                 onClick={() => handleMenuAction('refresh')}
               />
               <MenuDivider />
-              <div className="px-3 py-1 hover:bg-[#000080] hover:text-white cursor-pointer group">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-4" />
-                    <span className="text-sm">{t('arrangeIcons')}</span>
-                  </div>
-                  <span className="text-xs">▶</span>
-                </div>
+              <div className="relative">
+                <ContextMenuItem
+                  label={t('arrangeIcons')}
+                  onClick={() => {}}
+                  hasSubmenu
+                  onHover={() => setSubMenu('arrange')}
+                />
+                {subMenu === 'arrange' && (
+                  <SubMenuPanel offsetTop={-4}>
+                    <ContextMenuItem
+                      label={t('byName')}
+                      onClick={() => arrangeIcons('name')}
+                    />
+                    <ContextMenuItem
+                      label={t('byType')}
+                      onClick={() => arrangeIcons('type')}
+                    />
+                    <MenuDivider />
+                    <ContextMenuItem
+                      label={t('autoArrange')}
+                      onClick={() => arrangeIcons('auto')}
+                    />
+                  </SubMenuPanel>
+                )}
               </div>
               <MenuDivider />
               <ContextMenuItem
@@ -332,20 +492,39 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
                 disabled
               />
               <MenuDivider />
-              <div className="px-3 py-1 hover:bg-[#000080] hover:text-white cursor-pointer group">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-4" />
-                    <span className="text-sm">{t('newItem')}</span>
-                  </div>
-                  <span className="text-xs">▶</span>
-                </div>
+              <div className="relative">
+                <ContextMenuItem
+                  label={t('newItem')}
+                  onClick={() => {}}
+                  hasSubmenu
+                  onHover={() => setSubMenu('new')}
+                />
+                {subMenu === 'new' && (
+                  <SubMenuPanel offsetTop={-4}>
+                    <ContextMenuItem
+                      icon="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png"
+                      label={t('folder')}
+                      onClick={() => createNewItem('folder')}
+                    />
+                    <ContextMenuItem
+                      icon="https://win98icons.alexmeub.com/icons/png/shortcut-0.png"
+                      label={t('shortcut')}
+                      onClick={() => createNewItem('shortcut')}
+                    />
+                    <MenuDivider />
+                    <ContextMenuItem
+                      icon="https://win98icons.alexmeub.com/icons/png/notepad-2.png"
+                      label={t('textDocument')}
+                      onClick={() => createNewItem('textfile')}
+                    />
+                  </SubMenuPanel>
+                )}
               </div>
               <MenuDivider />
               <ContextMenuItem
                 icon="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png"
                 label={t('properties')}
-                onClick={() => handleMenuAction('properties')}
+                onClick={() => {}}
                 disabled
               />
             </>
@@ -355,7 +534,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
       {/* Desktop Icons */}
       <div className="absolute inset-0">
-        {desktopIcons.map((icon) => (
+        {defaultDesktopIcons.map((icon) => (
           <div
             key={icon.id}
             className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''}`}
@@ -377,6 +556,31 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
               />
             </div>
             <span className="text-xs text-center leading-tight">{t(icon.label)}</span>
+          </div>
+        ))}
+
+        {/* Custom Icons */}
+        {customIcons.map((icon) => (
+          <div
+            key={icon.id}
+            className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''}`}
+            style={{
+              position: 'absolute',
+              left: `${icon.position.x}px`,
+              top: `${icon.position.y}px`
+            }}
+            onClick={(e) => handleIconClick(icon.id, e)}
+            onContextMenu={(e) => handleContextMenu(e, icon.id)}
+          >
+            <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+              <img 
+                src={icon.icon} 
+                alt={icon.name} 
+                className="w-full h-full object-contain"
+                draggable={false}
+              />
+            </div>
+            <span className="text-xs text-center leading-tight">{icon.name}</span>
           </div>
         ))}
       </div>

@@ -61,6 +61,15 @@ export const translations: Record<string, Translation> = {
     refresh: 'Refresh',
     arrangeIcons: 'Arrange Icons',
     newItem: 'New',
+    byName: 'by Name',
+    byType: 'by Type',
+    autoArrange: 'Auto Arrange',
+    folder: 'Folder',
+    shortcut: 'Shortcut',
+    textDocument: 'Text Document',
+    newFolder: 'New Folder',
+    newShortcut: 'New Shortcut',
+    newTextDocument: 'New Text Document.txt',
     
     // About content
     aboutMe: 'About Me:',
@@ -397,6 +406,15 @@ export const translations: Record<string, Translation> = {
     refresh: 'تحديث',
     arrangeIcons: 'ترتيب الأيقونات',
     newItem: 'جديد',
+    byName: 'حسب الاسم',
+    byType: 'حسب النوع',
+    autoArrange: 'ترتيب تلقائي',
+    folder: 'مجلد',
+    shortcut: 'اختصار',
+    textDocument: 'مستند نصي',
+    newFolder: 'مجلد جديد',
+    newShortcut: 'اختصار جديد',
+    newTextDocument: 'مستند نصي جديد.txt',
     
     // About content
     aboutMe: 'نبذة عني:',
