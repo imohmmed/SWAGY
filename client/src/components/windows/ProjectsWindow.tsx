@@ -136,7 +136,7 @@ const getProjects = (t: (key: string) => string) => [
     instagramLink: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
   },
   {
-    id: '20',
+    id: '22',
     title: 'Swan Decorations',
     description: t('swanDecorationsDesc'),
     category: 'worked-with' as ProjectCategory,
@@ -209,6 +209,15 @@ const getProjects = (t: (key: string) => string) => [
     technologies: ['Streaming', 'Video Platform', 'Entertainment'],
     image: filmoraTvImage,
     link: 'https://filmora.tv'
+  },
+  {
+    id: '21',
+    title: 'Swan Decoration',
+    description: t('swanDecorationFullDesc'),
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Event Design', 'Luxury Decor', 'Custom Website'],
+    image: swanDecorationsImage,
+    link: 'https://swandeciq.com'
   },
 
   // Telegram Bots section
