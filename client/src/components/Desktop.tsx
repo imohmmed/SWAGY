@@ -54,13 +54,19 @@ interface DragState {
 const STORAGE_KEY = 'desktop_custom_icons';
 const SYSTEM_POSITIONS_KEY = 'desktop_system_positions';
 
-const GRID_SIZE = 90;
-const GRID_PADDING = 10;
+const getGridSettings = () => {
+  const isMobile = window.innerWidth < 768;
+  return {
+    size: isMobile ? 75 : 90,
+    padding: isMobile ? 8 : 10
+  };
+};
 
 const snapToGrid = (x: number, y: number): { x: number; y: number } => {
-  const snappedX = Math.round((x - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
-  const snappedY = Math.round((y - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
-  return { x: Math.max(GRID_PADDING, snappedX), y: Math.max(GRID_PADDING, snappedY) };
+  const { size, padding } = getGridSettings();
+  const snappedX = Math.round((x - padding) / size) * size + padding;
+  const snappedY = Math.round((y - padding) / size) * size + padding;
+  return { x: Math.max(padding, snappedX), y: Math.max(padding, snappedY) };
 };
 
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
@@ -334,6 +340,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   };
 
   const findEmptyPosition = (): { x: number; y: number } => {
+    const { size, padding } = getGridSettings();
     const occupied = new Set<string>();
     
     initialDesktopIcons.forEach(icon => {
@@ -347,15 +354,15 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       occupied.add(`${snapped.x},${snapped.y}`);
     });
 
-    for (let y = GRID_PADDING; y < 700; y += GRID_SIZE) {
-      for (let x = GRID_PADDING + GRID_SIZE * 2; x < 600; x += GRID_SIZE) {
+    for (let y = padding; y < 700; y += size) {
+      for (let x = padding + size * 2; x < 600; x += size) {
         if (!occupied.has(`${x},${y}`)) {
           return { x, y };
         }
       }
     }
     
-    return { x: GRID_PADDING + GRID_SIZE * 2, y: GRID_PADDING + customIcons.length * GRID_SIZE };
+    return { x: padding + size * 2, y: padding + customIcons.length * size };
   };
 
   const createNewItem = (type: 'folder' | 'textfile') => {
@@ -428,10 +435,11 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
         break;
     }
 
-    let xPos = GRID_PADDING;
-    let yPos = GRID_PADDING;
-    const xStep = GRID_SIZE;
-    const yStep = GRID_SIZE;
+    const { size, padding } = getGridSettings();
+    let xPos = padding;
+    let yPos = padding;
+    const xStep = size;
+    const yStep = size;
     const maxY = 550;
 
     const newSystemPositions: Record<string, { x: number; y: number }> = {};
