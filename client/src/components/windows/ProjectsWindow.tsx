@@ -255,7 +255,7 @@ const getProjects = (t: (key: string) => string) => [
     title: 'Snkore Store',
     description: t('snkoreStoreFullDesc'),
     category: 'other-websites' as ProjectCategory,
-    technologies: ['Sneakers', 'E-commerce', 'Fashion'],
+    technologies: ['Digital Services', 'Gaming', 'Accounts'],
     image: snkoreStoreImage,
     link: 'https://snkore.store'
   },

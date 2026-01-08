@@ -322,8 +322,8 @@ export const translations: Record<string, Translation> = {
     'swanDecorationFullDesc': 'Elegance meets artistry. Swan Decoration brings luxury event design and premium decorations to life — weddings, parties, and corporate events with a royal touch.',
     'alaliSportDesc': 'Your one-stop shop for football gear and sports equipment. AlAli Sport delivers quality products for athletes and fans alike.',
     'alaliSportFullDesc': 'Score big with AlAli Sport ⚽ Your ultimate destination for premium football gear, sports equipment, and athletic apparel. From jerseys to boots, we got you covered.',
-    'snkoreStoreDesc': 'Premium sneaker store offering authentic footwear and streetwear fashion. Snkore Store brings you the latest kicks and exclusive drops.',
-    'snkoreStoreFullDesc': 'Step up your game with Snkore Store 👟 Your premium destination for authentic sneakers, streetwear, and exclusive footwear releases. Fresh kicks, authentic style.',
+    'snkoreStoreDesc': 'Digital services, accounts, and gaming store. Snkore Store offers premium digital products and gaming solutions.',
+    'snkoreStoreFullDesc': 'Level up with Snkore Store 🎮 Your destination for digital services, gaming accounts, and premium digital products. Game on!',
     
     // Telegram Bots descriptions
     'quranBotDesc': '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
@@ -669,8 +669,8 @@ export const translations: Record<string, Translation> = {
     'swanDecorationFullDesc': 'الأناقة تلتقي بالفن. سوان ديكوريشن تجلب تصميم الفعاليات الفاخرة والديكورات المميزة للحياة — حفلات زفاف، مناسبات، وفعاليات الشركات بلمسة ملكية.',
     'alaliSportDesc': 'وجهتك الرياضية الأولى لمعدات كرة القدم والمستلزمات الرياضية. العالي سبورت توفر منتجات عالية الجودة للرياضيين والمشجعين.',
     'alaliSportFullDesc': 'سجل هدفك مع العالي سبورت ⚽ وجهتك المثالية لمعدات كرة القدم الممتازة، المستلزمات الرياضية، والملابس الرياضية. من القمصان للأحذية، عندنا كل شي.',
-    'snkoreStoreDesc': 'متجر سنيكرز متميز يقدم أحذية أصلية وأزياء ستريت وير. سنكور ستور يجيبلك أحدث الكيكس والإصدارات الحصرية.',
-    'snkoreStoreFullDesc': 'ارتقِ بستايلك مع سنكور ستور 👟 وجهتك المميزة للسنيكرز الأصلية، الستريت وير، والإصدارات الحصرية للأحذية. كيكس فريش، ستايل أصيل.',
+    'snkoreStoreDesc': 'متجر سنيكرز للخدمات الرقمية والحسابات والألعاب.',
+    'snkoreStoreFullDesc': 'ارتقِ مع سنكور ستور 🎮 وجهتك للخدمات الرقمية، حسابات الألعاب، والمنتجات الرقمية المميزة. Game on!',
     
     // وصوفات بوتات التيليجرام
     'quranBotDesc': '1. حدد بلدك - احصل على أوقات صلاة دقيقة بناءً على موقعك.\n2. أوقات الصلاة اليومية - من الفجر للعشاء، دائماً في الوقت.\n3. أذكار وأحاديث - تذكيرات تلقائية لتحافظ على قلبك منتعش.\n4. الوصول للقرآن - اقرأه. استمع إليه. في أي وقت.\n5. آيات عشوائية - مفاجآت روحية، يومياً.\n6. جهد قليل، ثواب كثير - أنت ترتاح، البوت يقوم بالباقي.',
