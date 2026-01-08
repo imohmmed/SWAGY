@@ -7,16 +7,16 @@ interface DesktopProps {
 }
 
 const initialDesktopIcons: DesktopIcon[] = [
-  { id: 'mycomputer', type: 'mycomputer', icon: 'https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-0.png', label: 'myComputerIcon', position: { x: 20, y: 20 } },
-  { id: 'games', type: 'games', icon: 'https://win98icons.alexmeub.com/icons/png/game_spider-0.png', label: 'gamesIcon', position: { x: 110, y: 20 } },
-  { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 20, y: 110 } },
-  { id: 'terminal', type: 'terminal', icon: 'https://win98icons.alexmeub.com/icons/png/console_prompt-0.png', label: 'terminalIcon', position: { x: 110, y: 110 } },
-  { id: 'projects', type: 'projects', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'projectsIcon', position: { x: 20, y: 200 } },
-  { id: 'music', type: 'music', icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png', label: 'musicIcon', position: { x: 20, y: 290 } },
-  { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png', label: 'blogIcon', position: { x: 20, y: 380 } },
-  { id: 'downloads', type: 'downloads', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'downloadsIcon', position: { x: 20, y: 470 } },
-  { id: 'contact', type: 'contact', icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png', label: 'contactIcon', position: { x: 20, y: 560 } },
-  { id: 'recycle', type: 'recycle', icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png', label: 'recycleIcon', position: { x: 9999, y: 20 } },
+  { id: 'mycomputer', type: 'mycomputer', icon: 'https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-0.png', label: 'myComputerIcon', position: { x: 10, y: 10 } },
+  { id: 'games', type: 'games', icon: 'https://win98icons.alexmeub.com/icons/png/game_spider-0.png', label: 'gamesIcon', position: { x: 100, y: 10 } },
+  { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 10, y: 100 } },
+  { id: 'terminal', type: 'terminal', icon: 'https://win98icons.alexmeub.com/icons/png/console_prompt-0.png', label: 'terminalIcon', position: { x: 100, y: 100 } },
+  { id: 'projects', type: 'projects', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'projectsIcon', position: { x: 10, y: 190 } },
+  { id: 'music', type: 'music', icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png', label: 'musicIcon', position: { x: 10, y: 280 } },
+  { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png', label: 'blogIcon', position: { x: 10, y: 370 } },
+  { id: 'downloads', type: 'downloads', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'downloadsIcon', position: { x: 10, y: 460 } },
+  { id: 'contact', type: 'contact', icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png', label: 'contactIcon', position: { x: 10, y: 550 } },
+  { id: 'recycle', type: 'recycle', icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png', label: 'recycleIcon', position: { x: 9999, y: 10 } },
 ];
 
 interface SelectionBox {
@@ -53,6 +53,15 @@ interface DragState {
 
 const STORAGE_KEY = 'desktop_custom_icons';
 const SYSTEM_POSITIONS_KEY = 'desktop_system_positions';
+
+const GRID_SIZE = 90;
+const GRID_PADDING = 10;
+
+const snapToGrid = (x: number, y: number): { x: number; y: number } => {
+  const snappedX = Math.round((x - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
+  const snappedY = Math.round((y - GRID_PADDING) / GRID_SIZE) * GRID_SIZE + GRID_PADDING;
+  return { x: Math.max(GRID_PADDING, snappedX), y: Math.max(GRID_PADDING, snappedY) };
+};
 
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const { t } = useLanguage();
@@ -286,15 +295,17 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
   const handleMouseUp = useCallback(() => {
     if (dragState && dragPosition) {
+      const snapped = snapToGrid(dragPosition.x, dragPosition.y);
+      
       if (dragState.isSystem) {
         setSystemPositions(prev => ({
           ...prev,
-          [dragState.iconId]: { x: dragPosition.x, y: dragPosition.y }
+          [dragState.iconId]: snapped
         }));
       } else {
         setCustomIcons(prev => prev.map(icon => 
           icon.id === dragState.iconId 
-            ? { ...icon, position: { x: dragPosition.x, y: dragPosition.y } }
+            ? { ...icon, position: snapped }
             : icon
         ));
       }
@@ -327,22 +338,24 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     
     initialDesktopIcons.forEach(icon => {
       const pos = getSystemIconPosition(icon);
-      occupied.add(`${Math.round(pos.x / 90) * 90},${Math.round(pos.y / 90) * 90}`);
+      const snapped = snapToGrid(pos.x, pos.y);
+      occupied.add(`${snapped.x},${snapped.y}`);
     });
     
     customIcons.forEach(icon => {
-      occupied.add(`${Math.round(icon.position.x / 90) * 90},${Math.round(icon.position.y / 90) * 90}`);
+      const snapped = snapToGrid(icon.position.x, icon.position.y);
+      occupied.add(`${snapped.x},${snapped.y}`);
     });
 
-    for (let y = 20; y < 700; y += 90) {
-      for (let x = 200; x < 600; x += 90) {
+    for (let y = GRID_PADDING; y < 700; y += GRID_SIZE) {
+      for (let x = GRID_PADDING + GRID_SIZE * 2; x < 600; x += GRID_SIZE) {
         if (!occupied.has(`${x},${y}`)) {
           return { x, y };
         }
       }
     }
     
-    return { x: 200, y: 20 + customIcons.length * 90 };
+    return { x: GRID_PADDING + GRID_SIZE * 2, y: GRID_PADDING + customIcons.length * GRID_SIZE };
   };
 
   const createNewItem = (type: 'folder' | 'textfile') => {
@@ -415,11 +428,11 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
         break;
     }
 
-    let xPos = 20;
-    let yPos = 20;
-    const xStep = 90;
-    const yStep = 90;
-    const maxY = 560;
+    let xPos = GRID_PADDING;
+    let yPos = GRID_PADDING;
+    const xStep = GRID_SIZE;
+    const yStep = GRID_SIZE;
+    const maxY = 550;
 
     const newSystemPositions: Record<string, { x: number; y: number }> = {};
     const newCustomIcons = [...customIcons];
