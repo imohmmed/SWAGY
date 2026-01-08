@@ -287,6 +287,7 @@ export const translations: Record<string, Translation> = {
     'candyshopaliDesc': 'Sweets and food store',
     'altarafDesc': 'Integrated services and solutions company',
     'caravanDesc': 'Smart IT solutions for businesses in Iraq',
+    'swanDecorationsDesc': 'Luxury decorations and event design services',
     
     // Full project descriptions for "Other Websites" section
     'moraModaaFullDesc': 'Fashion? Check. Vibes? Double check. A sleek Shopify store that feels like your closet before Eid — clean, scrollable, and packed with trendy fits.',
@@ -607,6 +608,7 @@ export const translations: Record<string, Translation> = {
     'candyshopaliDesc': 'متجر حلويات ومأكولات',
     'altarafDesc': 'شركة خدمات وحلول متكاملة',
     'caravanDesc': 'حلول تقنية ذكية للشركات في العراق',
+    'swanDecorationsDesc': 'خدمات ديكورات فاخرة وتصميم فعاليات',
     
     // وصف المشاريع الكاملة لقسم "المواقع الأخرى"
     'moraModaaFullDesc': 'موضة؟ تمام. أجواء؟ تمام مضاعف. متجر شوبيفاي أنيق يشبه خزانتك قبل العيد — نظيف، قابل للتصفح، ومليء بالإطلالات العصرية.',

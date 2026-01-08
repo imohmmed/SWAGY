@@ -21,6 +21,7 @@ import hrSystemBotImage from '@assets/hr-system-bot-logo.jpeg';
 import downloaderBotImage from '@assets/downloader-bot-logo.jpeg';
 import instagramIcon from '@assets/IMG_7835_1751388021998.png';
 import caravanLogo from '@assets/361705CB-5233-4596-9A94-1D56EECA60D3_1758341736462.jpeg';
+import swanDecorationsImage from '@assets/EE78D3F9-BCEA-4AA2-B2B8-DFB6255DA812_1767893193012.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -133,6 +134,16 @@ const getProjects = (t: (key: string) => string) => [
     image: pixelSuiteImage,
     link: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw==',
     instagramLink: 'https://www.instagram.com/pixelsuit3?igsh=MXdsb3BzYjdxenp3Yw=='
+  },
+  {
+    id: '20',
+    title: 'Swan Decorations',
+    description: t('swanDecorationsDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: swanDecorationsImage,
+    link: 'https://www.instagram.com/swan.dec.iq?igsh=amtmMTdwZDVoeXB3',
+    instagramLink: 'https://www.instagram.com/swan.dec.iq?igsh=amtmMTdwZDVoeXB3'
   },
   
   // Other Websites section - Full projects with descriptions
