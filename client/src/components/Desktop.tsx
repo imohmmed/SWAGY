@@ -6,7 +6,7 @@ interface DesktopProps {
   onIconDoubleClick: (type: WindowType) => void;
 }
 
-const defaultDesktopIcons: DesktopIcon[] = [
+const initialDesktopIcons: DesktopIcon[] = [
   { id: 'mycomputer', type: 'mycomputer', icon: 'https://win98icons.alexmeub.com/icons/png/computer_explorer_cool-0.png', label: 'myComputerIcon', position: { x: 20, y: 20 } },
   { id: 'games', type: 'games', icon: 'https://win98icons.alexmeub.com/icons/png/game_spider-0.png', label: 'gamesIcon', position: { x: 110, y: 20 } },
   { id: 'me', type: 'me', icon: 'https://win98icons.alexmeub.com/icons/png/msagent-4.png', label: 'meIcon', position: { x: 20, y: 110 } },
@@ -16,15 +16,8 @@ const defaultDesktopIcons: DesktopIcon[] = [
   { id: 'blog', type: 'blog', icon: 'https://win98icons.alexmeub.com/icons/png/help_question_mark-0.png', label: 'blogIcon', position: { x: 20, y: 380 } },
   { id: 'downloads', type: 'downloads', icon: 'https://win98icons.alexmeub.com/icons/png/world_network_directories-4.png', label: 'downloadsIcon', position: { x: 20, y: 470 } },
   { id: 'contact', type: 'contact', icon: 'https://win98icons.alexmeub.com/icons/png/modem-3.png', label: 'contactIcon', position: { x: 20, y: 560 } },
+  { id: 'recycle', type: 'recycle', icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png', label: 'recycleIcon', position: { x: 9999, y: 20 } },
 ];
-
-const recycleIcon: DesktopIcon = {
-  id: 'recycle',
-  type: 'recycle',
-  icon: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
-  label: 'recycleIcon',
-  position: { x: 0, y: 20 }
-};
 
 interface SelectionBox {
   startX: number;
@@ -55,9 +48,11 @@ interface DragState {
   startY: number;
   offsetX: number;
   offsetY: number;
+  isSystem: boolean;
 }
 
 const STORAGE_KEY = 'desktop_custom_icons';
+const SYSTEM_POSITIONS_KEY = 'desktop_system_positions';
 
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const { t } = useLanguage();
@@ -67,19 +62,25 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const [contextMenu, setContextMenu] = useState<ContextMenu | null>(null);
   const [subMenu, setSubMenu] = useState<'arrange' | 'new' | null>(null);
   const [customIcons, setCustomIcons] = useState<CustomIcon[]>([]);
+  const [systemPositions, setSystemPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [refreshKey, setRefreshKey] = useState(0);
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [dragPosition, setDragPosition] = useState<{ x: number; y: number } | null>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    const savedCustom = localStorage.getItem(STORAGE_KEY);
+    if (savedCustom) {
       try {
-        setCustomIcons(JSON.parse(saved));
-      } catch (e) {
-        // Invalid data
-      }
+        setCustomIcons(JSON.parse(savedCustom));
+      } catch (e) {}
+    }
+    
+    const savedSystem = localStorage.getItem(SYSTEM_POSITIONS_KEY);
+    if (savedSystem) {
+      try {
+        setSystemPositions(JSON.parse(savedSystem));
+      } catch (e) {}
     }
   }, []);
 
@@ -90,6 +91,12 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       localStorage.removeItem(STORAGE_KEY);
     }
   }, [customIcons]);
+
+  useEffect(() => {
+    if (Object.keys(systemPositions).length > 0) {
+      localStorage.setItem(SYSTEM_POSITIONS_KEY, JSON.stringify(systemPositions));
+    }
+  }, [systemPositions]);
 
   useEffect(() => {
     const handleClickOutside = () => {
@@ -103,27 +110,50 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     }
   }, [contextMenu]);
 
-  const handleIconMouseDown = (iconId: string, e: React.MouseEvent) => {
+  const getSystemIconPosition = (icon: DesktopIcon) => {
+    if (systemPositions[icon.id]) {
+      return systemPositions[icon.id];
+    }
+    if (icon.id === 'recycle') {
+      const rect = desktopRef.current?.getBoundingClientRect();
+      return { x: (rect?.width || 800) - 80, y: 20 };
+    }
+    return icon.position;
+  };
+
+  const handleIconMouseDown = (iconId: string, e: React.MouseEvent, isSystem: boolean = false) => {
     if (e.button !== 0) return;
-    if (!iconId.startsWith('custom_')) return;
     
     e.preventDefault();
     e.stopPropagation();
     
-    const icon = customIcons.find(i => i.id === iconId);
-    if (!icon) return;
+    let iconX: number, iconY: number;
+    
+    if (isSystem) {
+      const sysIcon = initialDesktopIcons.find(i => i.id === iconId);
+      if (!sysIcon) return;
+      const pos = getSystemIconPosition(sysIcon);
+      iconX = pos.x;
+      iconY = pos.y;
+    } else {
+      const customIcon = customIcons.find(i => i.id === iconId);
+      if (!customIcon) return;
+      iconX = customIcon.position.x;
+      iconY = customIcon.position.y;
+    }
 
     const rect = desktopRef.current?.getBoundingClientRect();
     if (!rect) return;
 
     setDragState({
       iconId,
-      startX: icon.position.x,
-      startY: icon.position.y,
-      offsetX: e.clientX - rect.left - icon.position.x,
-      offsetY: e.clientY - rect.top - icon.position.y
+      startX: iconX,
+      startY: iconY,
+      offsetX: e.clientX - rect.left - iconX,
+      offsetY: e.clientY - rect.top - iconY,
+      isSystem
     });
-    setDragPosition({ x: icon.position.x, y: icon.position.y });
+    setDragPosition({ x: iconX, y: iconY });
     setSelectedIcons(new Set([iconId]));
     setContextMenu(null);
   };
@@ -225,22 +255,16 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
     const newSelected = new Set<string>();
 
-    [...defaultDesktopIcons, recycleIcon].forEach(icon => {
-      let iconX = icon.position.x;
-      let iconY = icon.position.y;
-
-      if (icon.id === 'recycle') {
-        iconX = rect.width - 70;
-      }
-
+    initialDesktopIcons.forEach(icon => {
+      const pos = getSystemIconPosition(icon);
       const iconWidth = 70;
       const iconHeight = 80;
 
       if (
-        iconX < boxRight &&
-        iconX + iconWidth > boxLeft &&
-        iconY < boxBottom &&
-        iconY + iconHeight > boxTop
+        pos.x < boxRight &&
+        pos.x + iconWidth > boxLeft &&
+        pos.y < boxBottom &&
+        pos.y + iconHeight > boxTop
       ) {
         newSelected.add(icon.id);
       }
@@ -258,15 +282,22 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     });
 
     setSelectedIcons(newSelected);
-  }, [isSelecting, selectionBox, customIcons, dragState]);
+  }, [isSelecting, selectionBox, customIcons, dragState, systemPositions]);
 
   const handleMouseUp = useCallback(() => {
     if (dragState && dragPosition) {
-      setCustomIcons(prev => prev.map(icon => 
-        icon.id === dragState.iconId 
-          ? { ...icon, position: { x: dragPosition.x, y: dragPosition.y } }
-          : icon
-      ));
+      if (dragState.isSystem) {
+        setSystemPositions(prev => ({
+          ...prev,
+          [dragState.iconId]: { x: dragPosition.x, y: dragPosition.y }
+        }));
+      } else {
+        setCustomIcons(prev => prev.map(icon => 
+          icon.id === dragState.iconId 
+            ? { ...icon, position: { x: dragPosition.x, y: dragPosition.y } }
+            : icon
+        ));
+      }
     }
     
     setDragState(null);
@@ -294,12 +325,13 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const findEmptyPosition = (): { x: number; y: number } => {
     const occupied = new Set<string>();
     
-    defaultDesktopIcons.forEach(icon => {
-      occupied.add(`${icon.position.x},${icon.position.y}`);
+    initialDesktopIcons.forEach(icon => {
+      const pos = getSystemIconPosition(icon);
+      occupied.add(`${Math.round(pos.x / 90) * 90},${Math.round(pos.y / 90) * 90}`);
     });
     
     customIcons.forEach(icon => {
-      occupied.add(`${icon.position.x},${icon.position.y}`);
+      occupied.add(`${Math.round(icon.position.x / 90) * 90},${Math.round(icon.position.y / 90) * 90}`);
     });
 
     for (let y = 20; y < 700; y += 90) {
@@ -348,44 +380,76 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     setContextMenu(null);
     setSubMenu(null);
     
-    if (customIcons.length === 0) {
-      setRefreshKey(prev => prev + 1);
-      return;
-    }
-
-    let sortedIcons = [...customIcons];
+    const allIcons: { id: string; name: string; type: string; isSystem: boolean }[] = [];
     
+    initialDesktopIcons.forEach(icon => {
+      allIcons.push({
+        id: icon.id,
+        name: t(icon.label),
+        type: 'system',
+        isSystem: true
+      });
+    });
+    
+    customIcons.forEach(icon => {
+      allIcons.push({
+        id: icon.id,
+        name: icon.name,
+        type: icon.type,
+        isSystem: false
+      });
+    });
+
     switch (method) {
       case 'name':
-        sortedIcons.sort((a, b) => a.name.localeCompare(b.name));
+        allIcons.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'type':
-        sortedIcons.sort((a, b) => a.type.localeCompare(b.type));
+        allIcons.sort((a, b) => {
+          if (a.isSystem && !b.isSystem) return -1;
+          if (!a.isSystem && b.isSystem) return 1;
+          return a.type.localeCompare(b.type);
+        });
         break;
       case 'auto':
         break;
     }
 
-    let xPos = 200;
+    let xPos = 20;
     let yPos = 20;
     const xStep = 90;
     const yStep = 90;
-    const maxY = 600;
+    const maxY = 560;
 
-    const rearrangedIcons = sortedIcons.map((icon) => {
-      const newIcon = { ...icon, position: { x: xPos, y: yPos } };
+    const newSystemPositions: Record<string, { x: number; y: number }> = {};
+    const newCustomIcons = [...customIcons];
+
+    allIcons.forEach((iconInfo) => {
+      if (iconInfo.isSystem) {
+        newSystemPositions[iconInfo.id] = { x: xPos, y: yPos };
+      } else {
+        const customIdx = newCustomIcons.findIndex(c => c.id === iconInfo.id);
+        if (customIdx !== -1) {
+          newCustomIcons[customIdx] = {
+            ...newCustomIcons[customIdx],
+            position: { x: xPos, y: yPos }
+          };
+        }
+      }
       
       yPos += yStep;
       if (yPos > maxY) {
         yPos = 20;
         xPos += xStep;
       }
-      
-      return newIcon;
     });
 
-    setCustomIcons(rearrangedIcons);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(rearrangedIcons));
+    setSystemPositions(newSystemPositions);
+    setCustomIcons(newCustomIcons);
+    localStorage.setItem(SYSTEM_POSITIONS_KEY, JSON.stringify(newSystemPositions));
+    if (newCustomIcons.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newCustomIcons));
+    }
     setRefreshKey(prev => prev + 1);
   };
 
@@ -468,11 +532,14 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     </div>
   );
 
-  const getIconPosition = (icon: CustomIcon) => {
-    if (dragState?.iconId === icon.id && dragPosition) {
+  const getDisplayPosition = (iconId: string, isSystem: boolean, originalPos: { x: number; y: number }) => {
+    if (dragState?.iconId === iconId && dragPosition) {
       return dragPosition;
     }
-    return icon.position;
+    if (isSystem) {
+      return systemPositions[iconId] || originalPos;
+    }
+    return originalPos;
   };
 
   return (
@@ -629,34 +696,49 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
       {/* Desktop Icons */}
       <div className="absolute inset-0">
-        {defaultDesktopIcons.map((icon) => (
-          <div
-            key={icon.id}
-            className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''}`}
-            style={{
-              position: 'absolute',
-              left: `${icon.position.x}px`,
-              top: `${icon.position.y}px`
-            }}
-            onClick={(e) => handleIconClick(icon.id, e)}
-            onDoubleClick={() => handleIconDoubleClick(icon.type)}
-            onContextMenu={(e) => handleContextMenu(e, icon.id, icon.type)}
-          >
-            <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
-              <img 
-                src={icon.icon} 
-                alt={t(icon.label)} 
-                className="w-full h-full object-contain"
-                draggable={false}
-              />
+        {initialDesktopIcons.map((icon) => {
+          const pos = getDisplayPosition(icon.id, true, icon.position);
+          const isDragging = dragState?.iconId === icon.id;
+          const isRecycle = icon.id === 'recycle';
+          
+          let displayPos = pos;
+          if (isRecycle && !systemPositions[icon.id] && !isDragging) {
+            const rect = desktopRef.current?.getBoundingClientRect();
+            displayPos = { x: (rect?.width || 800) - 80, y: 20 };
+          }
+          
+          return (
+            <div
+              key={icon.id}
+              className={`desktop-icon ${selectedIcons.has(icon.id) ? 'selected' : ''} ${isDragging ? 'opacity-80' : ''}`}
+              style={{
+                position: 'absolute',
+                left: `${displayPos.x}px`,
+                top: `${displayPos.y}px`,
+                cursor: isDragging ? 'grabbing' : 'grab',
+                zIndex: isDragging ? 100 : 1,
+              }}
+              onMouseDown={(e) => handleIconMouseDown(icon.id, e, true)}
+              onClick={(e) => !isDragging && handleIconClick(icon.id, e)}
+              onDoubleClick={() => handleIconDoubleClick(icon.type)}
+              onContextMenu={(e) => handleContextMenu(e, icon.id, icon.type)}
+            >
+              <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
+                <img 
+                  src={icon.icon} 
+                  alt={t(icon.label)} 
+                  className="w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+              <span className="text-xs text-center leading-tight">{t(icon.label)}</span>
             </div>
-            <span className="text-xs text-center leading-tight">{t(icon.label)}</span>
-          </div>
-        ))}
+          );
+        })}
 
         {/* Custom Icons */}
         {customIcons.map((icon) => {
-          const pos = getIconPosition(icon);
+          const pos = getDisplayPosition(icon.id, false, icon.position);
           const isDragging = dragState?.iconId === icon.id;
           
           return (
@@ -670,7 +752,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
                 cursor: isDragging ? 'grabbing' : 'grab',
                 zIndex: isDragging ? 100 : 1,
               }}
-              onMouseDown={(e) => handleIconMouseDown(icon.id, e)}
+              onMouseDown={(e) => handleIconMouseDown(icon.id, e, false)}
               onClick={(e) => !isDragging && handleIconClick(icon.id, e)}
               onContextMenu={(e) => handleContextMenu(e, icon.id)}
             >
@@ -686,26 +768,6 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
             </div>
           );
         })}
-      </div>
-      
-      {/* Recycle Bin - Top Right */}
-      <div className="absolute top-5 right-5">
-        <div
-          className={`desktop-icon ${selectedIcons.has(recycleIcon.id) ? 'selected' : ''}`}
-          onClick={(e) => handleIconClick(recycleIcon.id, e)}
-          onDoubleClick={() => handleIconDoubleClick(recycleIcon.type)}
-          onContextMenu={(e) => handleContextMenu(e, recycleIcon.id, recycleIcon.type)}
-        >
-          <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
-            <img 
-              src={recycleIcon.icon} 
-              alt={t(recycleIcon.label)} 
-              className="w-full h-full object-contain"
-              draggable={false}
-            />
-          </div>
-          <span className="text-xs text-center leading-tight">{t(recycleIcon.label)}</span>
-        </div>
       </div>
     </div>
   );
