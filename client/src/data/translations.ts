@@ -50,6 +50,18 @@ export const translations: Record<string, Translation> = {
     draw: 'Draw',
     undo: 'Undo',
     
+    // Context Menu
+    open: 'Open',
+    cut: 'Cut',
+    copy: 'Copy',
+    paste: 'Paste',
+    pasteShortcut: 'Paste Shortcut',
+    deleteItem: 'Delete',
+    rename: 'Rename',
+    refresh: 'Refresh',
+    arrangeIcons: 'Arrange Icons',
+    newItem: 'New',
+    
     // About content
     aboutMe: 'About Me:',
     swagy: 'MoHmmeD',
@@ -373,6 +385,18 @@ export const translations: Record<string, Translation> = {
     previous: 'السابق',
     draw: 'سحب',
     undo: 'تراجع',
+    
+    // Context Menu
+    open: 'فتح',
+    cut: 'قص',
+    copy: 'نسخ',
+    paste: 'لصق',
+    pasteShortcut: 'لصق اختصار',
+    deleteItem: 'حذف',
+    rename: 'إعادة تسمية',
+    refresh: 'تحديث',
+    arrangeIcons: 'ترتيب الأيقونات',
+    newItem: 'جديد',
     
     // About content
     aboutMe: 'نبذة عني:',

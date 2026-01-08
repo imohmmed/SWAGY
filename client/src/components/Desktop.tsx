@@ -1,6 +1,6 @@
 import { DesktopIcon, WindowType } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 interface DesktopProps {
   onIconDoubleClick: (type: WindowType) => void;
@@ -33,15 +33,36 @@ interface SelectionBox {
   currentY: number;
 }
 
+interface ContextMenu {
+  x: number;
+  y: number;
+  type: 'desktop' | 'icon';
+  iconId?: string;
+  iconType?: WindowType;
+}
+
 export function Desktop({ onIconDoubleClick }: DesktopProps) {
   const { t } = useLanguage();
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
   const [selectionBox, setSelectionBox] = useState<SelectionBox | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
+  const [contextMenu, setContextMenu] = useState<ContextMenu | null>(null);
   const desktopRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setContextMenu(null);
+    };
+    
+    if (contextMenu) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [contextMenu]);
 
   const handleIconClick = (iconId: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    setContextMenu(null);
     if (e.ctrlKey || e.metaKey) {
       setSelectedIcons(prev => {
         const newSet = new Set(prev);
@@ -59,11 +80,37 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
 
   const handleIconDoubleClick = (type: WindowType) => {
     setSelectedIcons(new Set());
+    setContextMenu(null);
     onIconDoubleClick(type);
   };
 
+  const handleContextMenu = useCallback((e: React.MouseEvent, iconId?: string, iconType?: WindowType) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const rect = desktopRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    if (x + 160 > rect.width) x = rect.width - 160;
+    if (y + 200 > rect.height) y = rect.height - 200;
+
+    if (iconId) {
+      setSelectedIcons(new Set([iconId]));
+      setContextMenu({ x, y, type: 'icon', iconId, iconType });
+    } else {
+      setContextMenu({ x, y, type: 'desktop' });
+    }
+  }, []);
+
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (e.button === 2) return;
     if ((e.target as HTMLElement).closest('.desktop-icon')) return;
+    if ((e.target as HTMLElement).closest('.context-menu')) return;
+    
+    setContextMenu(null);
     
     const rect = desktopRef.current?.getBoundingClientRect();
     if (!rect) return;
@@ -144,6 +191,46 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
     };
   };
 
+  const handleMenuAction = (action: string) => {
+    setContextMenu(null);
+    
+    switch (action) {
+      case 'open':
+        if (contextMenu?.iconType) {
+          onIconDoubleClick(contextMenu.iconType);
+        }
+        break;
+      case 'refresh':
+        window.location.reload();
+        break;
+      case 'arrange':
+        break;
+      case 'properties':
+        break;
+    }
+  };
+
+  const ContextMenuItem = ({ icon, label, onClick, disabled = false }: { 
+    icon?: string; 
+    label: string; 
+    onClick: () => void;
+    disabled?: boolean;
+  }) => (
+    <div
+      className={`flex items-center gap-2 px-3 py-1 cursor-pointer ${disabled ? 'text-gray-500' : 'hover:bg-[#000080] hover:text-white'}`}
+      onClick={disabled ? undefined : onClick}
+      data-testid={`menu-${label.toLowerCase().replace(/\s+/g, '-')}`}
+    >
+      {icon && <img src={icon} alt="" className="w-4 h-4" />}
+      {!icon && <span className="w-4" />}
+      <span className="text-sm">{label}</span>
+    </div>
+  );
+
+  const MenuDivider = () => (
+    <div className="border-t border-gray-400 my-1" />
+  );
+
   return (
     <div 
       ref={desktopRef}
@@ -153,6 +240,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onContextMenu={(e) => handleContextMenu(e)}
     >
       {/* Selection Box */}
       {isSelecting && selectionBox && (
@@ -165,6 +253,104 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
             zIndex: 1000,
           }}
         />
+      )}
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <div
+          className="context-menu absolute bg-[#c0c0c0] border-2 border-t-white border-l-white border-b-gray-700 border-r-gray-700 py-1 min-w-[160px] shadow-md"
+          style={{
+            left: `${contextMenu.x}px`,
+            top: `${contextMenu.y}px`,
+            zIndex: 9999,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {contextMenu.type === 'icon' ? (
+            <>
+              <ContextMenuItem
+                icon="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png"
+                label={t('open')}
+                onClick={() => handleMenuAction('open')}
+              />
+              <MenuDivider />
+              <ContextMenuItem
+                label={t('cut')}
+                onClick={() => {}}
+                disabled
+              />
+              <ContextMenuItem
+                label={t('copy')}
+                onClick={() => {}}
+                disabled
+              />
+              <MenuDivider />
+              <ContextMenuItem
+                label={t('deleteItem')}
+                onClick={() => {}}
+                disabled
+              />
+              <ContextMenuItem
+                label={t('rename')}
+                onClick={() => {}}
+                disabled
+              />
+              <MenuDivider />
+              <ContextMenuItem
+                icon="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png"
+                label={t('properties')}
+                onClick={() => handleMenuAction('properties')}
+                disabled
+              />
+            </>
+          ) : (
+            <>
+              <ContextMenuItem
+                icon="https://win98icons.alexmeub.com/icons/png/refresh-0.png"
+                label={t('refresh')}
+                onClick={() => handleMenuAction('refresh')}
+              />
+              <MenuDivider />
+              <div className="px-3 py-1 hover:bg-[#000080] hover:text-white cursor-pointer group">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-4" />
+                    <span className="text-sm">{t('arrangeIcons')}</span>
+                  </div>
+                  <span className="text-xs">▶</span>
+                </div>
+              </div>
+              <MenuDivider />
+              <ContextMenuItem
+                label={t('paste')}
+                onClick={() => {}}
+                disabled
+              />
+              <ContextMenuItem
+                label={t('pasteShortcut')}
+                onClick={() => {}}
+                disabled
+              />
+              <MenuDivider />
+              <div className="px-3 py-1 hover:bg-[#000080] hover:text-white cursor-pointer group">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-4" />
+                    <span className="text-sm">{t('newItem')}</span>
+                  </div>
+                  <span className="text-xs">▶</span>
+                </div>
+              </div>
+              <MenuDivider />
+              <ContextMenuItem
+                icon="https://win98icons.alexmeub.com/icons/png/settings_gear-0.png"
+                label={t('properties')}
+                onClick={() => handleMenuAction('properties')}
+                disabled
+              />
+            </>
+          )}
+        </div>
       )}
 
       {/* Desktop Icons */}
@@ -180,6 +366,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
             }}
             onClick={(e) => handleIconClick(icon.id, e)}
             onDoubleClick={() => handleIconDoubleClick(icon.type)}
+            onContextMenu={(e) => handleContextMenu(e, icon.id, icon.type)}
           >
             <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
               <img 
@@ -200,6 +387,7 @@ export function Desktop({ onIconDoubleClick }: DesktopProps) {
           className={`desktop-icon ${selectedIcons.has(recycleIcon.id) ? 'selected' : ''}`}
           onClick={(e) => handleIconClick(recycleIcon.id, e)}
           onDoubleClick={() => handleIconDoubleClick(recycleIcon.type)}
+          onContextMenu={(e) => handleContextMenu(e, recycleIcon.id, recycleIcon.type)}
         >
           <div className="w-10 h-10 md:w-12 md:h-12 mb-1 flex items-center justify-center">
             <img 
