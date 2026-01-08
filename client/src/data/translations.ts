@@ -299,6 +299,8 @@ export const translations: Record<string, Translation> = {
     'altarafNetFullDesc': 'A travel company I co-created that makes vacations feel like music videos. Clean branding, custom website, and golden vibes all the way.',
     'filmoraTvFullDesc': 'Like Netflix, but with more attitude 🎬 A streaming platform with personality and style.',
     'swanDecorationFullDesc': 'Elegance meets artistry. Swan Decoration brings luxury event design and premium decorations to life — weddings, parties, and corporate events with a royal touch.',
+    'alaliSportDesc': 'Your one-stop shop for football gear and sports equipment. AlAli Sport delivers quality products for athletes and fans alike.',
+    'alaliSportFullDesc': 'Score big with AlAli Sport ⚽ Your ultimate destination for premium football gear, sports equipment, and athletic apparel. From jerseys to boots, we got you covered.',
     
     // Telegram Bots descriptions
     'quranBotDesc': '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
@@ -621,6 +623,8 @@ export const translations: Record<string, Translation> = {
     'altarafNetFullDesc': 'شركة سفريات شاركت في إنشائها وتجعل العطلات تبدو مثل الفيديو كليبات. علامة تجارية نظيفة، موقع مخصص، وأجواء ذهبية طوال الطريق.',
     'filmoraTvFullDesc': 'مثل نيتفلكس، لكن بطابع أكثر جرأة 🎬 منصة بث بشخصية وأسلوب.',
     'swanDecorationFullDesc': 'الأناقة تلتقي بالفن. سوان ديكوريشن تجلب تصميم الفعاليات الفاخرة والديكورات المميزة للحياة — حفلات زفاف، مناسبات، وفعاليات الشركات بلمسة ملكية.',
+    'alaliSportDesc': 'وجهتك الرياضية الأولى لمعدات كرة القدم والمستلزمات الرياضية. العالي سبورت توفر منتجات عالية الجودة للرياضيين والمشجعين.',
+    'alaliSportFullDesc': 'سجل هدفك مع العالي سبورت ⚽ وجهتك المثالية لمعدات كرة القدم الممتازة، المستلزمات الرياضية، والملابس الرياضية. من القمصان للأحذية، عندنا كل شي.',
     
     // وصوفات بوتات التيليجرام
     'quranBotDesc': '1. حدد بلدك - احصل على أوقات صلاة دقيقة بناءً على موقعك.\n2. أوقات الصلاة اليومية - من الفجر للعشاء، دائماً في الوقت.\n3. أذكار وأحاديث - تذكيرات تلقائية لتحافظ على قلبك منتعش.\n4. الوصول للقرآن - اقرأه. استمع إليه. في أي وقت.\n5. آيات عشوائية - مفاجآت روحية، يومياً.\n6. جهد قليل، ثواب كثير - أنت ترتاح، البوت يقوم بالباقي.',

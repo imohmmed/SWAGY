@@ -22,6 +22,7 @@ import downloaderBotImage from '@assets/downloader-bot-logo.jpeg';
 import instagramIcon from '@assets/IMG_7835_1751388021998.png';
 import caravanLogo from '@assets/361705CB-5233-4596-9A94-1D56EECA60D3_1758341736462.jpeg';
 import swanDecorationsImage from '@assets/EE78D3F9-BCEA-4AA2-B2B8-DFB6255DA812_1767893193012.jpeg';
+import alaliSportImage from '@assets/80482EDD-4699-46A1-B039-829F93B84DEB_1767893504417.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -145,6 +146,16 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://www.instagram.com/swan.dec.iq?igsh=amtmMTdwZDVoeXB3',
     instagramLink: 'https://www.instagram.com/swan.dec.iq?igsh=amtmMTdwZDVoeXB3'
   },
+  {
+    id: '23',
+    title: 'AlAli Sport',
+    description: t('alaliSportDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: alaliSportImage,
+    link: 'https://www.instagram.com/alalisports?igsh=Y2J2ZmdjcjFjb3l6',
+    instagramLink: 'https://www.instagram.com/alalisports?igsh=Y2J2ZmdjcjFjb3l6'
+  },
   
   // Other Websites section - Full projects with descriptions
   {
@@ -218,6 +229,15 @@ const getProjects = (t: (key: string) => string) => [
     technologies: ['Event Design', 'Luxury Decor', 'Custom Website'],
     image: swanDecorationsImage,
     link: 'https://swandeciq.com'
+  },
+  {
+    id: '25',
+    title: 'AlAli Sport',
+    description: t('alaliSportFullDesc'),
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Sports', 'E-commerce', 'Football Gear'],
+    image: alaliSportImage,
+    link: 'https://alalisports.com'
   },
 
   // Telegram Bots section
