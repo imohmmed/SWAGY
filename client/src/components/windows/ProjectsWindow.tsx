@@ -146,15 +146,6 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://mora1.com/'
   },
   {
-    id: '11',
-    title: 'CARAVAN',
-    description: 'Innovation? Check. Quality? Double check. Caravan-iq delivers smart IT solutions tailored for businesses in Iraq and beyond — from websites to digital platforms that scale with you.',
-    category: 'other-websites' as ProjectCategory,
-    technologies: ['Web Development', 'IT Solutions', 'Digital Transformation'],
-    image: caravanLogo,
-    link: 'https://caravan-iq.com'
-  },
-  {
     id: '12',
     title: 'Printday7',
     description: t('printday7FullDesc'),
