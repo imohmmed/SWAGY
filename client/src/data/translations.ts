@@ -324,6 +324,8 @@ export const translations: Record<string, Translation> = {
     'alaliSportFullDesc': 'Score big with AlAli Sport ⚽ Your ultimate destination for premium football gear, sports equipment, and athletic apparel. From jerseys to boots, we got you covered.',
     'snkoreStoreDesc': 'Digital services, accounts, and gaming store. Snkore Store offers premium digital products and gaming solutions.',
     'snkoreStoreFullDesc': 'Level up with Snkore Store 🎮 Your destination for digital services, gaming accounts, and premium digital products. Game on!',
+    'alaliSmmDesc': 'Social media marketing services. AlAli SMM helps grow your online presence with professional SMM solutions.',
+    'alaliSmmFullDesc': 'Boost your brand with AlAli SMM 🚀 Professional social media marketing services to grow your followers, engagement, and online presence. SMM done right!',
     
     // Telegram Bots descriptions
     'quranBotDesc': '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
@@ -671,6 +673,8 @@ export const translations: Record<string, Translation> = {
     'alaliSportFullDesc': 'سجل هدفك مع العالي سبورت ⚽ وجهتك المثالية لمعدات كرة القدم الممتازة، المستلزمات الرياضية، والملابس الرياضية. من القمصان للأحذية، عندنا كل شي.',
     'snkoreStoreDesc': 'متجر سنيكرز للخدمات الرقمية والحسابات والألعاب.',
     'snkoreStoreFullDesc': 'ارتقِ مع سنكور ستور 🎮 وجهتك للخدمات الرقمية، حسابات الألعاب، والمنتجات الرقمية المميزة. Game on!',
+    'alaliSmmDesc': 'خدمات التسويق عبر وسائل التواصل الاجتماعي. العالي SMM يساعدك على تنمية حضورك الرقمي.',
+    'alaliSmmFullDesc': 'عزز علامتك التجارية مع العالي SMM 🚀 خدمات تسويق احترافية عبر وسائل التواصل الاجتماعي لزيادة متابعينك وتفاعلك وحضورك الرقمي!',
     
     // وصوفات بوتات التيليجرام
     'quranBotDesc': '1. حدد بلدك - احصل على أوقات صلاة دقيقة بناءً على موقعك.\n2. أوقات الصلاة اليومية - من الفجر للعشاء، دائماً في الوقت.\n3. أذكار وأحاديث - تذكيرات تلقائية لتحافظ على قلبك منتعش.\n4. الوصول للقرآن - اقرأه. استمع إليه. في أي وقت.\n5. آيات عشوائية - مفاجآت روحية، يومياً.\n6. جهد قليل، ثواب كثير - أنت ترتاح، البوت يقوم بالباقي.',

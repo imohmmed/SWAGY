@@ -24,6 +24,7 @@ import caravanLogo from '@assets/361705CB-5233-4596-9A94-1D56EECA60D3_1758341736
 import swanDecorationsImage from '@assets/EE78D3F9-BCEA-4AA2-B2B8-DFB6255DA812_1767893193012.jpeg';
 import alaliSportImage from '@assets/80482EDD-4699-46A1-B039-829F93B84DEB_1767893504417.jpeg';
 import snkoreStoreImage from '@assets/IMG_2407_1767898587497.jpeg';
+import alaliSmmImage from '@assets/alalismm-logo.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -167,6 +168,16 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://www.instagram.com/snkore_store?igsh=MXY4dmVteW54YzgzZg==',
     instagramLink: 'https://www.instagram.com/snkore_store?igsh=MXY4dmVteW54YzgzZg=='
   },
+  {
+    id: '28',
+    title: 'AlAli SMM',
+    description: t('alaliSmmDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: alaliSmmImage,
+    link: 'https://www.instagram.com/alalismm?igsh=eGZ6ajYxbGUwYmR1&utm_source=qr',
+    instagramLink: 'https://www.instagram.com/alalismm?igsh=eGZ6ajYxbGUwYmR1&utm_source=qr'
+  },
   
   // Other Websites section - Full projects with descriptions
   {
@@ -258,6 +269,15 @@ const getProjects = (t: (key: string) => string) => [
     technologies: ['Digital Services', 'Gaming', 'Accounts'],
     image: snkoreStoreImage,
     link: 'https://snkore.store'
+  },
+  {
+    id: '29',
+    title: 'AlAli SMM',
+    description: t('alaliSmmFullDesc'),
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Social Media', 'Marketing', 'SMM Services'],
+    image: alaliSmmImage,
+    link: 'https://alalismm.com'
   },
 
   // Telegram Bots section
