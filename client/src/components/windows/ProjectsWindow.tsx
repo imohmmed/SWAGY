@@ -25,6 +25,7 @@ import swanDecorationsImage from '@assets/EE78D3F9-BCEA-4AA2-B2B8-DFB6255DA812_1
 import alaliSportImage from '@assets/80482EDD-4699-46A1-B039-829F93B84DEB_1767893504417.jpeg';
 import snkoreStoreImage from '@assets/IMG_2407_1767898587497.jpeg';
 import alaliSmmImage from '@assets/alalismm-logo.jpeg';
+import alaliTvImage from '@assets/alalitv-logo.jpeg';
 
 type ProjectCategory = 'worked-with' | 'other-websites' | 'telegram-bots';
 
@@ -178,6 +179,16 @@ const getProjects = (t: (key: string) => string) => [
     link: 'https://www.instagram.com/alalismm?igsh=eGZ6ajYxbGUwYmR1&utm_source=qr',
     instagramLink: 'https://www.instagram.com/alalismm?igsh=eGZ6ajYxbGUwYmR1&utm_source=qr'
   },
+  {
+    id: '30',
+    title: 'AlAli TV',
+    description: t('alaliTvDesc'),
+    category: 'worked-with' as ProjectCategory,
+    technologies: [],
+    image: alaliTvImage,
+    link: 'https://www.instagram.com/alali.tv?igsh=NGM0M3d6ZzFpOHk3&utm_source=qr',
+    instagramLink: 'https://www.instagram.com/alali.tv?igsh=NGM0M3d6ZzFpOHk3&utm_source=qr'
+  },
   
   // Other Websites section - Full projects with descriptions
   {
@@ -278,6 +289,15 @@ const getProjects = (t: (key: string) => string) => [
     technologies: ['Social Media', 'Marketing', 'SMM Services'],
     image: alaliSmmImage,
     link: 'https://alalismm.com'
+  },
+  {
+    id: '31',
+    title: 'AlAli TV',
+    description: t('alaliTvFullDesc'),
+    category: 'other-websites' as ProjectCategory,
+    technologies: ['Streaming', 'Entertainment', 'Video Platform'],
+    image: alaliTvImage,
+    link: 'https://alalitv.com'
   },
 
   // Telegram Bots section
