@@ -326,6 +326,8 @@ export const translations: Record<string, Translation> = {
     'snkoreStoreFullDesc': 'Level up with Snkore Store 🎮 Your destination for digital services, gaming accounts, and premium digital products. Game on!',
     'alaliSmmDesc': 'Social media marketing services. AlAli SMM helps grow your online presence with professional SMM solutions.',
     'alaliSmmFullDesc': 'Boost your brand with AlAli SMM 🚀 Professional social media marketing services to grow your followers, engagement, and online presence. SMM done right!',
+    'alaliTvDesc': 'Entertainment and streaming platform. AlAli TV brings you the best content and entertainment.',
+    'alaliTvFullDesc': 'Watch and enjoy with AlAli TV 📺 Your premium entertainment destination for streaming content, movies, and shows. Entertainment at its finest!',
     
     // Telegram Bots descriptions
     'quranBotDesc': '1. Set your country – Get accurate prayer times based on your location.\n2. Daily prayer times – From Fajr to Isha, always on time.\n3. Azkar & Hadiths – Auto reminders to keep your heart fresh.\n4. Quran access – Read it. Listen to it. Anytime.\n5. Random Ayahs – Spiritual surprises, daily.\n6. Low effort, high reward – You chill, bot does the rest.',
@@ -675,6 +677,8 @@ export const translations: Record<string, Translation> = {
     'snkoreStoreFullDesc': 'ارتقِ مع سنكور ستور 🎮 وجهتك للخدمات الرقمية، حسابات الألعاب، والمنتجات الرقمية المميزة. Game on!',
     'alaliSmmDesc': 'خدمات التسويق عبر وسائل التواصل الاجتماعي. العالي SMM يساعدك على تنمية حضورك الرقمي.',
     'alaliSmmFullDesc': 'عزز علامتك التجارية مع العالي SMM 🚀 خدمات تسويق احترافية عبر وسائل التواصل الاجتماعي لزيادة متابعينك وتفاعلك وحضورك الرقمي!',
+    'alaliTvDesc': 'منصة ترفيه وبث محتوى. العالي TV يجيبلك أفضل المحتوى والترفيه.',
+    'alaliTvFullDesc': 'شاهد واستمتع مع العالي TV 📺 وجهتك المميزة للبث والأفلام والمسلسلات. ترفيه بأعلى مستوى!',
     
     // وصوفات بوتات التيليجرام
     'quranBotDesc': '1. حدد بلدك - احصل على أوقات صلاة دقيقة بناءً على موقعك.\n2. أوقات الصلاة اليومية - من الفجر للعشاء، دائماً في الوقت.\n3. أذكار وأحاديث - تذكيرات تلقائية لتحافظ على قلبك منتعش.\n4. الوصول للقرآن - اقرأه. استمع إليه. في أي وقت.\n5. آيات عشوائية - مفاجآت روحية، يومياً.\n6. جهد قليل، ثواب كثير - أنت ترتاح، البوت يقوم بالباقي.',
