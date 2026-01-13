@@ -385,7 +385,7 @@ interface Project {
 
 export function ProjectsWindow() {
   const { t } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory | null>('worked-with');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
   const projectCategories = getProjectCategories(t);
